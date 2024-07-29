@@ -1,5 +1,4 @@
 //@ts-ignore
-
 import { network, deployments as hardhatDeployments, ethers } from "hardhat";
 
 interface NamedAccounts {
@@ -17,12 +16,25 @@ module.exports = async function ({
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
   log("------------------------------------------------------------");
-  let args = [] as any[];
-  const Test = await deploy("Test", {
+
+  // Deploy the Equation library
+  const equation = await deploy("Equation", {
     from: deployer,
-    args: args,
     log: true,
   });
+
+  // Deploy the Test contract and link the Equation library
+  const test = await deploy("Test", {
+    from: deployer,
+    args: [],
+    log: true,
+    libraries: {
+      Equation: equation.address,
+    },
+  });
+
+  log(`Equation deployed at ${equation.address}`);
+  log(`Test deployed at ${test.address}`);
 };
 
 module.exports.tags = ["all", "Test"];
