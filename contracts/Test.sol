@@ -1,30 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "hardhat/console.sol";
 import "./Equation.sol";
+import "solmate/src/utils/SSTORE2.sol";
 
 contract Test {
-    using Equation for Equation.Node[];
+    address public equationStorage;
 
-    Equation.Node[] public equationNodes;
+    event EquationInitialized(address indexed storageAddress);
 
-    /// @notice Initialize the equation with a given list of expressions
-    /// @param _expressions The list of expressions in prefix order
     function initializeEquation(uint256[] calldata _expressions) external {
-        equationNodes.init(_expressions);
+        require(equationStorage == address(0), "Equation already initialized");
+        bytes memory encodedTree = Equation.init(_expressions);
+        address newStorage = SSTORE2.write(encodedTree);
+        require(newStorage != address(0), "Equation initialization failed");
+        equationStorage = newStorage;
+        emit EquationInitialized(newStorage);
     }
 
-    /// @notice Calculate the output for the given x value
-    /// @param xValue The input value for the variable x
-    /// @return The calculated result based on the equation
-    function calculate(uint256 xValue) external view returns (uint256) {
-        return equationNodes.calculate(xValue);
+    function calculate(uint256[] calldata xValue) external returns (uint256) {
+        require(equationStorage != address(0), "Equation not initialized");
+        bytes memory encodedTree = SSTORE2.read(equationStorage);
+        return Equation.calculate(encodedTree, xValue);
     }
 
-    /// @notice Checks if the equation is initialized
-    /// @return True if initialized, false otherwise
-    function isInitialized() external view returns (bool) {
-        return equationNodes.length > 0;
+    function isInitialized() public view returns (bool) {
+        return equationStorage != address(0);
     }
 }

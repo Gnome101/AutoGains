@@ -25,4 +25,4 @@ module.exports = async function ({
   });
 };
 
-module.exports.tags = ["all", "ERC20"];
+module.exports.tags = ["", "ERC20"];
