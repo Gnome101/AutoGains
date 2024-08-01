@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity 0.8.24;
-
+//Claude basically wrote the upgrade
 import "solmate/src/utils/SSTORE2.sol";
 
 library Equation {

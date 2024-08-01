@@ -18,7 +18,9 @@ contract Test {
         emit EquationInitialized(newStorage);
     }
 
-    function calculate(uint256[] calldata xValue) external returns (uint256) {
+    function calculate(
+        uint256[] calldata xValue
+    ) external view returns (uint256) {
         require(equationStorage != address(0), "Equation not initialized");
         bytes memory encodedTree = SSTORE2.read(equationStorage);
         return Equation.calculate(encodedTree, xValue);

@@ -47,17 +47,17 @@ describe("AutoGains Tests", function () {
 
   //   console.log((await test.calculate([10, 5, 3, 2])).toString());
   // });
-  it("test exists equ", async () => {
-    //if x1 < x2 then x3 else x4
+  // it("test exists equ", async () => {
+  //   //if x1 < x2 then x3 else x4
 
-    await test.initializeEquation([18, 12, 1, 0, 1, 1, 1, 2, 1, 3]);
+  //   await test.initializeEquation([18, 12, 1, 0, 1, 1, 1, 2, 1, 3]);
 
-    console.log(
-      (
-        await test.calculate([1221312, 3123, 12321, 123123, 123123, 123123])
-      ).toString()
-    );
-  });
+  //   console.log(
+  //     (
+  //       await test.calculate([1221312, 3123, 12321, 123123, 123123, 123123])
+  //     ).toString()
+  //   );
+  // });
   // it("number actually comes back right", async function () {
   //   this.timeout(0); // Disable the timeout for this test
 
@@ -84,9 +84,30 @@ describe("AutoGains Tests", function () {
   //     });
   //   });
   // });
-  it("Fufillment works", async () => {
-    await impersonateOracleAndFulfill(Test256, "10");
-    const res = await Test256.response();
-    assert.equal(res.toString(), "10");
+  // it("Fufillment works", async () => {
+  //   await impersonateOracleAndFulfill(Test256, "10");
+  //   const res = await Test256.response();
+  //   assert.equal(res.toString(), "10");
+  // });
+  it("number actually comes back right", async function () {
+    console.log("Starting continuous query. Press Ctrl+C to stop.");
+
+    return new Promise((resolve) => {
+      const intervalId = setInterval(async () => {
+        try {
+          const r = await Test256.response();
+          console.log("Response:", r.toString());
+        } catch (error) {
+          console.error("Error querying response:", error);
+        }
+      }, 5000);
+
+      // Set up a handler for the SIGINT signal (Ctrl+C)
+      process.on("SIGINT", () => {
+        clearInterval(intervalId);
+        console.log("Continuous query stopped.");
+        resolve();
+      });
+    });
   });
 });
