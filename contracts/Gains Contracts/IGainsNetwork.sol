@@ -33,8 +33,30 @@ struct TradeInfo {
     uint48 collateralPriceUsd;
     uint48 __placeholder;
 }
+struct Counter {
+    uint32 currentIndex;
+    uint32 openCount;
+    uint192 __placeholder;
+}
+enum CounterType {
+    TRADE,
+    PENDING_ORDER
+}
 
 interface IGainsNetwork {
+    function updateOpenOrder(
+        uint32 _index,
+        uint64 _triggerPrice,
+        uint64 _tp,
+        uint64 _sl,
+        uint16 _maxSlippageP
+    ) external;
+
+    function getCounters(
+        address _trader,
+        CounterType _type
+    ) external view returns (Counter memory);
+
     function openTrade(
         Trade memory,
         uint16 maxSlippageP,
@@ -44,6 +66,8 @@ interface IGainsNetwork {
     function updateSl(uint32 _index, uint64 _newSl) external;
 
     function updateTp(uint32 _index, uint64 _newTp) external;
+
+    function cancelOpenOrder(uint32 _index) external;
 
     function closeTradeMarket(uint32 _index) external;
 
