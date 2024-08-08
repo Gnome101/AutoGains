@@ -1,0 +1,6107 @@
+{
+  "price": 147.3642,
+  "trade": {
+    "user": "0x793448209Ef713CAe41437C7DaA219b59BEF1A4A",
+    "index": 17,
+    "pairIndex": 22,
+    "leverage": 14,
+    "long": false,
+    "isOpen": true,
+    "collateralIndex": 3,
+    "tradeType": 0,
+    "collateralAmount": 38.602699,
+    "openPrice": 145.017248775,
+    "sl": 0,
+    "tp": 51.7918745625
+  },
+  "tradeInfo": {
+    "createdBlock": 0,
+    "tpLastUpdatedBlock": 1722934512,
+    "slLastUpdatedBlock": 100050000,
+    "maxSlippageP": 0,
+    "lastOiUpdateTs": 0,
+    "collateralPriceUsd": 0
+  },
+  "initialAccFees": {
+    "accPairFee": 0,
+    "accGroupFee": 0,
+    "block": 69249596
+  },
+  "fees": true,
+  "Context": {
+    "currentBlock": 69752563,
+    "groups": [
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 0
+      },
+      {
+        "oi": {
+          "long": 1683295.464534,
+          "short": 15629788.918331001,
+          "max": 66513631
+        },
+        "feePerBlock": 0.0000115507,
+        "accFeeLong": 0.3871202081,
+        "accFeeShort": 2.202903473,
+        "accLastUpdatedBlock": 69742210,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 37576.660524,
+          "short": 2100.359832,
+          "max": 34496714
+        },
+        "feePerBlock": 0.0000033561,
+        "accFeeLong": 0.0325149236,
+        "accFeeShort": 0.0039438616,
+        "accLastUpdatedBlock": 69646902,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 14918.995965,
+          "short": 540.437786,
+          "max": 100000000
+        },
+        "feePerBlock": 1.7e-9,
+        "accFeeLong": 0.0000129368,
+        "accFeeShort": 4.2e-9,
+        "accLastUpdatedBlock": 69750935,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 100000000
+        },
+        "feePerBlock": 9.18e-8,
+        "accFeeLong": 0.0001392411,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69745064,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 100000000
+        },
+        "feePerBlock": 1.2e-9,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 66233418,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 1696200.000574,
+          "short": 2249.975424,
+          "max": 52083676
+        },
+        "feePerBlock": 6.055e-7,
+        "accFeeLong": 0.1196574932,
+        "accFeeShort": 0.000222107,
+        "accLastUpdatedBlock": 69745064,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 9930.03499,
+          "max": 100000000
+        },
+        "feePerBlock": 2.82e-8,
+        "accFeeLong": 1.38e-8,
+        "accFeeShort": 0.000002681,
+        "accLastUpdatedBlock": 69750504,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 19262314
+        },
+        "feePerBlock": 2.546e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742210,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 100000000
+        },
+        "feePerBlock": 7.67e-8,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69731367,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 244.00101,
+          "short": 0,
+          "max": 68503574
+        },
+        "feePerBlock": 3.769e-7,
+        "accFeeLong": 3.096e-7,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747855,
+        "feeExponent": 1
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 68480668
+        },
+        "feePerBlock": 3.696e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69698232,
+        "feeExponent": 1
+      }
+    ],
+    "pairs": [
+      {
+        "oi": {
+          "long": 1533507.252098,
+          "short": 13751324.038537,
+          "max": 51246113
+        },
+        "feePerBlock": 0.0000137807,
+        "accFeeLong": 0.4720376322,
+        "accFeeShort": 2.9180653821,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 1,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 149788.212436,
+          "short": 1878464.879794,
+          "max": 45116229.505
+        },
+        "feePerBlock": 0.0000142694,
+        "accFeeLong": 0.3627731798,
+        "accFeeShort": 0.772568924,
+        "accLastUpdatedBlock": 69633157,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 1,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8431274
+        },
+        "feePerBlock": 0.0000121794,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69733995,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8304295
+        },
+        "feePerBlock": 0.0000129014,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0056180279,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9537023
+        },
+        "feePerBlock": 0.0000092976,
+        "accFeeLong": 0,
+        "accFeeShort": 0.000115011,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9636555
+        },
+        "feePerBlock": 0.000009388,
+        "accFeeLong": 0.016289444,
+        "accFeeShort": 0.0024432149,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 628.028082,
+          "short": 0.000082,
+          "max": 7678029
+        },
+        "feePerBlock": 0.0000139652,
+        "accFeeLong": 0.0002929384,
+        "accFeeShort": 0.0002346749,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9049668
+        },
+        "feePerBlock": 0.0000104021,
+        "accFeeLong": 2.03e-8,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69723621,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9370299
+        },
+        "feePerBlock": 0.0000098018,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8465110
+        },
+        "feePerBlock": 0.0000109358,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9413623
+        },
+        "feePerBlock": 0.0000110165,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9524345
+        },
+        "feePerBlock": 0.0000100062,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9255490
+        },
+        "feePerBlock": 0.0000089308,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9378454
+        },
+        "feePerBlock": 0.0000105275,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8308596
+        },
+        "feePerBlock": 0.0000147879,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8520253
+        },
+        "feePerBlock": 0.0000114161,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69728830,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9080193.1
+        },
+        "feePerBlock": 0.0000114736,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69631121,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7954959.9
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0.0004536508,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69597384,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8062137
+        },
+        "feePerBlock": 0.0000120814,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69698242,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 61977848
+        },
+        "feePerBlock": 1.848e-7,
+        "accFeeLong": 0.0003948608,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 4,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 14918.995965,
+          "short": 540.437786,
+          "max": 34953397
+        },
+        "feePerBlock": 8.015e-7,
+        "accFeeLong": 0.0004987492,
+        "accFeeShort": 0.0000073102,
+        "accLastUpdatedBlock": 69750935,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 3,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 57227926
+        },
+        "feePerBlock": 1.941e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 4,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 46101126
+        },
+        "feePerBlock": 4.474e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69731376,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 3,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 48693135
+        },
+        "feePerBlock": 3.942e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 4,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 70012237
+        },
+        "feePerBlock": 1.198e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69718729,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 3,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 49708778
+        },
+        "feePerBlock": 3.347e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69689157,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 4,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 49698224
+        },
+        "feePerBlock": 4.375e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69739271,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 5,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 35997810
+        },
+        "feePerBlock": 7.729e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69677524,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 5,
+            "block": 34343042,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 65530461
+        },
+        "feePerBlock": 1.725e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 5,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 10291301
+        },
+        "feePerBlock": 0.0000076818,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69733995,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 4930.283256,
+          "short": 2100.35975,
+          "max": 7898034
+        },
+        "feePerBlock": 0.0000144814,
+        "accFeeLong": 0.152115254,
+        "accFeeShort": 0.0057918708,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9468757
+        },
+        "feePerBlock": 0.000008973,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69733995,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8537023.95
+        },
+        "feePerBlock": 0.0000100072,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 1635664
+        },
+        "feePerBlock": 0.0000161995,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0264109449,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9885296
+        },
+        "feePerBlock": 0.0000088433,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0.00001,
+          "short": 0,
+          "max": 9434241
+        },
+        "feePerBlock": 0.0000089967,
+        "accFeeLong": 0.1475588693,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8250315
+        },
+        "feePerBlock": 0.0000180746,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9035987
+        },
+        "feePerBlock": 0.0000113758,
+        "accFeeLong": 0.0000437675,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8626715
+        },
+        "feePerBlock": 0.0000124728,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 15651192
+        },
+        "feePerBlock": 0.0000022872,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8945346
+        },
+        "feePerBlock": 0.0000119231,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9367130
+        },
+        "feePerBlock": 0.0000078671,
+        "accFeeLong": 0,
+        "accFeeShort": 0.004817143,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8459488
+        },
+        "feePerBlock": 0.0000142517,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69635128,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8975256
+        },
+        "feePerBlock": 0.00001338,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69721169,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8010874
+        },
+        "feePerBlock": 0.0000136655,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9030830
+        },
+        "feePerBlock": 0.0000116034,
+        "accFeeLong": 0.0029205842,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8893445
+        },
+        "feePerBlock": 0.0000102306,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8274828
+        },
+        "feePerBlock": 0.0000123196,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69637025,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 7,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 6,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 6,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 6,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 6,
+            "block": 34343074,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 1696200.0005,
+          "short": 2249.97505,
+          "max": 31590521
+        },
+        "feePerBlock": 7.065e-7,
+        "accFeeLong": 0.0228351452,
+        "accFeeShort": 0.0003577177,
+        "accLastUpdatedBlock": 69739271,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 8,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0.000074,
+          "short": 0.0003,
+          "max": 22120553
+        },
+        "feePerBlock": 0.0000015554,
+        "accFeeLong": 0.0333885159,
+        "accFeeShort": 0.0007404817,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 8,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 9930.03499,
+          "max": 14679072
+        },
+        "feePerBlock": 1.916e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0001162782,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 17855634
+        },
+        "feePerBlock": 1.263e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69698242,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 12245536
+        },
+        "feePerBlock": 3.481e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69721169,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 10,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 13003554
+        },
+        "feePerBlock": 2.505e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69700543,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 11329045
+        },
+        "feePerBlock": 4.901e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69739271,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 10,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8272171
+        },
+        "feePerBlock": 8.518e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69686903,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 11004580
+        },
+        "feePerBlock": 3.861e-7,
+        "accFeeLong": 6.02e-7,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69733995,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 9,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8551074
+        },
+        "feePerBlock": 0.0000108327,
+        "accFeeLong": 0.000610187,
+        "accFeeShort": 0.0005106331,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9307994
+        },
+        "feePerBlock": 0.0000088147,
+        "accFeeLong": 0.146157956,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69681978,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8056529
+        },
+        "feePerBlock": 0.0000147127,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9352538
+        },
+        "feePerBlock": 0.0000097151,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69723621,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8742824
+        },
+        "feePerBlock": 0.0000174082,
+        "accFeeLong": 0.0000160497,
+        "accFeeShort": 0.0003888418,
+        "accLastUpdatedBlock": 69718729,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 26229.056,
+          "short": 0,
+          "max": 8423288
+        },
+        "feePerBlock": 0.0000120019,
+        "accFeeLong": 0.0464979669,
+        "accFeeShort": 0.0003567322,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 47911040
+        },
+        "feePerBlock": 4.348e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 5,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 50017332
+        },
+        "feePerBlock": 3.378e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 5,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 65820185
+        },
+        "feePerBlock": 1.67e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 5,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 51659622
+        },
+        "feePerBlock": 3.296e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69675320,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 11,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 51759348
+        },
+        "feePerBlock": 2.168e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 11,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 60664068
+        },
+        "feePerBlock": 1.721e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 11,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 39734516
+        },
+        "feePerBlock": 6.388e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69713717,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 11,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 34522173
+        },
+        "feePerBlock": 8.965e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69639131,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 11,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 58798891
+        },
+        "feePerBlock": 2.675e-7,
+        "accFeeLong": 9e-10,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 12,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 54988299
+        },
+        "feePerBlock": 2.99e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 12,
+            "block": 34343090,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 244.00101,
+          "short": 0,
+          "max": 37269206
+        },
+        "feePerBlock": 7.997e-7,
+        "accFeeLong": 0.0000010453,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69675320,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 12,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 32086664
+        },
+        "feePerBlock": 0.0000011874,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69728830,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 12,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 55775597
+        },
+        "feePerBlock": 2.404e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 13,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 38184407
+        },
+        "feePerBlock": 7.215e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69739271,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 13,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 32142815
+        },
+        "feePerBlock": 0.0000010857,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69677524,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 13,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0.000648,
+          "short": 0,
+          "max": 43265730
+        },
+        "feePerBlock": 5.32e-7,
+        "accFeeLong": 0.0287744916,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69728830,
+        "feeExponent": 1,
+        "groups": []
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 34439333
+        },
+        "feePerBlock": 8.731e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69663244,
+        "feeExponent": 1,
+        "groups": []
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 40776021
+        },
+        "feePerBlock": 4.276e-7,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": []
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7795382
+        },
+        "feePerBlock": 0.0000155897,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7944216
+        },
+        "feePerBlock": 0.0000150875,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8085733
+        },
+        "feePerBlock": 0.0000132462,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69723621,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7581414
+        },
+        "feePerBlock": 0.0000133285,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69681978,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8983927
+        },
+        "feePerBlock": 0.0000097556,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69721169,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6653933.0475
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0.0001880302,
+        "accFeeShort": 0.0073872264,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8700043
+        },
+        "feePerBlock": 0.0000118775,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 3916615
+        },
+        "feePerBlock": 0.0000124192,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8910980
+        },
+        "feePerBlock": 0.00001328,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9233323
+        },
+        "feePerBlock": 0.00001859,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69635128,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8141526.6855
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9272098
+        },
+        "feePerBlock": 0.0000093216,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69635128,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8452717.53
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0.0076080442,
+        "accFeeShort": 0.1464442789,
+        "accLastUpdatedBlock": 69670894,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7381726.195
+        },
+        "feePerBlock": 0.0000187666,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69677524,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8967043
+        },
+        "feePerBlock": 0.0000102877,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7508324
+        },
+        "feePerBlock": 0.0000152624,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7477911.9375
+        },
+        "feePerBlock": 0.0000143888,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8109616
+        },
+        "feePerBlock": 0.0000136562,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8453185.5
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69633157,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9386923
+        },
+        "feePerBlock": 0.0000113523,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7393743
+        },
+        "feePerBlock": 0.0000176818,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8384244
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69677524,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9635297
+        },
+        "feePerBlock": 0.0000081839,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8066365.7635
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69718729,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7772448.2275
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69675320,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8136713
+        },
+        "feePerBlock": 0.0000181854,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69578732,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8343229
+        },
+        "feePerBlock": 0.0000182182,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69556676,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7394873
+        },
+        "feePerBlock": 0.0000151961,
+        "accFeeLong": 0.0010361878,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8306038
+        },
+        "feePerBlock": 0.0000149465,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0269805591,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8673875
+        },
+        "feePerBlock": 0.0000131259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69645199,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8412573
+        },
+        "feePerBlock": 0.0000173243,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8779271
+        },
+        "feePerBlock": 0.0000108837,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8682691.25
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9091061
+        },
+        "feePerBlock": 0.0000124113,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0001654136,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 5789.293176,
+          "short": 0,
+          "max": 8954608
+        },
+        "feePerBlock": 0.00001522,
+        "accFeeLong": 0.0501521099,
+        "accFeeShort": 0.00374521,
+        "accLastUpdatedBlock": 69723621,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7468969
+        },
+        "feePerBlock": 0.0000189713,
+        "accFeeLong": 0.0000078173,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9395749
+        },
+        "feePerBlock": 0.0000100553,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6632086
+        },
+        "feePerBlock": 0.0000144532,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0373084389,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9310626
+        },
+        "feePerBlock": 0.0000104691,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9089548
+        },
+        "feePerBlock": 0.000011133,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69635128,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9142486
+        },
+        "feePerBlock": 0.0000107605,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7757203
+        },
+        "feePerBlock": 0.0000144881,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69723621,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7801411
+        },
+        "feePerBlock": 0.0000133813,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8808853
+        },
+        "feePerBlock": 0.0000107027,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69723621,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8290797
+        },
+        "feePerBlock": 0.0000133256,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343122,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9428634
+        },
+        "feePerBlock": 0.0000106447,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8753767
+        },
+        "feePerBlock": 0.000010284,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69635128,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7004608
+        },
+        "feePerBlock": 0.0000169879,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7703258.065
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8333055
+        },
+        "feePerBlock": 0.0000128535,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 12259650
+        },
+        "feePerBlock": 0.0000013238,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69718729,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 8,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 25314373
+        },
+        "feePerBlock": 9.772e-7,
+        "accFeeLong": 1.8e-9,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69668671,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 8,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0.000074,
+          "max": 22040921
+        },
+        "feePerBlock": 0.0000020657,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0481894519,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 8,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 8,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.1107827876,
+            "prevGroupAccFeeShort": 0.0001882836,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 4020156.8
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7776022
+        },
+        "feePerBlock": 0.0000147584,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7464786
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0140249929,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6266678
+        },
+        "feePerBlock": 0.0000171709,
+        "accFeeLong": 0.0788281487,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69747864,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9196178
+        },
+        "feePerBlock": 0.0000087859,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69635128,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7526524
+        },
+        "feePerBlock": 0.0000171954,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0286736888,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7130858
+        },
+        "feePerBlock": 0.0000145946,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8294478
+        },
+        "feePerBlock": 0.0000139694,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8516231
+        },
+        "feePerBlock": 0.0000132478,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8121981
+        },
+        "feePerBlock": 0.0000158599,
+        "accFeeLong": 0,
+        "accFeeShort": 0.0284675989,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6728420
+        },
+        "feePerBlock": 0.0000142999,
+        "accFeeLong": 4.2e-9,
+        "accFeeShort": 0.0000392928,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8802877
+        },
+        "feePerBlock": 0.0000117996,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8139395
+        },
+        "feePerBlock": 0.000014779,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7454347
+        },
+        "feePerBlock": 0.0000120761,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6364801.83
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0.0259745764,
+        "accFeeShort": 0.0017648877,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7925136
+        },
+        "feePerBlock": 0.0000137162,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69675320,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7814391
+        },
+        "feePerBlock": 0.0000189138,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69679739,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6716940
+        },
+        "feePerBlock": 0.0000169811,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6398277.36
+        },
+        "feePerBlock": 0.0000190259,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69728830,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 9534663
+        },
+        "feePerBlock": 0.0000078485,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7201524
+        },
+        "feePerBlock": 0.0000186819,
+        "accFeeLong": 0.0004284255,
+        "accFeeShort": 0.0003155326,
+        "accLastUpdatedBlock": 69750512,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7543893
+        },
+        "feePerBlock": 0.000017046,
+        "accFeeLong": 0.0000370952,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8159497
+        },
+        "feePerBlock": 0.0000114332,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7427837
+        },
+        "feePerBlock": 0.0000162287,
+        "accFeeLong": 0.0032264061,
+        "accFeeShort": 0.0011798009,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6933598
+        },
+        "feePerBlock": 0.0000184872,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8735526
+        },
+        "feePerBlock": 0.0000102388,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69728830,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7615425
+        },
+        "feePerBlock": 0.000014734,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69726243,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8291353
+        },
+        "feePerBlock": 0.0000122633,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7219004
+        },
+        "feePerBlock": 0.0000155941,
+        "accFeeLong": 0.0010221005,
+        "accFeeShort": 0.0001138866,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8250070
+        },
+        "feePerBlock": 0.0000133354,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69723621,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 6671799
+        },
+        "feePerBlock": 0.0000157716,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69672989,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343153,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 7215186
+        },
+        "feePerBlock": 0.0000181979,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69742220,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34565017,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0.0000767161,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      }
+    ],
+    "openInterest": {
+      "long": 0.0000014918995965,
+      "short": 5.4043778599999996e-8,
+      "max": 0.0034953397
+    },
+    "fee": {
+      "openFeeP": 0.000045,
+      "closeFeeP": 0.00009,
+      "minPositionSizeUsd": 45000,
+      "triggerOrderFeeP": 0.00003
+    },
+    "maxGainP": 900
+  }
+}

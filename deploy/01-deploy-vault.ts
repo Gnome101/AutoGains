@@ -1,5 +1,7 @@
 //@ts-ignore
 import { network, deployments as hardhatDeployments, ethers } from "hardhat";
+import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
+import { verify } from "../utils/verify";
 
 interface NamedAccounts {
   deployer: string;
@@ -15,26 +17,58 @@ module.exports = async function ({
 }) {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
+  const chainId = network.config.chainId;
+  if (chainId == undefined) throw "No Chain ID!";
+  const startInfo = contracts[chainId];
   log("------------------------------------------------------------");
 
-  // Deploy the Equation library
   const equation = await deploy("Equation", {
     from: deployer,
     log: true,
   });
-
-  // Deploy the Test contract and link the Equation library
-  const test = await deploy("Test", {
+  const AutoVaultMaster = await deploy("AutoVault", {
     from: deployer,
     args: [],
+    log: true,
+  });
+
+  let args = [
+    startInfo.OracleAddress,
+    startInfo.ChainLinkToken,
+    startInfo.GainsNetwork,
+    AutoVaultMaster.address,
+  ] as any[];
+
+  // Deploy the Test contract and link the Equation library
+  const vaultFactory = await deploy("VaultFactory", {
+    from: deployer,
+    args: args,
     log: true,
     libraries: {
       Equation: equation.address,
     },
   });
+  // if (chainId != 31337) {
+  //   log("Verifying...");
+  //   await verify(
+  //     vaultFactory.address,
+  //     args,
+  //     "contracts/VaultFactory:VaultFactory.sol"
+  //   );
+  // }
 
-  log(`Equation deployed at ${equation.address}`);
-  log(`Test deployed at ${test.address}`);
+  const Helper = await deploy("Helper", {
+    from: deployer,
+    args: [],
+    log: true,
+  });
+  // if (chainId != 31337) {
+  //   log("Verifying...");
+  //   await verify(Helper.address, [], "contracts/Helper:Helper.sol");
+  // }
+
+  log(`VaultFactory deployed at ${vaultFactory.address}`);
+  log(`Helper deployed at ${Helper.address}`);
 };
 
-module.exports.tags = ["all", "Test"];
+module.exports.tags = ["all", "Test", "Harness"];

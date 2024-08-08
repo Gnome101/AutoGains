@@ -42,8 +42,28 @@ enum CounterType {
     TRADE,
     PENDING_ORDER
 }
+struct BorrowingFeeInput {
+    uint8 collateralIndex;
+    address trader;
+    uint16 pairIndex;
+    uint32 index;
+    bool long;
+    uint256 collateral;
+    uint256 leverage;
+}
 
 interface IGainsNetwork {
+    function getTradeBorrowingFee(
+        BorrowingFeeInput calldata _input
+    ) external view returns (uint256 feeAmountCollateral);
+
+    function getPnlPercent(
+        uint64 _openPrice,
+        uint64 _currentPrice,
+        bool _long,
+        uint24 _leverage
+    ) external pure returns (int256);
+
     function updateOpenOrder(
         uint32 _index,
         uint64 _triggerPrice,

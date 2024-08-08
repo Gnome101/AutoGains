@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-pragma solidity 0.8.24;
+pragma solidity ^0.8.24;
 //Claude basically wrote the upgrade
 import "solmate/src/utils/SSTORE2.sol";
 
@@ -37,7 +37,7 @@ library Equation {
 
     function encodeTree(
         uint256[] calldata _expressions
-    ) private pure returns (bytes memory) {
+    ) public pure returns (bytes memory) {
         bytes memory encoded = new bytes(_expressions.length * 33); // Max possible size
         uint256 encodedLength = 0;
 
@@ -71,7 +71,7 @@ library Equation {
     function calculate(
         bytes memory encodedTree,
         uint256[] calldata xValue
-    ) external pure returns (uint256) {
+    ) internal pure returns (uint256) {
         (uint256 result, ) = evaluateNode(encodedTree, 0, xValue);
         return result;
     }

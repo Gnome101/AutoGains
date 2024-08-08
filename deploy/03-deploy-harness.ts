@@ -21,13 +21,25 @@ module.exports = async function ({
   if (chainId == undefined) throw "No Chain ID!";
   const startInfo = contracts[chainId];
   log("------------------------------------------------------------");
+  const FakeGainsNetwork = await deploy("FakeGainsNetwork", {
+    from: deployer,
+    args: [],
+    log: true,
+  });
   let args = [
+    startInfo.USDC,
+    0,
+    deployer,
+    deployer,
+    "aHarnessUSDC",
+    "aHarness",
+    [],
     startInfo.ChainLinkToken,
     startInfo.OracleAddress,
-    "e20c7567b2bb4e3690c615d03457b5d3", //jobID from //https://docs.linkwellnodes.io/services/direct-request-jobs/testnets/Arbitrum-Sepolia-Testnet-Jobs
+    FakeGainsNetwork.address,
   ] as any[];
   // Deploy the Test256 library
-  const Test256 = await deploy("Test256", {
+  const AutoVaultHarness = await deploy("AutoVaultHarness", {
     from: deployer,
     args: args,
     log: true,
@@ -35,20 +47,12 @@ module.exports = async function ({
 
   if (chainId != 31337) {
     log("Verifying...");
-    await verify(Test256.address, args, "contracts/Test256:Test256.sol");
+    await verify(
+      AutoVaultHarness.address,
+      args,
+      "contracts/Harness/AutoVaultHarness:AutoVaultHarness.sol"
+    );
   }
-  const Test = await deploy("Test", {
-    from: deployer,
-    args: [],
-    log: true,
-  });
-
-  if (chainId != 31337) {
-    log("Verifying...");
-    await verify(Test.address, args, "contracts/Test:Test.sol");
-  }
-
-  log(`Test256 deployed at ${Test256.address}`);
 };
 
-module.exports.tags = ["", "Test256"];
+module.exports.tags = ["Harness"];

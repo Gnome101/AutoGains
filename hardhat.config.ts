@@ -28,13 +28,14 @@ module.exports = {
     hardhat: {
       forking: {
         url: process.env.ARB_SEP_RPC,
-        blockNumber: 68121851,
+        blockNumber: 68485917,
       },
       chainId: 31337,
       allowBlocksWithSameTimestamp: true,
       gasPrice: "auto",
       initialBaseFeePerGas: 0,
       allowUnlimitedContractSize: true,
+
       // mining: {
       //   auto: false,
       // },
@@ -45,6 +46,7 @@ module.exports = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       chainId: 421614,
       timeout: 200000, // Increase the timeout value
+      saveDeployments: false,
     },
   },
 
@@ -63,12 +65,12 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.24",
+        version: "0.8.26",
         settings: {
           evmVersion: "cancun",
           optimizer: {
             enabled: true,
-            runs: 100,
+            runs: 1,
             details: {
               yul: true, //https://github.com/ethereum/solidity/issues/11638#issuecomment-1101524130 (added this so that coverage works)
             },
@@ -127,7 +129,7 @@ module.exports = {
     token: "ETH",
   },
   mocha: {
-    timeout: 30000, // 500 seconds max for running tests
+    timeout: 60000, // 500 seconds max for running tests
     parallel: false,
   },
 };
