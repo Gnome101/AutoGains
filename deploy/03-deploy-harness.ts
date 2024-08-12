@@ -55,4 +55,4 @@ module.exports = async function ({
   }
 };
 
-module.exports.tags = ["Harness"];
+module.exports.tags = ["Test"];

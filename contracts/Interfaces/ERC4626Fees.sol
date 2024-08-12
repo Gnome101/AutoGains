@@ -16,7 +16,8 @@ abstract contract ERC4626Fees is ERC4626 {
     function previewDeposit(
         uint256 assets
     ) public virtual override returns (uint256) {
-        uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints());
+        uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints(), _msgSender());
+        console.log("real fee", fee);
         return super.previewDeposit(assets - fee);
     }
 
@@ -25,14 +26,16 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 shares
     ) public virtual override returns (uint256) {
         uint256 assets = super.previewMint(shares);
-        return assets + _feeOnRaw(assets, _entryFeeBasisPoints());
+
+        return assets + _feeOnRaw(assets, _entryFeeBasisPoints(), _msgSender());
     }
 
     /// @dev Preview adding an exit fee on withdraw. See {IERC4626-previewWithdraw}.
     function previewWithdraw(
         uint256 assets
     ) public virtual override returns (uint256) {
-        uint256 fee = _feeOnRaw(assets, _exitFeeBasisPoints());
+        uint256 fee = _feeOnRaw(assets, _exitFeeBasisPoints(), _msgSender());
+
         return super.previewWithdraw(assets + fee);
     }
 
@@ -41,7 +44,12 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 shares
     ) public virtual override returns (uint256) {
         uint256 assets = super.previewRedeem(shares);
-        return assets - _feeOnTotal(assets, _exitFeeBasisPoints());
+        return
+            assets - _feeOnTotal(assets, _exitFeeBasisPoints(), _msgSender());
+    }
+
+    function splitFees(uint256 fee) internal pure returns (uint256, uint256) {
+        return (fee / 2, fee - fee / 2);
     }
 
     /// @dev Send entry fee to {_entryFeeRecipient}. See {IERC4626-_deposit}.
@@ -51,14 +59,22 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 assets,
         uint256 shares
     ) internal virtual override {
-        uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints());
-        address recipient = _entryFeeRecipient();
+        uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints(), _msgSender());
+
+        (address recipient1, address recipient2) = _entryFeeRecipient();
+        console.log("Fee", fee, assets, shares);
+
+        if (fee > 0 && recipient2 == receiver) {
+            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee);
+        } else if (fee > 0 && recipient2 != address(this)) {
+            (uint256 fee1, uint256 fee2) = splitFees(fee);
+            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee1);
+            SafeERC20.safeTransfer(IERC20(asset()), recipient2, fee2);
+        }
 
         super._deposit(caller, receiver, assets, shares);
 
-        if (fee > 0 && recipient != address(this)) {
-            SafeERC20.safeTransfer(IERC20(asset()), recipient, fee);
-        }
+        afterDeposit(receiver, assets);
     }
 
     /// @dev Send exit fee to {_exitFeeRecipient}. See {IERC4626-_deposit}.
@@ -69,13 +85,22 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 assets,
         uint256 shares
     ) internal virtual override {
-        uint256 fee = _feeOnRaw(assets, _exitFeeBasisPoints());
-        address recipient = _exitFeeRecipient();
-        beforeWithdraw(assets);
-        super._withdraw(caller, receiver, owner, assets, shares);
-        if (fee > 0 && recipient != address(this)) {
-            SafeERC20.safeTransfer(IERC20(asset()), recipient, fee);
+        uint256 fee = _feeOnRaw(assets, _exitFeeBasisPoints(), _msgSender());
+        (address recipient1, address recipient2) = _exitFeeRecipient();
+        beforeWithdraw(receiver, assets);
+
+        // if (fee > 0 && recipient2 != address(this)) {
+        //     SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee1);
+        //     SafeERC20.safeTransfer(IERC20(asset()), recipient2, fee2);
+        // }
+        if (fee > 0 && recipient2 == receiver) {
+            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee);
+        } else if (fee > 0 && recipient2 != address(this)) {
+            (uint256 fee1, uint256 fee2) = splitFees(fee);
+            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee1);
+            SafeERC20.safeTransfer(IERC20(asset()), recipient2, fee2);
         }
+        super._withdraw(caller, receiver, owner, assets, shares);
     }
 
     // === Fee configuration ===
@@ -88,15 +113,33 @@ abstract contract ERC4626Fees is ERC4626 {
         return 0; // replace with e.g. 100 for 1%
     }
 
-    function _entryFeeRecipient() internal view virtual returns (address) {
-        return address(0); // replace with e.g. a treasury address
+    function _entryFeeRecipient()
+        internal
+        view
+        virtual
+        returns (address, address)
+    {
+        return (address(0), address(0)); // replace with e.g. a treasury address
     }
 
-    function _exitFeeRecipient() internal view virtual returns (address) {
-        return address(0); // replace with e.g. a treasury address
+    function _exitFeeRecipient()
+        internal
+        view
+        virtual
+        returns (address, address)
+    {
+        return (address(0), address(0)); // replace with e.g. a treasury address
     }
 
-    function beforeWithdraw(uint256 assetsWithdrawn) internal virtual {}
+    function beforeWithdraw(
+        address user,
+        uint256 assetsWithdrawn
+    ) internal virtual {}
+
+    function afterDeposit(
+        address user,
+        uint256 amountDeposited
+    ) internal virtual {}
 
     // === Fee operations ===
 
@@ -104,13 +147,26 @@ abstract contract ERC4626Fees is ERC4626 {
     /// Used in {IERC4626-mint} and {IERC4626-withdraw} operations.
     function _feeOnRaw(
         uint256 assets,
-        uint256 feeBasisPoints
-    ) private pure returns (uint256) {
+        uint256 feeBasisPoints,
+        address receiver
+    ) private view returns (uint256) {
+        (address recipient1, address recipient2) = _entryFeeRecipient();
+
+        if ((receiver == recipient1 || receiver == recipient2)) {
+            if (_doesRecipientPayFee()) {
+                return _getMinFee() - _getMinFee() / 2;
+            } else {
+                return 0;
+            }
+        }
         return
-            assets.mulDiv(
-                feeBasisPoints,
-                _BASIS_POINT_SCALE,
-                Math.Rounding.Ceil
+            Math.max(
+                _getMinFee(),
+                assets.mulDiv(
+                    feeBasisPoints,
+                    _BASIS_POINT_SCALE,
+                    Math.Rounding.Ceil
+                )
             );
     }
 
@@ -118,13 +174,29 @@ abstract contract ERC4626Fees is ERC4626 {
     /// Used in {IERC4626-deposit} and {IERC4626-redeem} operations.
     function _feeOnTotal(
         uint256 assets,
-        uint256 feeBasisPoints
-    ) private pure returns (uint256) {
+        uint256 feeBasisPoints,
+        address receiver
+    ) private view returns (uint256) {
+        (address recipient1, address recipient2) = _entryFeeRecipient();
+        if ((receiver == recipient1 || receiver == recipient2)) {
+            if (_doesRecipientPayFee()) {
+                return _getMinFee() - _getMinFee() / 2;
+            } else {
+                return 0;
+            }
+        }
         return
-            assets.mulDiv(
-                feeBasisPoints,
-                feeBasisPoints + _BASIS_POINT_SCALE,
-                Math.Rounding.Ceil
+            Math.max(
+                _getMinFee(),
+                assets.mulDiv(
+                    feeBasisPoints,
+                    feeBasisPoints + _BASIS_POINT_SCALE,
+                    Math.Rounding.Ceil
+                )
             );
     }
+
+    function _doesRecipientPayFee() internal view virtual returns (bool) {}
+
+    function _getMinFee() internal view virtual returns (uint256) {}
 }

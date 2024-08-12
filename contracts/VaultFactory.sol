@@ -21,10 +21,14 @@ contract VaultFactory is ChainlinkClient, Ownable {
 
     // mapping(address => address[]) userToVaults; read events
     uint256 private constant minimumDeposit = 100;
-    address private oracleAddress;
-    address private chainLinkToken;
-    address private gainsAddress;
+    address public oracleAddress;
+    address public chainLinkToken;
+    address public gainsAddress;
     address public immutable autoVaultImplementation;
+
+    mapping(string => bool) public publicAPIEndPoints;
+    error ArraysMustBeSameLength();
+    mapping(IERC20Metadata => uint256) public tokenToOracleFee;
 
     constructor(
         address oracleAddy,
@@ -46,69 +50,91 @@ contract VaultFactory is ChainlinkClient, Ownable {
         string path;
         string jobIDs;
     }
+    event PublicApiUpdate(string indexed url);
 
-    // function createVault(
-    //     IERC20Metadata collateral,
-    //     uint256 initialAmount,
-    //     APIInfo[] calldata apiInfo,
-    //     uint256[][] calldata listOfStrategies
-    // ) external returns (AutoVault newVault) {
-    //     require(initialAmount > minimumDeposit);
-    //     collateral.safeTransferFrom(msg.sender, address(this), initialAmount);
+    function togglePublicAPI(string memory url) external onlyOwner {
+        publicAPIEndPoints[url] = !publicAPIEndPoints[url];
+        emit PublicApiUpdate(url);
+    }
 
-    //     address[] memory keys = getAddressKeys(apiInfo, listOfStrategies);
+    event VaultCreated(
+        address indexed vaultCreator,
+        address indexed vaultAddress,
+        IERC20Metadata indexed collateral,
+        APIInfo[] apiinfo,
+        uint256[][] strategy
+    );
+    error CollateralNotAdded();
 
-    //     newVault = new AutoVault(
-    //         collateral,
-    //         initialAmount,
-    //         owner(),
-    //         msg.sender,
-    //         string.concat("Auto", collateral.name()),
-    //         string.concat("a", collateral.symbol()),
-    //         keys,
-    //         chainLinkToken,
-    //         oracleAddress,
-    //         gainsAddress
-    //     );
-
-    //     collateral.safeTransfer(address(newVault), initialAmount);
-    //     // console.log("Vault deployed at ", address(newVault));
-    //     // userToVaults[msg.sender] = address(newVault);
-    // }
     function createVault(
         IERC20Metadata collateral,
         uint256 initialAmount,
         APIInfo[] calldata apiInfo,
         uint256[][] calldata listOfStrategies
-    ) external returns (AutoVault newVault) {
+    ) external returns (address payable clonedVault) {
         require(initialAmount > minimumDeposit, "Deposit too low");
+        if (tokenToOracleFee[collateral] == 0) revert CollateralNotAdded();
+
         collateral.safeTransferFrom(msg.sender, address(this), initialAmount);
 
-        address[] memory keys = getAddressKeys(apiInfo, listOfStrategies);
-
         // Clone the AutoVault implementation
-        address payable clonedVault = payable(
-            Clones.clone(autoVaultImplementation)
-        );
-
+        clonedVault = payable(Clones.clone(autoVaultImplementation));
+        AutoVault.StartInfo memory startInfo = AutoVault.StartInfo({
+            factoryOwner: owner(),
+            vaultManager: msg.sender,
+            chainLinkToken: chainLinkToken,
+            oracleAddress: oracleAddress,
+            gainsAddress: gainsAddress
+        });
         // Initialize the cloned vault
         AutoVault(clonedVault).initialize(
             collateral,
+            buildChainlinkTradeRequest(clonedVault, collateral.decimals()),
             initialAmount,
-            owner(),
-            msg.sender,
+            startInfo,
+            tokenToOracleFee[collateral],
             string.concat("Auto", collateral.name()),
             string.concat("a", collateral.symbol()),
-            keys,
-            chainLinkToken,
-            oracleAddress,
-            gainsAddress
+            getAddressKeys(apiInfo, listOfStrategies)
         );
 
-        newVault = AutoVault(clonedVault);
-        collateral.safeTransfer(address(newVault), initialAmount);
+        collateral.safeTransfer(clonedVault, initialAmount);
 
         // emit VaultCreated(address(newVault), msg.sender);
+        emit VaultCreated(
+            msg.sender,
+            clonedVault,
+            collateral,
+            apiInfo,
+            listOfStrategies
+        );
+    }
+
+    string public constant trade_method = "POST";
+    string public constant trade_url =
+        "https://xpzyihmcunwwykjpfdgy.supabase.co/functions/v1/get-trading-variables";
+    string public constant trade_headers =
+        '["accept", "application/json", "Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwenlpaG1jdW53d3lranBmZGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0MjU3ODIsImV4cCI6MjAzODAwMTc4Mn0.mgu_pc2fGZgAQPSlMTY_FPLcsIvepIZb3geDXA7au-0"]';
+    string public constant trade_body =
+        '{"userAddress": "0x793448209Ef713CAe41437C7DaA219b59BEF1A4A"}';
+    string public constant trade_path = "totalCollateral;blockNumber";
+    string public constant trade_job = "e20c7567b2bb4e3690c615d03457b5d3";
+
+    function buildChainlinkTradeRequest(
+        address vaultAddress,
+        uint256 tokenDecimals
+    ) internal view returns (Chainlink.Request memory req) {
+        req = _buildOperatorRequest(
+            bytes32(bytes(trade_job)),
+            AutoVault.preformAction.selector
+        );
+        req._add("method", trade_method);
+        req._add("url", trade_url);
+        req._add("headers", trade_headers);
+        req._add("body", trade_body);
+        req._add("contact", "A"); // PLEASE ENTER YOUR CONTACT INFO. this allows us to notify you in the event of any emergencies related to your request (ie, bugs, downtime, etc.). example values: 'derek_linkwellnodes.io' (Discord handle) OR 'derek@linkwellnodes.io' OR '+1-617-545-4721'
+        req._add("path", trade_path);
+        req._addInt("multiplier", int256(10 ** tokenDecimals));
     }
 
     function getAddressKeys(
@@ -126,6 +152,10 @@ contract VaultFactory is ChainlinkClient, Ownable {
             );
             req._add("method", apiInfo[i].method);
             req._add("url", apiInfo[i].url);
+            uint256 feeMultiplier = 1_000_000;
+            if (publicAPIEndPoints[apiInfo[i].url]) {
+                feeMultiplier = 1_500_000;
+            }
             req._add("headers", apiInfo[i].headers);
             req._add("body", apiInfo[i].body);
             req._add("contact", "A"); // PLEASE ENTER YOUR CONTACT INFO. this allows us to notify you in the event of any emergencies related to your request (ie, bugs, downtime, etc.). example values: 'derek_linkwellnodes.io' (Discord handle) OR 'derek@linkwellnodes.io' OR '+1-617-545-4721'
@@ -134,39 +164,69 @@ contract VaultFactory is ChainlinkClient, Ownable {
 
             bytes memory encodedTree = Equation.init(listOfStrategies[i]);
 
-            bytes memory encodedStrategy = abi.encode(req, encodedTree);
+            bytes memory encodedStrategy = abi.encode(
+                feeMultiplier,
+                req,
+                encodedTree
+            );
 
             address newStorage = SSTORE2.write(encodedStrategy);
             finalArr[i] = newStorage;
         }
     }
 
+    event SetStartingFee(
+        IERC20Metadata[] indexed collateral,
+        uint256[] amounts
+    );
+
+    function setStartingFees(
+        IERC20Metadata[] calldata tokens,
+        uint256[] calldata amounts
+    ) external onlyOwner {
+        if (tokens.length != amounts.length) {
+            revert ArraysMustBeSameLength();
+        }
+        for (uint i = 0; i < tokens.length; i++) {
+            tokenToOracleFee[tokens[i]] = amounts[i];
+        }
+        emit SetStartingFee(tokens, amounts);
+    }
+
+    event OracleAddressSet(address indexed oracle);
+
     function setOracleAddress(address _oracleAddress) external onlyOwner {
         oracleAddress = _oracleAddress;
+        emit OracleAddressSet(_oracleAddress);
     }
+
+    event ChainLinkTokenSet(address indexed ChainLinkToken);
 
     function setChainLinkToken(address _chainLinkToken) external onlyOwner {
         chainLinkToken = _chainLinkToken;
+        emit ChainLinkTokenSet(_chainLinkToken);
     }
+
+    event GainsAddressSet(address indexed GainsAddress);
 
     function setGainsAddress(address _gainsAddress) external onlyOwner {
         gainsAddress = _gainsAddress;
+        emit GainsAddressSet(_gainsAddress);
     }
 
     uint256 private ownerPercentShare = 7_000_000; //10e5 percision
     uint256 private constant percentShareScaling = 10_000_000;
+    event FundsClaimed(
+        address indexed owner,
+        IERC20Metadata indexed asset,
+        uint256 amount
+    );
 
-    // function claimFunds(
-    //     AutoVault vault,
-    //     uint256 sharesToWithdraw
-    // ) external returns (uint256 assetsEarned) {
-    //     uint256 ownerShare = sharesToWithdraw.mulDiv(
-    //         ownerPercentShare,
-    //         percentShareScaling,
-    //         Math.Rounding.Ceil
-    //     );
-    //     uint256 managerShare = sharesToWithdraw - ownerPercentShare;
-    //     assetsEarned = vault.redeem(ownerShare, owner(), address(this));
-    //     vault.transfer(vault.owner(), managerShare);
-    // }
+    function claimFunds(
+        IERC20Metadata asset,
+        uint256 funds
+    ) external onlyOwner {
+        asset.safeTransfer(msg.sender, funds);
+        emit FundsClaimed(msg.sender, asset, funds);
+    }
 }

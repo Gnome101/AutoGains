@@ -52,7 +52,7 @@ import {ERC20} from "./ERC20.sol";
 abstract contract ERC4626 is ERC20, IERC4626 {
     using Math for uint256;
 
-    IERC20 public _asset;
+    IERC20Metadata public _asset;
     uint8 private _underlyingDecimals;
 
     /**
@@ -92,7 +92,7 @@ abstract contract ERC4626 is ERC20, IERC4626 {
     //     _asset = asset_;
     // }
 
-    function __ERC4626_init(IERC20 asset_) internal onlyInitializing {
+    function __ERC4626_init(IERC20Metadata asset_) internal onlyInitializing {
         (bool success, uint8 assetDecimals) = _tryGetAssetDecimals(asset_);
         _underlyingDecimals = success ? assetDecimals : 18;
         _asset = asset_;

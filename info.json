@@ -1,35 +1,35 @@
 {
-  "price": 147.3642,
+  "price": 147.213,
   "trade": {
     "user": "0x793448209Ef713CAe41437C7DaA219b59BEF1A4A",
-    "index": 17,
+    "index": 18,
     "pairIndex": 22,
-    "leverage": 14,
-    "long": false,
+    "leverage": 15,
+    "long": true,
     "isOpen": true,
     "collateralIndex": 3,
     "tradeType": 0,
-    "collateralAmount": 38.602699,
-    "openPrice": 145.017248775,
+    "collateralAmount": 994.599731,
+    "openPrice": 147.3136153125,
     "sl": 0,
-    "tp": 51.7918745625
+    "tp": 235.7017845
   },
   "tradeInfo": {
-    "createdBlock": 0,
-    "tpLastUpdatedBlock": 1722934512,
-    "slLastUpdatedBlock": 100050000,
-    "maxSlippageP": 0,
-    "lastOiUpdateTs": 0,
+    "createdBlock": 69249596,
+    "tpLastUpdatedBlock": 69249596,
+    "slLastUpdatedBlock": 0,
+    "maxSlippageP": 58.722,
+    "lastOiUpdateTs": 100050000,
     "collateralPriceUsd": 0
   },
   "initialAccFees": {
-    "accPairFee": 0,
-    "accGroupFee": 0,
-    "block": 69249596
+    "accPairFee": 0.0004987492,
+    "accGroupFee": 0.0000129368,
+    "block": 69750935
   },
   "fees": true,
   "Context": {
-    "currentBlock": 69752563,
+    "currentBlock": 69928026,
     "groups": [
       {
         "oi": {
@@ -45,26 +45,26 @@
       },
       {
         "oi": {
-          "long": 1683295.464534,
+          "long": 1683121.989147,
           "short": 15629788.918331001,
-          "max": 66513631
+          "max": 65032772.785
         },
-        "feePerBlock": 0.0000115507,
+        "feePerBlock": 0.0000142694,
         "accFeeLong": 0.3871202081,
-        "accFeeShort": 2.202903473,
-        "accLastUpdatedBlock": 69742210,
+        "accFeeShort": 2.4655767621,
+        "accLastUpdatedBlock": 69851565,
         "feeExponent": 1
       },
       {
         "oi": {
           "long": 37576.660524,
           "short": 2100.359832,
-          "max": 34496714
+          "max": 34294750
         },
-        "feePerBlock": 0.0000033561,
-        "accFeeLong": 0.0325149236,
+        "feePerBlock": 0.0000032898,
+        "accFeeLong": 0.03324473,
         "accFeeShort": 0.0039438616,
-        "accLastUpdatedBlock": 69646902,
+        "accLastUpdatedBlock": 69859808,
         "feeExponent": 1
       },
       {
@@ -85,10 +85,10 @@
           "short": 0,
           "max": 100000000
         },
-        "feePerBlock": 9.18e-8,
+        "feePerBlock": 9.72e-8,
         "accFeeLong": 0.0001392411,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69745064,
+        "accLastUpdatedBlock": 69895746,
         "feeExponent": 1
       },
       {
@@ -131,12 +131,12 @@
         "oi": {
           "long": 1696200.000574,
           "short": 2249.975424,
-          "max": 52083676
+          "max": 52633025
         },
-        "feePerBlock": 6.055e-7,
-        "accFeeLong": 0.1196574932,
+        "feePerBlock": 7.097e-7,
+        "accFeeLong": 0.1218597535,
         "accFeeShort": 0.000222107,
-        "accLastUpdatedBlock": 69745064,
+        "accLastUpdatedBlock": 69837702,
         "feeExponent": 1
       },
       {
@@ -145,22 +145,22 @@
           "short": 9930.03499,
           "max": 100000000
         },
-        "feePerBlock": 2.82e-8,
+        "feePerBlock": 3.38e-8,
         "accFeeLong": 1.38e-8,
-        "accFeeShort": 0.000002681,
-        "accLastUpdatedBlock": 69750504,
+        "accFeeShort": 0.0000031494,
+        "accLastUpdatedBlock": 69920449,
         "feeExponent": 1
       },
       {
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 19262314
+          "max": 21334197
         },
-        "feePerBlock": 2.546e-7,
+        "feePerBlock": 1.778e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742210,
+        "accLastUpdatedBlock": 69924819,
         "feeExponent": 1
       },
       {
@@ -169,48 +169,48 @@
           "short": 0,
           "max": 100000000
         },
-        "feePerBlock": 7.67e-8,
+        "feePerBlock": 8.98e-8,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69731367,
+        "accLastUpdatedBlock": 69893489,
         "feeExponent": 1
       },
       {
         "oi": {
           "long": 244.00101,
           "short": 0,
-          "max": 68503574
+          "max": 66905531
         },
-        "feePerBlock": 3.769e-7,
-        "accFeeLong": 3.096e-7,
+        "feePerBlock": 3.706e-7,
+        "accFeeLong": 4.993e-7,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747855,
+        "accLastUpdatedBlock": 69913353,
         "feeExponent": 1
       },
       {
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 68480668
+          "max": 70939219
         },
-        "feePerBlock": 3.696e-7,
+        "feePerBlock": 3.647e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69698232,
+        "accLastUpdatedBlock": 69918188,
         "feeExponent": 1
       }
     ],
     "pairs": [
       {
         "oi": {
-          "long": 1533507.252098,
+          "long": 1533333.776711,
           "short": 13751324.038537,
-          "max": 51246113
+          "max": 50669760.5475
         },
-        "feePerBlock": 0.0000137807,
+        "feePerBlock": 0.0000142694,
         "accFeeLong": 0.4720376322,
-        "accFeeShort": 2.9180653821,
-        "accLastUpdatedBlock": 69742220,
+        "accFeeShort": 3.3940334499,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -229,12 +229,12 @@
         "oi": {
           "long": 149788.212436,
           "short": 1878464.879794,
-          "max": 45116229.505
+          "max": 43295355.4325
         },
         "feePerBlock": 0.0000142694,
         "accFeeLong": 0.3627731798,
-        "accFeeShort": 0.772568924,
-        "accLastUpdatedBlock": 69633157,
+        "accFeeShort": 0.8889298899,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -253,12 +253,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8431274
+          "max": 8228832
         },
-        "feePerBlock": 0.0000121794,
+        "feePerBlock": 0.0000125794,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69733995,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -277,12 +277,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8304295
+          "max": 8296187
         },
-        "feePerBlock": 0.0000129014,
+        "feePerBlock": 0.0000117524,
         "accFeeLong": 0,
         "accFeeShort": 0.0056180279,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -301,12 +301,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9537023
+          "max": 8930391.8275
         },
-        "feePerBlock": 0.0000092976,
+        "feePerBlock": 0.0000103606,
         "accFeeLong": 0,
         "accFeeShort": 0.000115011,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -325,12 +325,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9636555
+          "max": 9243913
         },
-        "feePerBlock": 0.000009388,
+        "feePerBlock": 0.0000098897,
         "accFeeLong": 0.016289444,
         "accFeeShort": 0.0024432149,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -383,12 +383,12 @@
         "oi": {
           "long": 628.028082,
           "short": 0.000082,
-          "max": 7678029
+          "max": 7385613
         },
-        "feePerBlock": 0.0000139652,
-        "accFeeLong": 0.0002929384,
+        "feePerBlock": 0.0000125214,
+        "accFeeLong": 0.0004173064,
         "accFeeShort": 0.0002346749,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69879172,
         "feeExponent": 1,
         "groups": [
           {
@@ -407,12 +407,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9049668
+          "max": 9092801
         },
-        "feePerBlock": 0.0000104021,
+        "feePerBlock": 0.0000105815,
         "accFeeLong": 2.03e-8,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69723621,
+        "accLastUpdatedBlock": 69908627,
         "feeExponent": 1,
         "groups": [
           {
@@ -431,12 +431,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9370299
+          "max": 9012838
         },
-        "feePerBlock": 0.0000098018,
+        "feePerBlock": 0.0000072587,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69886212,
         "feeExponent": 1,
         "groups": [
           {
@@ -455,12 +455,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8465110
+          "max": 8471342
         },
-        "feePerBlock": 0.0000109358,
+        "feePerBlock": 0.0000106512,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -479,12 +479,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9413623
+          "max": 8770679.3
         },
-        "feePerBlock": 0.0000110165,
+        "feePerBlock": 0.0000099057,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -503,12 +503,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9524345
+          "max": 9315319
         },
-        "feePerBlock": 0.0000100062,
+        "feePerBlock": 0.0000088214,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69886212,
         "feeExponent": 1,
         "groups": [
           {
@@ -527,12 +527,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9255490
+          "max": 9371272
         },
-        "feePerBlock": 0.0000089308,
+        "feePerBlock": 0.0000092313,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -551,12 +551,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9378454
+          "max": 8842419
         },
-        "feePerBlock": 0.0000105275,
+        "feePerBlock": 0.0000098484,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -609,12 +609,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8308596
+          "max": 8531199
         },
-        "feePerBlock": 0.0000147879,
+        "feePerBlock": 0.0000137762,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -633,12 +633,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8520253
+          "max": 8748235
         },
-        "feePerBlock": 0.0000114161,
+        "feePerBlock": 0.0000107113,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69728830,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -657,12 +657,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9080193.1
+          "max": 9042196.9
         },
-        "feePerBlock": 0.0000114736,
+        "feePerBlock": 0.0000061998,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69631121,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -681,12 +681,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7954959.9
+          "max": 7700949
         },
-        "feePerBlock": 0.0000190259,
+        "feePerBlock": 0.0000120261,
         "accFeeLong": 0.0004536508,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69597384,
+        "accLastUpdatedBlock": 69927097,
         "feeExponent": 1,
         "groups": [
           {
@@ -705,12 +705,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8062137
+          "max": 8066256
         },
-        "feePerBlock": 0.0000120814,
+        "feePerBlock": 0.0000163764,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69698242,
+        "accLastUpdatedBlock": 69913361,
         "feeExponent": 1,
         "groups": [
           {
@@ -729,12 +729,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 61977848
+          "max": 63315937
         },
-        "feePerBlock": 1.848e-7,
+        "feePerBlock": 1.735e-7,
         "accFeeLong": 0.0003948608,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69927097,
         "feeExponent": 1,
         "groups": [
           {
@@ -753,12 +753,12 @@
         "oi": {
           "long": 14918.995965,
           "short": 540.437786,
-          "max": 34953397
+          "max": 35066723
         },
-        "feePerBlock": 8.015e-7,
-        "accFeeLong": 0.0004987492,
+        "feePerBlock": 7.116e-7,
+        "accFeeLong": 0.000549759,
         "accFeeShort": 0.0000073102,
-        "accLastUpdatedBlock": 69750935,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": [
           {
@@ -777,12 +777,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 57227926
+          "max": 59613020
         },
-        "feePerBlock": 1.941e-7,
+        "feePerBlock": 2.73e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69902197,
         "feeExponent": 1,
         "groups": [
           {
@@ -801,12 +801,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 46101126
+          "max": 45283965
         },
-        "feePerBlock": 4.474e-7,
+        "feePerBlock": 4.937e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69731376,
+        "accLastUpdatedBlock": 69893497,
         "feeExponent": 1,
         "groups": [
           {
@@ -825,12 +825,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 48693135
+          "max": 47807760
         },
-        "feePerBlock": 3.942e-7,
+        "feePerBlock": 4.109e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69910994,
         "feeExponent": 1,
         "groups": [
           {
@@ -851,10 +851,10 @@
           "short": 0,
           "max": 70012237
         },
-        "feePerBlock": 1.198e-7,
+        "feePerBlock": 1.297e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69718729,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -875,10 +875,10 @@
           "short": 0,
           "max": 49708778
         },
-        "feePerBlock": 3.347e-7,
+        "feePerBlock": 3.826e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69689157,
+        "accLastUpdatedBlock": 69906331,
         "feeExponent": 1,
         "groups": [
           {
@@ -897,12 +897,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 49698224
+          "max": 48953950
         },
-        "feePerBlock": 4.375e-7,
+        "feePerBlock": 4.398e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69739271,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -921,12 +921,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 35997810
+          "max": 35996442
         },
-        "feePerBlock": 7.729e-7,
+        "feePerBlock": 6.587e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69677524,
+        "accLastUpdatedBlock": 69881429,
         "feeExponent": 1,
         "groups": [
           {
@@ -945,12 +945,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 65530461
+          "max": 64074844
         },
-        "feePerBlock": 1.725e-7,
+        "feePerBlock": 2.429e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69908627,
         "feeExponent": 1,
         "groups": [
           {
@@ -1003,12 +1003,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 10291301
+          "max": 10449046
         },
-        "feePerBlock": 0.0000076818,
+        "feePerBlock": 0.000006712,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69733995,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -1027,12 +1027,12 @@
         "oi": {
           "long": 4930.283256,
           "short": 2100.35975,
-          "max": 7898034
+          "max": 8234247
         },
-        "feePerBlock": 0.0000144814,
-        "accFeeLong": 0.152115254,
+        "feePerBlock": 0.000011404,
+        "accFeeLong": 0.1527813592,
         "accFeeShort": 0.0057918708,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69888996,
         "feeExponent": 1,
         "groups": [
           {
@@ -1051,12 +1051,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9468757
+          "max": 9836794
         },
-        "feePerBlock": 0.000008973,
+        "feePerBlock": 0.0000087589,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69733995,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -1075,12 +1075,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8537023.95
+          "max": 8134059.22
         },
-        "feePerBlock": 0.0000100072,
+        "feePerBlock": 0.0000164554,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -1133,12 +1133,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 1635664
+          "max": 1587493
         },
-        "feePerBlock": 0.0000161995,
+        "feePerBlock": 0.000015637,
         "accFeeLong": 0,
         "accFeeShort": 0.0264109449,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69902197,
         "feeExponent": 1,
         "groups": [
           {
@@ -1157,12 +1157,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9885296
+          "max": 9333951
         },
-        "feePerBlock": 0.0000088433,
+        "feePerBlock": 0.0000071272,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69866361,
         "feeExponent": 1,
         "groups": [
           {
@@ -1181,12 +1181,12 @@
         "oi": {
           "long": 0.00001,
           "short": 0,
-          "max": 9434241
+          "max": 9572654
         },
-        "feePerBlock": 0.0000089967,
+        "feePerBlock": 0.0000094906,
         "accFeeLong": 0.1475588693,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -1205,12 +1205,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8250315
+          "max": 8367199
         },
-        "feePerBlock": 0.0000180746,
+        "feePerBlock": 0.0000160225,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -1229,12 +1229,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9035987
+          "max": 8895572
         },
-        "feePerBlock": 0.0000113758,
+        "feePerBlock": 0.0000127924,
         "accFeeLong": 0.0000437675,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69888996,
         "feeExponent": 1,
         "groups": [
           {
@@ -1287,12 +1287,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8626715
+          "max": 8139701.65
         },
-        "feePerBlock": 0.0000124728,
+        "feePerBlock": 0.0000127245,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -1311,12 +1311,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 15651192
+          "max": 14388327
         },
-        "feePerBlock": 0.0000022872,
+        "feePerBlock": 0.0000019276,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -1369,12 +1369,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8945346
+          "max": 9029827
         },
-        "feePerBlock": 0.0000119231,
+        "feePerBlock": 0.0000110073,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -1393,12 +1393,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9367130
+          "max": 9402956
         },
-        "feePerBlock": 0.0000078671,
+        "feePerBlock": 0.0000089696,
         "accFeeLong": 0,
         "accFeeShort": 0.004817143,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -1451,12 +1451,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8459488
+          "max": 8463582
         },
-        "feePerBlock": 0.0000142517,
+        "feePerBlock": 0.000013098,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69635128,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -1475,104 +1475,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8975256
+          "max": 8790180
         },
-        "feePerBlock": 0.00001338,
+        "feePerBlock": 0.0000136787,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69721169,
-        "feeExponent": 1,
-        "groups": [
-          {
-            "groupIndex": 2,
-            "block": 34343059,
-            "initialAccFeeLong": 0,
-            "initialAccFeeShort": 0,
-            "prevGroupAccFeeLong": 0,
-            "prevGroupAccFeeShort": 0,
-            "pairAccFeeLong": 0,
-            "pairAccFeeShort": 0
-          }
-        ]
-      },
-      {
-        "oi": {
-          "long": 0,
-          "short": 0,
-          "max": 0
-        },
-        "feePerBlock": 0,
-        "accFeeLong": 0,
-        "accFeeShort": 0,
-        "accLastUpdatedBlock": 58283430,
-        "feeExponent": 1,
-        "groups": [
-          {
-            "groupIndex": 2,
-            "block": 34343059,
-            "initialAccFeeLong": 0,
-            "initialAccFeeShort": 0,
-            "prevGroupAccFeeLong": 0,
-            "prevGroupAccFeeShort": 0,
-            "pairAccFeeLong": 0,
-            "pairAccFeeShort": 0
-          },
-          {
-            "groupIndex": 0,
-            "block": 58283430,
-            "initialAccFeeLong": 0,
-            "initialAccFeeShort": 0,
-            "prevGroupAccFeeLong": 0.008041766,
-            "prevGroupAccFeeShort": 0.002552473,
-            "pairAccFeeLong": 0,
-            "pairAccFeeShort": 0
-          }
-        ]
-      },
-      {
-        "oi": {
-          "long": 0,
-          "short": 0,
-          "max": 0
-        },
-        "feePerBlock": 0,
-        "accFeeLong": 0,
-        "accFeeShort": 0,
-        "accLastUpdatedBlock": 58283430,
-        "feeExponent": 1,
-        "groups": [
-          {
-            "groupIndex": 2,
-            "block": 34343059,
-            "initialAccFeeLong": 0,
-            "initialAccFeeShort": 0,
-            "prevGroupAccFeeLong": 0,
-            "prevGroupAccFeeShort": 0,
-            "pairAccFeeLong": 0,
-            "pairAccFeeShort": 0
-          },
-          {
-            "groupIndex": 0,
-            "block": 58283430,
-            "initialAccFeeLong": 0,
-            "initialAccFeeShort": 0,
-            "prevGroupAccFeeLong": 0.008041766,
-            "prevGroupAccFeeShort": 0.002552473,
-            "pairAccFeeLong": 0,
-            "pairAccFeeShort": 0
-          }
-        ]
-      },
-      {
-        "oi": {
-          "long": 0,
-          "short": 0,
-          "max": 8010874
-        },
-        "feePerBlock": 0.0000136655,
-        "accFeeLong": 0,
-        "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -1625,12 +1533,104 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9030830
+          "max": 0
         },
-        "feePerBlock": 0.0000116034,
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8323297
+        },
+        "feePerBlock": 0.0000145499,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69859816,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 0
+        },
+        "feePerBlock": 0,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 58283430,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343059,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          },
+          {
+            "groupIndex": 0,
+            "block": 58283430,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0.008041766,
+            "prevGroupAccFeeShort": 0.002552473,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8546709
+        },
+        "feePerBlock": 0.0000106921,
         "accFeeLong": 0.0029205842,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -1649,12 +1649,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8893445
+          "max": 8925373
         },
-        "feePerBlock": 0.0000102306,
+        "feePerBlock": 0.0000096544,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -1673,12 +1673,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8274828
+          "max": 8253534
         },
-        "feePerBlock": 0.0000123196,
+        "feePerBlock": 0.0000116827,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69637025,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -2787,10 +2787,10 @@
           "short": 2249.97505,
           "max": 31590521
         },
-        "feePerBlock": 7.065e-7,
-        "accFeeLong": 0.0228351452,
+        "feePerBlock": 6.98e-7,
+        "accFeeLong": 0.0299286531,
         "accFeeShort": 0.0003577177,
-        "accLastUpdatedBlock": 69739271,
+        "accLastUpdatedBlock": 69910994,
         "feeExponent": 1,
         "groups": [
           {
@@ -2809,12 +2809,12 @@
         "oi": {
           "long": 0.000074,
           "short": 0.0003,
-          "max": 22120553
+          "max": 22353718
         },
-        "feePerBlock": 0.0000015554,
+        "feePerBlock": 0.0000018018,
         "accFeeLong": 0.0333885159,
         "accFeeShort": 0.0007404817,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69910994,
         "feeExponent": 1,
         "groups": [
           {
@@ -2835,10 +2835,10 @@
           "short": 9930.03499,
           "max": 14679072
         },
-        "feePerBlock": 1.916e-7,
+        "feePerBlock": 1.718e-7,
         "accFeeLong": 0,
-        "accFeeShort": 0.0001162782,
-        "accLastUpdatedBlock": 69747864,
+        "accFeeShort": 0.000136915,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": [
           {
@@ -2857,12 +2857,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 17855634
+          "max": 17911356
         },
-        "feePerBlock": 1.263e-7,
+        "feePerBlock": 1.296e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69698242,
+        "accLastUpdatedBlock": 69927097,
         "feeExponent": 1,
         "groups": [
           {
@@ -2881,12 +2881,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 12245536
+          "max": 12321998
         },
-        "feePerBlock": 3.481e-7,
+        "feePerBlock": 2.436e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69721169,
+        "accLastUpdatedBlock": 69927097,
         "feeExponent": 1,
         "groups": [
           {
@@ -2905,12 +2905,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 13003554
+          "max": 12782242
         },
-        "feePerBlock": 2.505e-7,
+        "feePerBlock": 4.282e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69700543,
+        "accLastUpdatedBlock": 69888996,
         "feeExponent": 1,
         "groups": [
           {
@@ -2929,12 +2929,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 11329045
+          "max": 11512983
         },
-        "feePerBlock": 4.901e-7,
+        "feePerBlock": 3.792e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69739271,
+        "accLastUpdatedBlock": 69908627,
         "feeExponent": 1,
         "groups": [
           {
@@ -2987,12 +2987,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8272171
+          "max": 8167407
         },
-        "feePerBlock": 8.518e-7,
+        "feePerBlock": 0.0000012625,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69686903,
+        "accLastUpdatedBlock": 69879172,
         "feeExponent": 1,
         "groups": [
           {
@@ -3047,10 +3047,10 @@
           "short": 0,
           "max": 11004580
         },
-        "feePerBlock": 3.861e-7,
+        "feePerBlock": 4.1e-7,
         "accFeeLong": 6.02e-7,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69733995,
+        "accLastUpdatedBlock": 69927097,
         "feeExponent": 1,
         "groups": [
           {
@@ -3103,12 +3103,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8551074
+          "max": 8488469
         },
-        "feePerBlock": 0.0000108327,
+        "feePerBlock": 0.0000130638,
         "accFeeLong": 0.000610187,
         "accFeeShort": 0.0005106331,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -3127,12 +3127,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9307994
+          "max": 9545492
         },
-        "feePerBlock": 0.0000088147,
+        "feePerBlock": 0.000008134,
         "accFeeLong": 0.146157956,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69681978,
+        "accLastUpdatedBlock": 69855585,
         "feeExponent": 1,
         "groups": [
           {
@@ -3151,12 +3151,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8056529
+          "max": 8000362
         },
-        "feePerBlock": 0.0000147127,
+        "feePerBlock": 0.000015636,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69902197,
         "feeExponent": 1,
         "groups": [
           {
@@ -3175,12 +3175,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9352538
+          "max": 9364830
         },
-        "feePerBlock": 0.0000097151,
+        "feePerBlock": 0.0000085086,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69723621,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -3233,12 +3233,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8742824
+          "max": 8775528
         },
-        "feePerBlock": 0.0000174082,
+        "feePerBlock": 0.0000100112,
         "accFeeLong": 0.0000160497,
         "accFeeShort": 0.0003888418,
-        "accLastUpdatedBlock": 69718729,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -3291,12 +3291,12 @@
         "oi": {
           "long": 26229.056,
           "short": 0,
-          "max": 8423288
+          "max": 8649861
         },
-        "feePerBlock": 0.0000120019,
-        "accFeeLong": 0.0464979669,
+        "feePerBlock": 0.0000131439,
+        "accFeeLong": 0.0508957714,
         "accFeeShort": 0.0003567322,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -3315,12 +3315,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 47911040
+          "max": 46685786
         },
-        "feePerBlock": 4.348e-7,
+        "feePerBlock": 4.291e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": [
           {
@@ -3339,12 +3339,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 50017332
+          "max": 50460943
         },
-        "feePerBlock": 3.378e-7,
+        "feePerBlock": 3.721e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -3363,12 +3363,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 65820185
+          "max": 66915201
         },
-        "feePerBlock": 1.67e-7,
+        "feePerBlock": 1.591e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69842791,
         "feeExponent": 1,
         "groups": [
           {
@@ -3389,10 +3389,10 @@
           "short": 0,
           "max": 51659622
         },
-        "feePerBlock": 3.296e-7,
+        "feePerBlock": 2.302e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69675320,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": [
           {
@@ -3411,12 +3411,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 51759348
+          "max": 52881745
         },
-        "feePerBlock": 2.168e-7,
+        "feePerBlock": 2.462e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69915652,
         "feeExponent": 1,
         "groups": [
           {
@@ -3435,12 +3435,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 60664068
+          "max": 63216037
         },
-        "feePerBlock": 1.721e-7,
+        "feePerBlock": 2.489e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69908627,
         "feeExponent": 1,
         "groups": [
           {
@@ -3459,12 +3459,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 39734516
+          "max": 39194132
         },
-        "feePerBlock": 6.388e-7,
+        "feePerBlock": 7.375e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69713717,
+        "accLastUpdatedBlock": 69906331,
         "feeExponent": 1,
         "groups": [
           {
@@ -3483,12 +3483,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 34522173
+          "max": 34524019
         },
-        "feePerBlock": 8.965e-7,
+        "feePerBlock": 8.97e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69639131,
+        "accLastUpdatedBlock": 69881429,
         "feeExponent": 1,
         "groups": [
           {
@@ -3507,12 +3507,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 58798891
+          "max": 59130071
         },
-        "feePerBlock": 2.675e-7,
+        "feePerBlock": 2.105e-7,
         "accFeeLong": 9e-10,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69913361,
         "feeExponent": 1,
         "groups": [
           {
@@ -3531,12 +3531,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 54988299
+          "max": 53155306
         },
-        "feePerBlock": 2.99e-7,
+        "feePerBlock": 2.953e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69913361,
         "feeExponent": 1,
         "groups": [
           {
@@ -3555,12 +3555,12 @@
         "oi": {
           "long": 244.00101,
           "short": 0,
-          "max": 37269206
+          "max": 36028571
         },
-        "feePerBlock": 7.997e-7,
-        "accFeeLong": 0.0000010453,
+        "feePerBlock": 9.199e-7,
+        "accFeeLong": 0.0000021634,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69675320,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -3579,12 +3579,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 32086664
+          "max": 31802808
         },
-        "feePerBlock": 0.0000011874,
+        "feePerBlock": 0.0000010828,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69728830,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": [
           {
@@ -3603,12 +3603,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 55775597
+          "max": 57277150
         },
-        "feePerBlock": 2.404e-7,
+        "feePerBlock": 2.863e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -3627,12 +3627,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 38184407
+          "max": 37906067
         },
-        "feePerBlock": 7.215e-7,
+        "feePerBlock": 8.204e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69739271,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -3651,12 +3651,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 32142815
+          "max": 32195016
         },
-        "feePerBlock": 0.0000010857,
+        "feePerBlock": 9.516e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69677524,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": [
           {
@@ -3675,12 +3675,12 @@
         "oi": {
           "long": 0.000648,
           "short": 0,
-          "max": 43265730
+          "max": 42922437
         },
-        "feePerBlock": 5.32e-7,
+        "feePerBlock": 5.763e-7,
         "accFeeLong": 0.0287744916,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69728830,
+        "accLastUpdatedBlock": 69893497,
         "feeExponent": 1,
         "groups": []
       },
@@ -3688,12 +3688,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 34439333
+          "max": 34600236
         },
-        "feePerBlock": 8.731e-7,
+        "feePerBlock": 7.629e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69663244,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": []
       },
@@ -3701,12 +3701,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 40776021
+          "max": 40728273
         },
-        "feePerBlock": 4.276e-7,
+        "feePerBlock": 4.066e-7,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69881429,
         "feeExponent": 1,
         "groups": []
       },
@@ -3714,12 +3714,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7795382
+          "max": 7880217
         },
-        "feePerBlock": 0.0000155897,
+        "feePerBlock": 0.0000162438,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -3738,12 +3738,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7944216
+          "max": 7613199.395
         },
-        "feePerBlock": 0.0000150875,
+        "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -3762,12 +3762,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8085733
+          "max": 8316123
         },
-        "feePerBlock": 0.0000132462,
+        "feePerBlock": 0.0000141051,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69723621,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -3820,12 +3820,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7581414
+          "max": 7853483
         },
-        "feePerBlock": 0.0000133285,
+        "feePerBlock": 0.0000133366,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69681978,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -3844,12 +3844,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8983927
+          "max": 8693282
         },
-        "feePerBlock": 0.0000097556,
+        "feePerBlock": 0.0000096389,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69721169,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -3868,12 +3868,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6653933.0475
+          "max": 6502023.345
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0.0001880302,
         "accFeeShort": 0.0073872264,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -3892,12 +3892,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8700043
+          "max": 9181562
         },
-        "feePerBlock": 0.0000118775,
+        "feePerBlock": 0.000009419,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69864170,
         "feeExponent": 1,
         "groups": [
           {
@@ -3916,12 +3916,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 3916615
+          "max": 4129068
         },
-        "feePerBlock": 0.0000124192,
+        "feePerBlock": 0.000013096,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -3940,12 +3940,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8910980
+          "max": 9047505
         },
-        "feePerBlock": 0.00001328,
+        "feePerBlock": 0.0000141252,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69866361,
         "feeExponent": 1,
         "groups": [
           {
@@ -3964,36 +3964,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9233323
-        },
-        "feePerBlock": 0.00001859,
-        "accFeeLong": 0,
-        "accFeeShort": 0,
-        "accLastUpdatedBlock": 69635128,
-        "feeExponent": 1,
-        "groups": [
-          {
-            "groupIndex": 2,
-            "block": 34343106,
-            "initialAccFeeLong": 0,
-            "initialAccFeeShort": 0,
-            "prevGroupAccFeeLong": 0,
-            "prevGroupAccFeeShort": 0,
-            "pairAccFeeLong": 0,
-            "pairAccFeeShort": 0
-          }
-        ]
-      },
-      {
-        "oi": {
-          "long": 0,
-          "short": 0,
-          "max": 8141526.6855
+          "max": 8849845.5075
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -4012,12 +3988,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9272098
+          "max": 8114859.435
         },
-        "feePerBlock": 0.0000093216,
+        "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69635128,
+        "accLastUpdatedBlock": 69913361,
         "feeExponent": 1,
         "groups": [
           {
@@ -4036,12 +4012,36 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8452717.53
+          "max": 9274394
+        },
+        "feePerBlock": 0.0000090584,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69862012,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343106,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 8464667.2
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0.0076080442,
         "accFeeShort": 0.1464442789,
-        "accLastUpdatedBlock": 69670894,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -4060,12 +4060,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7381726.195
+          "max": 7353985
         },
-        "feePerBlock": 0.0000187666,
+        "feePerBlock": 0.0000179644,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69677524,
+        "accLastUpdatedBlock": 69927097,
         "feeExponent": 1,
         "groups": [
           {
@@ -4084,12 +4084,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8967043
+          "max": 9012871
         },
-        "feePerBlock": 0.0000102877,
+        "feePerBlock": 0.0000089608,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -4108,12 +4108,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7508324
+          "max": 7204841.61
         },
-        "feePerBlock": 0.0000152624,
+        "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -4132,12 +4132,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7477911.9375
+          "max": 7698428.55
         },
-        "feePerBlock": 0.0000143888,
+        "feePerBlock": 0.0000175689,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69918194,
         "feeExponent": 1,
         "groups": [
           {
@@ -4156,12 +4156,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8109616
+          "max": 8066682
         },
-        "feePerBlock": 0.0000136562,
+        "feePerBlock": 0.0000133558,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -4214,12 +4214,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8453185.5
+          "max": 8437970.3
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69633157,
+        "accLastUpdatedBlock": 69886212,
         "feeExponent": 1,
         "groups": [
           {
@@ -4238,12 +4238,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9386923
+          "max": 8829609
         },
-        "feePerBlock": 0.0000113523,
+        "feePerBlock": 0.0000124485,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -4262,12 +4262,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7393743
+          "max": 7457046.85
         },
-        "feePerBlock": 0.0000176818,
+        "feePerBlock": 0.0000163066,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -4310,12 +4310,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9635297
+          "max": 9386802
         },
-        "feePerBlock": 0.0000081839,
+        "feePerBlock": 0.0000094635,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69849588,
         "feeExponent": 1,
         "groups": [
           {
@@ -4334,12 +4334,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8066365.7635
+          "max": 7317968.27025
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69718729,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -4358,12 +4358,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7772448.2275
+          "max": 7777609.15
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69675320,
+        "accLastUpdatedBlock": 69893497,
         "feeExponent": 1,
         "groups": [
           {
@@ -4416,12 +4416,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8136713
+          "max": 7729877.35
         },
-        "feePerBlock": 0.0000181854,
+        "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69578732,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -4464,12 +4464,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7394873
+          "max": 7648329
         },
-        "feePerBlock": 0.0000151961,
+        "feePerBlock": 0.0000164179,
         "accFeeLong": 0.0010361878,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -4488,12 +4488,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8306038
+          "max": 7880323.15
         },
-        "feePerBlock": 0.0000149465,
+        "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0.0269805591,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -4546,12 +4546,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8673875
+          "max": 8673860
         },
-        "feePerBlock": 0.0000131259,
+        "feePerBlock": 0.0000120436,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69645199,
+        "accLastUpdatedBlock": 69864170,
         "feeExponent": 1,
         "groups": [
           {
@@ -4570,12 +4570,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8412573
+          "max": 8461330
         },
-        "feePerBlock": 0.0000173243,
+        "feePerBlock": 0.000016191,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -4628,12 +4628,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8779271
+          "max": 9048494
         },
-        "feePerBlock": 0.0000108837,
+        "feePerBlock": 0.0000103028,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -4652,12 +4652,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8682691.25
+          "max": 8726419.75
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69790846,
         "feeExponent": 1,
         "groups": [
           {
@@ -4676,12 +4676,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9091061
+          "max": 8466750.55
         },
-        "feePerBlock": 0.0000124113,
+        "feePerBlock": 0.0000142455,
         "accFeeLong": 0,
         "accFeeShort": 0.0001654136,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -4700,12 +4700,12 @@
         "oi": {
           "long": 5789.293176,
           "short": 0,
-          "max": 8954608
+          "max": 9223827.4
         },
-        "feePerBlock": 0.00001522,
-        "accFeeLong": 0.0501521099,
+        "feePerBlock": 0.0000160845,
+        "accFeeLong": 0.0513273044,
         "accFeeShort": 0.00374521,
-        "accLastUpdatedBlock": 69723621,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -4724,12 +4724,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7468969
+          "max": 6956859.5
         },
-        "feePerBlock": 0.0000189713,
+        "feePerBlock": 0.0000141916,
         "accFeeLong": 0.0000078173,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -4748,12 +4748,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9395749
+          "max": 9441430
         },
-        "feePerBlock": 0.0000100553,
+        "feePerBlock": 0.0000087877,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -4806,12 +4806,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6632086
+          "max": 6570341.55
         },
-        "feePerBlock": 0.0000144532,
+        "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0.0373084389,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69893497,
         "feeExponent": 1,
         "groups": [
           {
@@ -4830,12 +4830,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9310626
+          "max": 9298977
         },
-        "feePerBlock": 0.0000104691,
+        "feePerBlock": 0.0000085762,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -4854,12 +4854,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9089548
+          "max": 9070827
         },
-        "feePerBlock": 0.000011133,
+        "feePerBlock": 0.0000113121,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69635128,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -4878,12 +4878,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9142486
+          "max": 9082247
         },
-        "feePerBlock": 0.0000107605,
+        "feePerBlock": 0.0000108178,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69906331,
         "feeExponent": 1,
         "groups": [
           {
@@ -4902,12 +4902,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7757203
+          "max": 7856591
         },
-        "feePerBlock": 0.0000144881,
+        "feePerBlock": 0.0000185156,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69723621,
+        "accLastUpdatedBlock": 69790846,
         "feeExponent": 1,
         "groups": [
           {
@@ -4926,12 +4926,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7801411
+          "max": 7628541
         },
-        "feePerBlock": 0.0000133813,
+        "feePerBlock": 0.000012083,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -4950,12 +4950,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8808853
+          "max": 8741386
         },
-        "feePerBlock": 0.0000107027,
+        "feePerBlock": 0.0000099719,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69723621,
+        "accLastUpdatedBlock": 69891185,
         "feeExponent": 1,
         "groups": [
           {
@@ -4974,12 +4974,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8290797
+          "max": 7916957
         },
-        "feePerBlock": 0.0000133256,
+        "feePerBlock": 0.0000120076,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -5032,12 +5032,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9428634
+          "max": 8724948.2
         },
-        "feePerBlock": 0.0000106447,
+        "feePerBlock": 0.0000107174,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -5056,12 +5056,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8753767
+          "max": 8745588
         },
-        "feePerBlock": 0.000010284,
+        "feePerBlock": 0.0000093367,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69635128,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -5148,12 +5148,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7004608
+          "max": 7261198
         },
-        "feePerBlock": 0.0000169879,
+        "feePerBlock": 0.0000145992,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -5172,12 +5172,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7703258.065
+          "max": 8090517
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69769461,
         "feeExponent": 1,
         "groups": [
           {
@@ -5196,12 +5196,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8333055
+          "max": 8579144
         },
-        "feePerBlock": 0.0000128535,
+        "feePerBlock": 0.0000116732,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69864170,
         "feeExponent": 1,
         "groups": [
           {
@@ -5222,10 +5222,10 @@
           "short": 0,
           "max": 12259650
         },
-        "feePerBlock": 0.0000013238,
+        "feePerBlock": 0.00000135,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69718729,
+        "accLastUpdatedBlock": 69837708,
         "feeExponent": 1,
         "groups": [
           {
@@ -5244,12 +5244,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 25314373
+          "max": 25427688
         },
-        "feePerBlock": 9.772e-7,
+        "feePerBlock": 0.0000012881,
         "accFeeLong": 1.8e-9,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69668671,
+        "accLastUpdatedBlock": 69855585,
         "feeExponent": 1,
         "groups": [
           {
@@ -5268,12 +5268,12 @@
         "oi": {
           "long": 0,
           "short": 0.000074,
-          "max": 22040921
+          "max": 21819465
         },
-        "feePerBlock": 0.0000020657,
+        "feePerBlock": 0.0000024169,
         "accFeeLong": 0,
         "accFeeShort": 0.0481894519,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -5326,12 +5326,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 4020156.8
+          "max": 4011135.6
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -5350,12 +5350,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7776022
+          "max": 7591713.15
         },
-        "feePerBlock": 0.0000147584,
+        "feePerBlock": 0.0000136962,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -5374,12 +5374,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7464786
+          "max": 7198586.05
         },
-        "feePerBlock": 0.0000190259,
+        "feePerBlock": 0.000014709,
         "accFeeLong": 0,
         "accFeeShort": 0.0140249929,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -5398,12 +5398,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6266678
+          "max": 6583525.4125
         },
-        "feePerBlock": 0.0000171709,
+        "feePerBlock": 0.0000182102,
         "accFeeLong": 0.0788281487,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69747864,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -5422,12 +5422,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9196178
+          "max": 9288332.4
         },
-        "feePerBlock": 0.0000087859,
+        "feePerBlock": 0.0000095641,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69635128,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -5446,12 +5446,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7526524
+          "max": 7364564
         },
-        "feePerBlock": 0.0000171954,
+        "feePerBlock": 0.0000141576,
         "accFeeLong": 0,
         "accFeeShort": 0.0286736888,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -5470,12 +5470,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7130858
+          "max": 7087522
         },
-        "feePerBlock": 0.0000145946,
+        "feePerBlock": 0.0000164748,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69927097,
         "feeExponent": 1,
         "groups": [
           {
@@ -5494,12 +5494,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8294478
+          "max": 8649455
         },
-        "feePerBlock": 0.0000139694,
+        "feePerBlock": 0.0000130496,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -5518,12 +5518,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8516231
+          "max": 8048518
         },
-        "feePerBlock": 0.0000132478,
+        "feePerBlock": 0.0000151782,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -5542,12 +5542,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8121981
+          "max": 8430619
         },
-        "feePerBlock": 0.0000158599,
+        "feePerBlock": 0.0000125144,
         "accFeeLong": 0,
         "accFeeShort": 0.0284675989,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69864170,
         "feeExponent": 1,
         "groups": [
           {
@@ -5566,12 +5566,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6728420
+          "max": 7087680
         },
-        "feePerBlock": 0.0000142999,
+        "feePerBlock": 0.0000153932,
         "accFeeLong": 4.2e-9,
         "accFeeShort": 0.0000392928,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69893497,
         "feeExponent": 1,
         "groups": [
           {
@@ -5590,12 +5590,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8802877
+          "max": 8847579
         },
-        "feePerBlock": 0.0000117996,
+        "feePerBlock": 0.0000120457,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69895755,
         "feeExponent": 1,
         "groups": [
           {
@@ -5614,12 +5614,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8139395
+          "max": 8293721
         },
-        "feePerBlock": 0.000014779,
+        "feePerBlock": 0.0000117834,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69864170,
         "feeExponent": 1,
         "groups": [
           {
@@ -5638,12 +5638,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7454347
+          "max": 7237149
         },
-        "feePerBlock": 0.0000120761,
+        "feePerBlock": 0.00001745,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69886212,
         "feeExponent": 1,
         "groups": [
           {
@@ -5662,12 +5662,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6364801.83
+          "max": 6351088.3425
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0.0259745764,
         "accFeeShort": 0.0017648877,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -5686,12 +5686,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7925136
+          "max": 7994644
         },
-        "feePerBlock": 0.0000137162,
+        "feePerBlock": 0.0000138625,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69675320,
+        "accLastUpdatedBlock": 69857581,
         "feeExponent": 1,
         "groups": [
           {
@@ -5710,12 +5710,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7814391
+          "max": 7909628
         },
-        "feePerBlock": 0.0000189138,
+        "feePerBlock": 0.0000117028,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69679739,
+        "accLastUpdatedBlock": 69920456,
         "feeExponent": 1,
         "groups": [
           {
@@ -5734,36 +5734,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6716940
-        },
-        "feePerBlock": 0.0000169811,
-        "accFeeLong": 0,
-        "accFeeShort": 0,
-        "accLastUpdatedBlock": 69750512,
-        "feeExponent": 1,
-        "groups": [
-          {
-            "groupIndex": 2,
-            "block": 34343138,
-            "initialAccFeeLong": 0,
-            "initialAccFeeShort": 0,
-            "prevGroupAccFeeLong": 0,
-            "prevGroupAccFeeShort": 0,
-            "pairAccFeeLong": 0,
-            "pairAccFeeShort": 0
-          }
-        ]
-      },
-      {
-        "oi": {
-          "long": 0,
-          "short": 0,
-          "max": 6398277.36
+          "max": 6320022.4875
         },
         "feePerBlock": 0.0000190259,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69728830,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -5782,12 +5758,36 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 9534663
+          "max": 6521526
         },
-        "feePerBlock": 0.0000078485,
+        "feePerBlock": 0.000018997,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69920456,
+        "feeExponent": 1,
+        "groups": [
+          {
+            "groupIndex": 2,
+            "block": 34343138,
+            "initialAccFeeLong": 0,
+            "initialAccFeeShort": 0,
+            "prevGroupAccFeeLong": 0,
+            "prevGroupAccFeeShort": 0,
+            "pairAccFeeLong": 0,
+            "pairAccFeeShort": 0
+          }
+        ]
+      },
+      {
+        "oi": {
+          "long": 0,
+          "short": 0,
+          "max": 10326024
+        },
+        "feePerBlock": 0.0000073401,
+        "accFeeLong": 0,
+        "accFeeShort": 0,
+        "accLastUpdatedBlock": 69862012,
         "feeExponent": 1,
         "groups": [
           {
@@ -5806,12 +5806,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7201524
+          "max": 6917733
         },
-        "feePerBlock": 0.0000186819,
+        "feePerBlock": 0.000016458,
         "accFeeLong": 0.0004284255,
         "accFeeShort": 0.0003155326,
-        "accLastUpdatedBlock": 69750512,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -5830,12 +5830,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7543893
+          "max": 7593148
         },
-        "feePerBlock": 0.000017046,
+        "feePerBlock": 0.0000180746,
         "accFeeLong": 0.0000370952,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69859816,
         "feeExponent": 1,
         "groups": [
           {
@@ -5854,12 +5854,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8159497
+          "max": 8205929
         },
-        "feePerBlock": 0.0000114332,
+        "feePerBlock": 0.0000167592,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69851570,
         "feeExponent": 1,
         "groups": [
           {
@@ -5878,12 +5878,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7427837
+          "max": 7656439.5
         },
-        "feePerBlock": 0.0000162287,
+        "feePerBlock": 0.0000135271,
         "accFeeLong": 0.0032264061,
         "accFeeShort": 0.0011798009,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69908627,
         "feeExponent": 1,
         "groups": [
           {
@@ -5902,12 +5902,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6933598
+          "max": 7091789.9
         },
-        "feePerBlock": 0.0000184872,
+        "feePerBlock": 0.0000176353,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69924830,
         "feeExponent": 1,
         "groups": [
           {
@@ -5926,12 +5926,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8735526
+          "max": 8401874
         },
-        "feePerBlock": 0.0000102388,
+        "feePerBlock": 0.0000125863,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69728830,
+        "accLastUpdatedBlock": 69904250,
         "feeExponent": 1,
         "groups": [
           {
@@ -5950,12 +5950,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7615425
+          "max": 7649962
         },
-        "feePerBlock": 0.000014734,
+        "feePerBlock": 0.0000133991,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69726243,
+        "accLastUpdatedBlock": 69900198,
         "feeExponent": 1,
         "groups": [
           {
@@ -5974,12 +5974,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8291353
+          "max": 8668355
         },
-        "feePerBlock": 0.0000122633,
+        "feePerBlock": 0.0000115855,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69891185,
         "feeExponent": 1,
         "groups": [
           {
@@ -5998,12 +5998,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7219004
+          "max": 7461641
         },
-        "feePerBlock": 0.0000155941,
+        "feePerBlock": 0.0000171709,
         "accFeeLong": 0.0010221005,
         "accFeeShort": 0.0001138866,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69879172,
         "feeExponent": 1,
         "groups": [
           {
@@ -6022,12 +6022,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 8250070
+          "max": 8173396.25
         },
-        "feePerBlock": 0.0000133354,
+        "feePerBlock": 0.0000153302,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69723621,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -6046,12 +6046,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 6671799
+          "max": 6467747
         },
-        "feePerBlock": 0.0000157716,
+        "feePerBlock": 0.0000182669,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69672989,
+        "accLastUpdatedBlock": 69906331,
         "feeExponent": 1,
         "groups": [
           {
@@ -6070,12 +6070,12 @@
         "oi": {
           "long": 0,
           "short": 0,
-          "max": 7215186
+          "max": 7218181.7
         },
-        "feePerBlock": 0.0000181979,
+        "feePerBlock": 0.0000163782,
         "accFeeLong": 0,
         "accFeeShort": 0,
-        "accLastUpdatedBlock": 69742220,
+        "accLastUpdatedBlock": 69897992,
         "feeExponent": 1,
         "groups": [
           {
@@ -6094,7 +6094,7 @@
     "openInterest": {
       "long": 0.0000014918995965,
       "short": 5.4043778599999996e-8,
-      "max": 0.0034953397
+      "max": 0.0035066723
     },
     "fee": {
       "openFeeP": 0.000045,

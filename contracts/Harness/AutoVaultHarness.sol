@@ -4,11 +4,12 @@ pragma solidity ^0.8.24;
 import "hardhat/console.sol";
 
 import "../AutoVault.sol";
+import "../Interfaces/ERC20.sol";
 import "../Libraries/TransientPrimities.sol";
 
 contract AutoVaultHarness is AutoVault {
     constructor(
-        IERC20 __asset,
+        IERC20Metadata __asset,
         uint256 startingBalance,
         address factoryOwner,
         address _vaultManager,
@@ -19,17 +20,26 @@ contract AutoVaultHarness is AutoVault {
         address _oracleAddress,
         address _gainsAddy
     ) {
+        AutoVault.StartInfo memory startInfo = AutoVault.StartInfo({
+            factoryOwner: owner(),
+            vaultManager: msg.sender,
+            chainLinkToken: _chainLinkToken,
+            oracleAddress: _oracleAddress,
+            gainsAddress: _gainsAddy
+        });
+
         initialize(
             __asset,
+            _buildOperatorRequest(
+                bytes32(bytes("")),
+                AutoVault.preformAction.selector
+            ),
             startingBalance,
-            factoryOwner,
-            _vaultManager,
+            startInfo,
+            10,
             _name,
             _symbol,
-            _equations,
-            _chainLinkToken,
-            _oracleAddress,
-            _gainsAddy
+            _equations
         );
     }
 
@@ -40,10 +50,11 @@ contract AutoVaultHarness is AutoVault {
     function call_executeAction(
         uint32 index,
         uint64 openPrice,
+        uint256 feeMultiplier,
         uint256 action,
         uint256 strategy
     ) external {
-        super.executeAction(index, openPrice, action, strategy);
+        super.executeAction(index, openPrice, feeMultiplier, action, strategy);
     }
 
     function call_extractTrade(
@@ -62,11 +73,11 @@ contract AutoVaultHarness is AutoVault {
         return super._exitFeeBasisPoints(); // replace with e.g. 100 for 1%
     }
 
-    function call_entryFeeRecipient() external view returns (address) {
+    function call_entryFeeRecipient() external view returns (address, address) {
         return super._entryFeeRecipient();
     }
 
-    function call_exitFeeRecipient() external view returns (address) {
+    function call_exitFeeRecipient() external view returns (address, address) {
         return super._exitFeeRecipient();
     }
 
@@ -76,5 +87,13 @@ contract AutoVaultHarness is AutoVault {
 
     function getAddy() public view returns (address) {
         return TransientPrimitivesLib.get(currentUser);
+    }
+
+    function getTrades() public view returns (Trade[] memory) {
+        return GainsNetwork.getTrades(address(this));
+    }
+
+    function assetBalanceOfVault() public view returns (uint256) {
+        return ERC20(asset()).balanceOf(address(this));
     }
 }

@@ -115,7 +115,7 @@ async function main() {
 
   const trades = await Gains.getTrades(accounts[0].address);
   const tradeInfos = await Gains.getTradeInfos(accounts[0].address);
-  const currentIndex = 3;
+  const currentIndex = 4;
   const currentTrade = trades[currentIndex];
 
   const trade = {
@@ -287,12 +287,17 @@ async function main() {
   } as GetPnlContext;
 
   // Get the latest price from the WebSocket connection
-  const price = priceUpdater.getPrice(trade.pairIndex.toString());
+  let price = undefined;
 
-  if (price === undefined) {
-    console.log(`No price available for pair index ${trade.pairIndex}`);
-    return;
+  while (price == undefined) {
+    price = priceUpdater.getPrice(trade.pairIndex.toString());
+    await new Promise((f) => setTimeout(f, 500));
   }
+
+  // if (price === undefined) {
+  //   console.log(`No price available for pair index ${trade.pairIndex}`);
+  //   return;
+  // }
   const feeA = await getBorrowingFee(
     trade.collateralAmount * trade.leverage,
     trade.pairIndex,

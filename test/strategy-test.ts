@@ -23,7 +23,7 @@ import { trace } from "console";
 
 dotenv.config();
 
-describe("Strategy Tests ", function () {
+describe("Strategy Tests hyt", function () {
   let accounts: SignerWithAddress[];
   let deployer: SignerWithAddress;
   let user: SignerWithAddress;
@@ -57,7 +57,7 @@ describe("Strategy Tests ", function () {
       user = deployer;
     }
 
-    await deployments.fixture(["Harness"]);
+    await deployments.fixture(["Test"]);
 
     // test = (await ethers.getContractAt(
     //   "Test",
@@ -147,7 +147,7 @@ describe("Strategy Tests ", function () {
       18,
       15,
       1,
-      1,
+      2,
       0,
       new Decimal(70).mul(decimals).toFixed(),
       0,
@@ -181,10 +181,10 @@ describe("Strategy Tests ", function () {
       new Decimal(70).mul(decimals).toFixed(),
     ];
 
-    expect(await impersonateOracleFulfill(autoVault, requestID, input)).to.emit(
-      FakeGainsNetwork,
-      "OpenTradeCalled"
-    );
+    expect(
+      await impersonateOracleFulfill(autoVault, requestID, input, 0)
+    ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
+
     requestID = await autoVault.executeStrategy.staticCall(0);
     const tx4 = await autoVault.executeStrategy(0);
     await tx4.wait();
@@ -192,8 +192,8 @@ describe("Strategy Tests ", function () {
     input = [currentPrice.toFixed(), new Decimal(60).mul(decimals).toFixed()];
 
     await expect(
-      impersonateOracleFulfill(autoVault, requestID, input)
-    ).to.be.rejectedWith("InvalidAction()");
+      impersonateOracleFulfill(autoVault, requestID, input, 0)
+    ).to.be.rejectedWith("NoAction()");
   });
   it("RSI-based strategy works as expected ", async () => {
     const initialAmount = await getAmount(USDC, "10");
@@ -258,7 +258,7 @@ describe("Strategy Tests ", function () {
       18, //if
       14, // less
       1, //rsi
-      1,
+      2,
       0, //30
       new Decimal(30).mul(decimals).toFixed(),
       0,
@@ -266,7 +266,7 @@ describe("Strategy Tests ", function () {
       18,
       15,
       1,
-      1,
+      2,
       0,
       new Decimal(70).mul(decimals).toFixed(),
       0,
@@ -275,12 +275,12 @@ describe("Strategy Tests ", function () {
       16,
       15,
       1,
-      1,
+      2,
       0,
       new Decimal(40).mul(decimals).toFixed(),
       14,
       1,
-      1,
+      2,
       0,
       new Decimal(60).mul(decimals).toFixed(),
       0,
@@ -311,7 +311,7 @@ describe("Strategy Tests ", function () {
     console.log("Made it here");
     const currentPrice = new Decimal(60000).mul(decimals).toFixed();
     let input = [currentPrice, new Decimal(25).mul(decimals).toFixed()];
-    expect(await impersonateOracleFulfill(autoVault, requestID, input))
+    expect(await impersonateOracleFulfill(autoVault, requestID, input, 0))
       .to.emit(FakeGainsNetwork, "OpenTradeCalled")
       .withArgs(isLong);
 
@@ -319,16 +319,15 @@ describe("Strategy Tests ", function () {
     requestID = await autoVault.executeStrategy.staticCall(0);
     await autoVault.executeStrategy(0);
     input = [currentPrice, new Decimal(50).mul(decimals).toFixed()];
-    expect(await impersonateOracleFulfill(autoVault, requestID, input)).to.emit(
-      FakeGainsNetwork,
-      "CloseTradeMarketCalled"
-    );
+    expect(
+      await impersonateOracleFulfill(autoVault, requestID, input, 0)
+    ).to.emit(FakeGainsNetwork, "CloseTradeMarketCalled");
 
     // Test case 3: RSI = 75 (Should open short position)
     requestID = await autoVault.executeStrategy.staticCall(0);
     await autoVault.executeStrategy(0);
     input = [currentPrice, new Decimal(75).mul(decimals).toFixed()];
-    expect(await impersonateOracleFulfill(autoVault, requestID, input))
+    expect(await impersonateOracleFulfill(autoVault, requestID, input, 0))
       .to.emit(FakeGainsNetwork, "OpenTradeCalled")
       .withArgs(isShort);
 
@@ -336,26 +335,25 @@ describe("Strategy Tests ", function () {
     requestID = await autoVault.executeStrategy.staticCall(0);
     await autoVault.executeStrategy(0);
     input = [currentPrice, new Decimal(50).mul(decimals).toFixed()];
-    expect(await impersonateOracleFulfill(autoVault, requestID, input)).to.emit(
-      FakeGainsNetwork,
-      "CloseTradeMarketCalled"
-    );
+    expect(
+      await impersonateOracleFulfill(autoVault, requestID, input, 0)
+    ).to.emit(FakeGainsNetwork, "CloseTradeMarketCalled");
 
     // Test case 5: RSI = 35 (Should do nothing)
     requestID = await autoVault.executeStrategy.staticCall(0);
     await autoVault.executeStrategy(0);
     input = [currentPrice, new Decimal(35).mul(decimals).toFixed()];
     await expect(
-      impersonateOracleFulfill(autoVault, requestID, input)
-    ).to.be.rejectedWith("InvalidAction()");
+      impersonateOracleFulfill(autoVault, requestID, input, 0)
+    ).to.be.rejectedWith("NoAction()");
 
     // Test case 6: RSI = 50 (Should do revert and not close)
     requestID = await autoVault.executeStrategy.staticCall(0);
     await autoVault.executeStrategy(0);
     input = [currentPrice, new Decimal(55).mul(decimals).toFixed()];
     await expect(
-      impersonateOracleFulfill(autoVault, requestID, input)
-    ).to.be.rejectedWith("Not Active");
+      impersonateOracleFulfill(autoVault, requestID, input, 0)
+    ).to.be.rejectedWith("StrategyNotActive");
   });
 });
 
@@ -373,4 +371,9 @@ function isLong(Trade: TradeStruct): boolean {
 function isShort(Trade: TradeStruct): boolean {
   if (Trade.long == false) return true;
   return false;
+}
+
+export function getAmountDec(amount: string, decimals: number): Decimal {
+  const x = new Decimal(10).pow(decimals);
+  return new Decimal(amount).mul(x);
 }

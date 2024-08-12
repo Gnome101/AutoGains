@@ -2,6 +2,7 @@
 import { network, deployments as hardhatDeployments, ethers } from "hardhat";
 import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import { verify } from "../utils/verify";
+import { Decimal } from "decimal.js";
 
 interface NamedAccounts {
   deployer: string;
@@ -21,7 +22,7 @@ module.exports = async function ({
   if (chainId == undefined) throw "No Chain ID!";
   const startInfo = contracts[chainId];
   log("------------------------------------------------------------");
-
+  console.log("Staring");
   const equation = await deploy("Equation", {
     from: deployer,
     log: true,
@@ -31,16 +32,14 @@ module.exports = async function ({
     args: [],
     log: true,
   });
-
   let args = [
     startInfo.OracleAddress,
     startInfo.ChainLinkToken,
     startInfo.GainsNetwork,
     AutoVaultMaster.address,
   ] as any[];
-
   // Deploy the Test contract and link the Equation library
-  const vaultFactory = await deploy("VaultFactory", {
+  const VaultFactory = await deploy("VaultFactory", {
     from: deployer,
     args: args,
     log: true,
@@ -48,27 +47,40 @@ module.exports = async function ({
       Equation: equation.address,
     },
   });
-  // if (chainId != 31337) {
-  //   log("Verifying...");
-  //   await verify(
-  //     vaultFactory.address,
-  //     args,
-  //     "contracts/VaultFactory:VaultFactory.sol"
-  //   );
-  // }
-
+  const vaultFactory = await ethers.getContractAt(
+    "VaultFactory",
+    VaultFactory.address
+  );
+  const tokens = [startInfo.DAI, startInfo.USDC, startInfo.WETH];
+  const amounts = [
+    getAmountDec("0.04", 18).toFixed(),
+    getAmountDec("0.04", 6).toFixed(),
+    getAmountDec("0.00002", 18).toFixed(),
+  ];
+  await vaultFactory.setStartingFees(tokens, amounts);
+  if (chainId != 31337) {
+    log("Verifying...");
+    await verify(
+      VaultFactory.address,
+      args,
+      "contracts/VaultFactory:VaultFactory.sol"
+    );
+  }
   const Helper = await deploy("Helper", {
     from: deployer,
     args: [],
     log: true,
   });
-  // if (chainId != 31337) {
-  //   log("Verifying...");
-  //   await verify(Helper.address, [], "contracts/Helper:Helper.sol");
-  // }
-
-  log(`VaultFactory deployed at ${vaultFactory.address}`);
+  if (chainId != 31337) {
+    log("Verifying...");
+    await verify(Helper.address, [], "contracts/Helper:Helper.sol");
+  }
+  log(`VaultFactory deployed at ${VaultFactory.address}`);
   log(`Helper deployed at ${Helper.address}`);
 };
 
 module.exports.tags = ["all", "Test", "Harness"];
+export function getAmountDec(amount: string, decimals: number): Decimal {
+  const x = new Decimal(10).pow(decimals);
+  return new Decimal(amount).mul(x);
+}

@@ -21,7 +21,7 @@ import { Decimal } from "decimal.js";
 import dotenv from "dotenv";
 import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 import { trace } from "console";
-
+import { toDecimal } from "./vault-test";
 dotenv.config();
 
 describe("Action Tests ", function () {
@@ -34,12 +34,16 @@ describe("Action Tests ", function () {
   let USDC: ERC20;
   let vaultAmount: Decimal;
   let FakeGainsNetwork: FakeGainsNetwork;
+  const SWAP_FEE = new Decimal(2_000);
+  const SWAP_FEE_SCALE = new Decimal(1_000_000);
+
   beforeEach(async () => {
     const chainID = network.config.chainId;
     if (chainID == undefined) throw "Cannot find chainID";
 
     accounts = (await ethers.getSigners()) as unknown as SignerWithAddress[]; // could also do with getNamedAccounts
     user = accounts[0];
+
     if (chainID == 31337) {
       await network.provider.request({
         method: "hardhat_impersonateAccount",
@@ -49,7 +53,8 @@ describe("Action Tests ", function () {
         "0x793448209Ef713CAe41437C7DaA219b59BEF1A4A"
       ); //Test account with money
     }
-    await deployments.fixture(["Harness"]);
+
+    await deployments.fixture(["Test"]);
     const helperContract = (await deployments.get("Helper")) as Deployment;
 
     Helper = (await ethers.getContractAt(
@@ -195,10 +200,17 @@ describe("Action Tests ", function () {
     const call = autoVaultHarness.call_executeAction(
       0,
       currentPrice.toFixed(),
+      SWAP_FEE_SCALE.toFixed(),
       longAciton,
       0
     );
-    const totalAssets = await USDC.balanceOf(autoVaultHarness.target);
+    const totalAssets = toDecimal(
+      await USDC.balanceOf(autoVaultHarness.target)
+    );
+
+    const swapFee = totalAssets
+      .mul(SWAP_FEE)
+      .dividedBy(SWAP_FEE_SCALE) as Decimal;
 
     const expectedTrade = [
       autoVaultHarness.target.toString(),
@@ -210,7 +222,7 @@ describe("Action Tests ", function () {
       collateralType,
       orderType,
       collateralPercent
-        .mul(totalAssets.toString())
+        .mul(totalAssets.sub(swapFee))
         .dividedBy("1000000")
         .toFixed(),
       openPricePercent
@@ -269,10 +281,17 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         longAciton,
         0
       );
-      const totalAssets = await USDC.balanceOf(autoVaultHarness.target);
+      const totalAssets = toDecimal(
+        await USDC.balanceOf(autoVaultHarness.target)
+      );
+
+      const swapFee = totalAssets
+        .mul(SWAP_FEE)
+        .dividedBy(SWAP_FEE_SCALE) as Decimal;
 
       const expectedTrade = [
         autoVaultHarness.target.toString(),
@@ -284,7 +303,7 @@ describe("Action Tests ", function () {
         collateralType,
         orderType,
         collateralPercent
-          .mul(totalAssets.toString())
+          .mul(totalAssets.sub(swapFee))
           .dividedBy("1000000")
           .toFixed(),
         openPricePercent
@@ -319,6 +338,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         updateSlAction,
         0
       );
@@ -341,6 +361,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         updateTpAction,
         0
       );
@@ -372,6 +393,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         updateOpenOrderAction,
         0
       );
@@ -407,6 +429,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         cancelOpenOrderAction,
         0
       );
@@ -424,6 +447,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         closeTradeMarketAction,
         0
       );
@@ -442,6 +466,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         updateLeverageAction,
         0
       );
@@ -464,6 +489,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         decreasePositionSizeAction,
         0
       );
@@ -491,6 +517,7 @@ describe("Action Tests ", function () {
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
+        SWAP_FEE_SCALE.toFixed(),
         increasePositionSizeAction,
         0
       );

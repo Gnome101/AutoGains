@@ -32,13 +32,7 @@ import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
  * by listening to said events. Other implementations of the EIP may not emit
  * these events, as it isn't required by the specification.
  */
-abstract contract ERC20 is
-    Context,
-    IERC20,
-    IERC20Metadata,
-    IERC20Errors,
-    Initializable
-{
+contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors, Initializable {
     mapping(address account => uint256) private _balances;
 
     mapping(address account => mapping(address spender => uint256))
@@ -195,6 +189,7 @@ abstract contract ERC20 is
      * NOTE: This function is not virtual, {_update} should be overridden instead.
      */
     function _transfer(address from, address to, uint256 value) internal {
+        _beforeTransfer(from, to);
         if (from == address(0)) {
             revert ERC20InvalidSender(address(0));
         }
@@ -352,4 +347,6 @@ abstract contract ERC20 is
             }
         }
     }
+
+    function _beforeTransfer(address from, address to) internal view virtual {}
 }
