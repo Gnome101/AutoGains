@@ -30,7 +30,7 @@ import { Sign } from "crypto";
 
 dotenv.config();
 
-describe("Vault Tests yuta", function () {
+describe("Vault Tests ", function () {
   let accounts: SignerWithAddress[];
   let otherUser: SignerWithAddress;
   let vaultCreator: SignerWithAddress;
@@ -236,7 +236,7 @@ describe("Vault Tests yuta", function () {
   describe("Vault Created ", function () {
     let autoVault: AutoVault;
     let otherAutoVault: AutoVault;
-    const decimals = new Decimal(10).pow(10);
+    const decimals = new Decimal(10).pow(18);
     beforeEach(async () => {
       const initalAmount = await getAmount(USDC, "10");
 
@@ -268,7 +268,7 @@ describe("Vault Tests yuta", function () {
         12000000,
         8000000
       );
-      const decimals = new Decimal(10).pow(10);
+      const decimals = new Decimal(10).pow(18);
 
       // if x1 >  70 then longAction else nothing
       const longStrategy = [
@@ -582,7 +582,7 @@ describe("Vault Tests yuta", function () {
         let requestID = await autoVault.executeStrategy.staticCall(0);
         const tx3 = await autoVault.executeStrategy(0);
         await tx3.wait();
-        const x = new Decimal(10).pow(10);
+        const x = new Decimal(10).pow(18);
         const currentPrice = new Decimal(60).mul(x);
         let input = [
           currentPrice.toFixed(),
@@ -590,7 +590,7 @@ describe("Vault Tests yuta", function () {
         ];
 
         expect(
-          await impersonateOracleFulfill(autoVault, requestID, input, 0)
+          await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
         ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
       });
       it("action should revert without getting collateral value ", async () => {
@@ -644,7 +644,7 @@ describe("Vault Tests yuta", function () {
               MIN_FEE
             );
           });
-          it("withdraw should work with minimal fee ", async () => {
+          it("withdraw should work with minimal fee awad  ", async () => {
             await vault_creator_withdraw(
               USDC,
               autoVault,
@@ -708,7 +708,7 @@ describe("Vault Tests yuta", function () {
             const input = [totalCollateral.toFixed()];
 
             await impersonateOracleDoVaultAction(
-              autoVault,
+              vaultFactory,
               requestID,
               input,
               Number(await USDC.decimals()),
@@ -885,7 +885,7 @@ describe("Vault Tests yuta", function () {
             const input = [totalCollateral.toFixed()];
 
             await impersonateOracleDoVaultAction(
-              autoVault,
+              vaultFactory,
               requestID,
               input,
               Number(await USDC.decimals()),
@@ -1061,7 +1061,7 @@ describe("Vault Tests yuta", function () {
             const input = [totalCollateral.toFixed()];
 
             await impersonateOracleDoVaultAction(
-              autoVault,
+              vaultFactory,
               requestID,
               input,
               Number(await USDC.decimals()),
@@ -1237,7 +1237,7 @@ describe("Vault Tests yuta", function () {
             const input = [totalCollateral.toFixed()];
 
             await impersonateOracleDoVaultAction(
-              autoVault,
+              vaultFactory,
               requestID,
               input,
               Number(await USDC.decimals()),
@@ -1467,7 +1467,7 @@ async function vault_creator_deposit(
   const input = [totalCollateral.toFixed()];
 
   await impersonateOracleDoVaultAction(
-    autoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await USDC.decimals()),
@@ -1553,7 +1553,7 @@ async function vault_creator_mint(
 
   const input = [totalCollateral.toFixed()];
   await impersonateOracleDoVaultAction(
-    autoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await USDC.decimals()),
@@ -1643,7 +1643,7 @@ async function vault_creator_withdraw(
   const input = [totalCollateral.toFixed()];
 
   await impersonateOracleDoVaultAction(
-    autoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await USDC.decimals()),
@@ -1753,7 +1753,7 @@ async function vault_creator_redeem(
   // console.log(`Total collateral before:`, totalCollateral);
 
   await impersonateOracleDoVaultAction(
-    autoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await USDC.decimals()),
@@ -1864,7 +1864,7 @@ async function other_user_deposit(
   const input = [totalCollateral.toFixed()];
   console.log("DE", await otherUSDC.decimals());
   await impersonateOracleDoVaultAction(
-    otherAutoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await otherUSDC.decimals()),
@@ -1954,7 +1954,7 @@ async function other_user_mint(
 
   const input = [totalCollateral.toFixed()];
   await impersonateOracleDoVaultAction(
-    otherAutoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await otherUSDC.decimals()),
@@ -2047,7 +2047,7 @@ async function other_user_withdraw(
   const input = [totalCollateral.toFixed()];
 
   await impersonateOracleDoVaultAction(
-    otherAutoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await otherUSDC.decimals()),
@@ -2160,7 +2160,7 @@ async function other_user_redeem(
   // console.log(`Total collateral before:`, totalCollateral);
 
   await impersonateOracleDoVaultAction(
-    otherAutoVault,
+    vaultFactory,
     requestID,
     input,
     Number(await otherUSDC.decimals()),

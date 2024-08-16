@@ -14,6 +14,14 @@ import { contracts } from "../Addresses"; // assuming Addresses.ts exports an ob
 
 import { Decimal } from "decimal.js";
 import dotenv from "dotenv";
+import { Addressable, Contract, Filter, Provider, TopicFilter } from "ethers";
+import axios, { AxiosRequestConfig, Method } from "axios";
+import { impersonateOracleFulfill } from "../utils/AutoGains";
+import { DEFAULT_CIPHERS } from "tls";
+
+import { PriceUpdater } from "../scripts/readTrades";
+import { verify } from "../utils/verify";
+import { getStrategies } from "./getStrategies";
 dotenv.config();
 
 describe("Strategy Tests ", function () {
@@ -50,7 +58,7 @@ describe("Strategy Tests ", function () {
       user = deployer;
     }
 
-    // await deployments.fixture(["all"]);
+    await deployments.fixture(["all"]);
 
     const factoryContract = (await deployments.get(
       "VaultFactory"
@@ -61,6 +69,7 @@ describe("Strategy Tests ", function () {
       factoryContract.address.toString(),
       user
     )) as unknown as VaultFactory;
+
     GainsNetwork = (await ethers.getContractAt(
       "IGainsNetwork",
       contracts[chainID].GainsNetwork,
@@ -80,21 +89,73 @@ describe("Strategy Tests ", function () {
       user
     )) as unknown as ERC20;
   });
+  describe("All Methods Work", function () {
+    before(async () => {
+      const initalAmount = await getAmount(USDC, "150");
+      const apiKey = process.env.API;
+      const method = "POST";
+      const url = `https://xpzyihmcunwwykjpfdgy.supabase.co/rest/v1/rpc/process_indexed_json`;
+      const path = "price;blockNumber;rsi";
+      ("totalResultDiff");
+      const headers = `["accept", "application/json", "apikey","${apiKey}"]`;
+      const body = '{"input_index": 1, "input_json": {}}';
+      const jobId = "168535c73f7b46cd8fd9a7f21bdbedc1";
+      const APIInfos = [
+        {
+          method: method,
+          url: url,
+          headers: headers,
+          body: body,
+          path: path,
+          jobIDs: jobId,
+        },
+      ] as VaultFactory.APIInfoStruct[];
+      const decimals = new Decimal(10).pow(18);
+      const action1 = 0;
+    });
+  });
+  it("every method works with a strategy pow", async () => {
+    const priceUpdater = new PriceUpdater();
+    await priceUpdater.waitForReady(); // Wait for WebSocket to be ready
 
-  it("strategy works as expected pow", async () => {
     const initalAmount = await getAmount(USDC, "150");
-    const apiKey = process.env.LUKE_API;
+    const apiKey = process.env.API;
     const method = "POST";
-    const url = `https://xpzyihmcunwwykjpfdgy.supabase.co/functions/v1/rsi-price-query`;
-    const path = "data,0,price;blockNumber;data,0,rsi";
-    const headers = `["accept", "application/json", "Authorization","${apiKey}"]`;
-    const body = '{"symbols": [0], "period": 90}';
+    const url = `https://xpzyihmcunwwykjpfdgy.supabase.co/rest/v1/rpc/process_indexed_json`;
+    const path = "price;blockNumber;rsi";
+    ("totalResultDiff");
+    const headers = `["accept", "application/json", "apikey","${apiKey}"]`;
+    const body = '{"input_index": 1, "input_json": {}}';
     const jobId = "168535c73f7b46cd8fd9a7f21bdbedc1";
-    const decimals = new Decimal(10).pow(10);
+    const decimals = new Decimal(10).pow(18);
 
-    // const tx = await USDC.approve(vaultFactory.target, initalAmount.toFixed());
-    // await tx.wait();
+    const tx = await USDC.approve(vaultFactory.target, initalAmount.toFixed());
+    await tx.wait();
     const APIInfos = [
+      {
+        method: method,
+        url: url,
+        headers: headers,
+        body: body,
+        path: path,
+        jobIDs: jobId,
+      },
+      {
+        method: method,
+        url: url,
+        headers: headers,
+        body: body,
+        path: path,
+        jobIDs: jobId,
+      },
+      {
+        method: method,
+        url: url,
+        headers: headers,
+        body: body,
+        path: path,
+        jobIDs: jobId,
+      },
       {
         method: method,
         url: url,
@@ -107,131 +168,131 @@ describe("Strategy Tests ", function () {
     //According to ChatGPT, if RSI is above 70 then its too high. If its below 30 then its too low
     //So what I will do is have two strategies, if the RSI goes to 50 then it will close either position
     //if 70 < x1 then longBTC else do nothing
-    const longAction = await Helper.createOpenTradeAction(
-      10000, // maxSlippage
-      0, // pairIndex (BTC)
-      5000, // leverage (5x)
-      true, // long
-      true, // isOpen
-      3, // collateralType (USDC)
-      0, // orderType (Market)
-      800000, // collateralPercent (2%)
-      1000000, // openPricePercent
-      1200000, // takeProfitPercent
-      800000 // stopLossPercent
-    );
-
-    // Short action when RSI > 70
-    const shortAction = await Helper.createOpenTradeAction(
-      10000,
-      0,
-      5000,
-      false, // short
-      true,
-      3,
-      0,
-      800000,
-      1050000,
-      800000, // TP is lower for short
-      1200000 // SL is higher for short
-    );
-
-    // Close action when 40 < RSI < 60
-    const closeAction = await Helper.createCloseTradeMarketAction();
-
-    // If RSI < 30 then long, if RSI > 70 then short, if 40 < RSI < 60 then close, else do nothing
-    const strategy = [
-      18, //if
-      14, // less
-      1, //rsi
-      2,
-      0, //30
-      new Decimal(45).mul(decimals).toFixed(),
-      0,
-      longAction,
-      18,
-      15,
-      1,
-      2,
-      0,
-      new Decimal(65).mul(decimals).toFixed(),
-      0,
-      shortAction,
-      18,
-      16,
-      15,
-      1,
-      2,
-      0,
-      new Decimal(50).mul(decimals).toFixed(),
-      14,
-      1,
-      2,
-      0,
-      new Decimal(60).mul(decimals).toFixed(),
-      0,
-      closeAction,
-      0,
-      0,
-    ];
-
+    const strategies = await getStrategies(Helper);
     const vaultAddress = await vaultFactory.createVault.staticCall(
       USDC,
       initalAmount.toFixed(),
       APIInfos,
-      [strategy] as number[][]
+      strategies
     );
     const tx3 = await vaultFactory.createVault(
       USDC,
       initalAmount.toFixed(),
       APIInfos,
-      [strategy]
+      strategies
     );
     await tx3.wait();
+    // if (network.config.chainId != 31337) {
+    //   await verify(vaultAddress, [], "contracts/AutoVault:AutoVault.sol");
+    // }
     let autoVault = (await ethers.getContractAt(
       "AutoVault",
       vaultAddress,
       user
     )) as unknown as AutoVault;
     console.log(`Deployed autovault at ${autoVault.target}`);
+
     let requestID = await autoVault.executeStrategy.staticCall(0);
-    // const tx4 = await autoVault.executeStrategy(0);
-    // await tx4.wait();
+    let mostRecentPrice = undefined;
+    while (mostRecentPrice == undefined) {
+      mostRecentPrice = await priceUpdater.getPrice("0");
+      setTimeout(() => {}, 500);
+    }
+    if (mostRecentPrice == undefined) throw "Failed to get price";
+    console.log(`The msot recent price is ${mostRecentPrice.toString()}`);
+    let price = new Decimal(mostRecentPrice);
+    let rsi = new Decimal(25);
+    await updateResponse(price, ethers.provider, rsi);
+    console.log("Executing strategy", requestID);
+    await new Promise((f) => setTimeout(f, 30000));
+    const tx4 = await autoVault.executeStrategy(0);
+    await tx4.wait();
+
     const tradesBefore = await GainsNetwork.getTrades(autoVault.target);
     console.log(`Trades before: ${tradesBefore}`);
 
-    const requestPromise = new Promise<string>((resolve) => {
-      autoVault.once(
-        autoVault.getEvent("ChainlinkFulfilled"),
-        async (requestId: string) => {
-          const tradesAfter = await GainsNetwork.getTrades(autoVault.target);
-          console.log(`Trades after: ${tradesAfter}`);
-          resolve(requestId);
-        }
-      );
-    });
-    return new Promise((resolve) => {
+    await waitForTradeUpdate(autoVault.target.toString(), 0);
+    await new Promise((f) => setTimeout(f, 5000));
+
+    mostRecentPrice = undefined;
+    while (mostRecentPrice == undefined) {
+      mostRecentPrice = await priceUpdater.getPrice("0");
+      await new Promise((f) => setTimeout(f, 500));
+    }
+    if (mostRecentPrice == undefined) throw "Failed to get price";
+    price = new Decimal(mostRecentPrice);
+    rsi = new Decimal(95);
+    await updateResponse(price, ethers.provider, rsi);
+    const tx5 = await autoVault.executeStrategy(0);
+    await tx5.wait();
+    console.log(await autoVault.getC());
+  });
+  it("vault can update tp");
+  it("vault can update sl");
+  it("vault can updateLeverage");
+  it("vault can decrease position size");
+
+  async function waitForTradeUpdate(
+    address: string,
+    initialLength: number,
+    timeout = 60000
+  ) {
+    return new Promise((resolve, reject) => {
+      const startTime = Date.now();
       const intervalId = setInterval(async () => {
         try {
-          const r = await autoVault.getC();
-          console.log("Response:", r.toString());
+          const tradesAfter = await GainsNetwork.getTrades(address);
+          if (tradesAfter.length !== initialLength) {
+            clearInterval(intervalId);
+            resolve(tradesAfter);
+          } else if (Date.now() - startTime > timeout) {
+            clearInterval(intervalId);
+            reject(new Error("Timeout waiting for trade update"));
+          }
         } catch (error) {
-          console.error("Error querying response:", error);
+          clearInterval(intervalId);
+          reject(error);
         }
       }, 5000);
-
-      // Set up a handler for the SIGINT signal (Ctrl+C)
-      process.on("SIGINT", () => {
-        clearInterval(intervalId);
-        console.log("Continuous query stopped.");
-        resolve();
-      });
     });
-  });
-});
+  }
 
-async function getAmount(Token: ERC20, amount: string) {
-  const x = await Token.decimals();
-  const y = new Decimal(10).pow(x.toString());
-  return new Decimal(amount).mul(y);
-}
+  async function getAmount(Token: ERC20, amount: string) {
+    const x = await Token.decimals();
+    const y = new Decimal(10).pow(x.toString());
+    return new Decimal(amount).mul(y);
+  }
+  async function updateResponse(
+    res: Decimal,
+    provider: Provider,
+    rsi: Decimal
+  ) {
+    const latestBlock = await provider.getBlock("latest");
+    if (latestBlock == undefined) throw "undefined";
+    const blockNumber = new Decimal(latestBlock.number.toString());
+    // const x = new Decimal(10).pow(18);
+
+    const body = `{"input_index": 1, "input_json": {"price": "${res.toFixed()}", "blockNumber":"${blockNumber.toFixed()}", "rsi": "${rsi.toFixed()}" }}`;
+    console.log(body);
+    const headers = `["Content-Type", "application/json", "apikey","${process.env.API}"]`;
+    const parsedHeaders: Record<string, string> = {};
+    const headerArray: string[] = JSON.parse(headers);
+
+    for (let i = 0; i < headerArray.length; i += 2) {
+      if (headerArray[i].toLowerCase() === "accept") {
+        parsedHeaders["Content-Type"] = headerArray[i + 1];
+      } else {
+        parsedHeaders[headerArray[i]] = headerArray[i + 1];
+      }
+    }
+    const config: AxiosRequestConfig = {
+      method: "POST" as Method,
+      url: `https://xpzyihmcunwwykjpfdgy.supabase.co/rest/v1/rpc/process_indexed_json`,
+      headers: parsedHeaders,
+      data: body ? JSON.parse(body) : undefined,
+    };
+
+    const response = await axios(config);
+    return response.data;
+  }
+});

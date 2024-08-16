@@ -28,7 +28,6 @@ module.exports = {
     hardhat: {
       forking: {
         url: process.env.ARB_SEP_RPC,
-        blockNumber: 68485917,
       },
       chainId: 31337,
       allowBlocksWithSameTimestamp: true,
@@ -46,7 +45,7 @@ module.exports = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       chainId: 421614,
       timeout: 200000, // Increase the timeout value
-      saveDeployments: false,
+      saveDeployments: true,
     },
   },
 
@@ -129,7 +128,7 @@ module.exports = {
     token: "ETH",
   },
   mocha: {
-    timeout: 60000, // 500 seconds max for running tests
+    timeout: 120000, // 500 seconds max for running tests
     parallel: false,
   },
 };

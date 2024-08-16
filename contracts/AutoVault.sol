@@ -6,23 +6,19 @@ import "solmate/src/utils/SSTORE2.sol";
 import "./Interfaces/ERC4626Fees.sol";
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
-import "./Chainlink/ConfirmedOwnerWithProposal.sol";
 import {Trade, TradeType, Counter, CounterType, IGainsNetwork} from "./Gains Contracts/IGainsNetwork.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import "./Libraries/TransientPrimities.sol";
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
+import "./VaultFactory.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
-contract AutoVault is
-    ERC4626Fees,
-    ChainlinkClient,
-    ConfirmedOwnerWithProposal,
-    Pausable
-{
+contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     using Chainlink for Chainlink.Request;
     using SafeERC20 for IERC20;
     using SafeERC20 for IERC20Metadata;
-
+    using Strings for uint256;
     enum Choice {
         DEPOSIT,
         MINT,
@@ -36,6 +32,16 @@ contract AutoVault is
         uint256 amount;
         Choice choice;
         uint256 slippage;
+    }
+    modifier onlyFactory() {
+        if (msg.sender != vaultFactory) revert FactoryManagerOnly();
+        _;
+    }
+    error vaultManagerOnly();
+
+    modifier onlyOwner() {
+        if (msg.sender != vaultManager) revert vaultManagerOnly();
+        _;
     }
 
     mapping(bytes32 => uint256) public requestToStrategy;
@@ -56,6 +62,7 @@ contract AutoVault is
 
     tuint256 public totalValueCollateral;
     taddress public currentUser;
+    tuint256Array public tArray;
 
     error InvalidAction();
     error NoAction();
@@ -65,6 +72,7 @@ contract AutoVault is
     error CoolDownViolated();
     error StrategyNotActive();
     error BlockDifferenceTooLarge(uint256 blockDifference);
+    error FactoryManagerOnly();
 
     Chainlink.Request public balanceRequest; // This request returns the totalBalance of alltrades on GNS
 
@@ -75,29 +83,11 @@ contract AutoVault is
     mapping(address => uint256) private _lastMintTimestamp;
     uint256 public constant SWAP_FEE = 2_000; // 0.2% swap fee
 
-    // constructor(
-    //     IERC20 _asset,
-    //     uint256 startingBalance,
-    //     address factoryOwner,
-    //     address _vaultManager,
-    //     string memory _name,
-    //     string memory _symbol,
-    //     address[] memory _equations,
-    //     address _chainLinkToken,
-    //     address _oracleAddress,
-    //     address _gainsAddy
-    // ) ERC4626(_asset) ERC20(_name, _symbol) ConfirmedOwner(_vaultManager) {
-    //     _setChainlinkToken(_chainLinkToken);
-    //     _setChainlinkOracle(_oracleAddress);
-    //     strategies = _equations;
-    //     GainsNetwork = IGainsNetwork(_gainsAddy);
-    //     _asset.approve(_gainsAddy, type(uint256).max);
-    //     vaultManager = _vaultManager;
-    //     internalDeposit(startingBalance, _vaultManager);
-    //     vaultFactory = msg.sender;
-    //     specialRefer = factoryOwner;
-    //     fee = 0;
-    // }
+    uint256 public oracleFee; // Around 87 cents
+    uint256 public vaultActionFee; // Around 4 cents
+
+    mapping(bytes32 => RewardInfo) public rewardBot;
+
     struct StartInfo {
         address factoryOwner;
         address vaultManager;
@@ -106,35 +96,38 @@ contract AutoVault is
         address gainsAddress;
     }
 
+    function returnStrategies() public view returns (address[] memory) {
+        return strategies;
+    }
+
     function initialize(
         IERC20Metadata __asset,
         Chainlink.Request memory _req,
         uint256 startingBalance,
         StartInfo memory startingInfo,
-        uint256 startingFee,
+        uint256[2] memory startingFee,
         string memory _name,
         string memory _symbol,
         address[] memory _equations
     ) public initializer {
-        console.log(" 1 Stargin balance", startingBalance);
-
         _asset = __asset;
         __ERC4626_init(_asset);
         __ERC20_init(_name, _symbol);
-        __ChainlinkClient_init(startingInfo.vaultManager, address(0));
-        _setChainlinkToken(startingInfo.chainLinkToken);
-        _setChainlinkOracle(startingInfo.oracleAddress);
+
         strategies = _equations;
         GainsNetwork = IGainsNetwork(startingInfo.gainsAddress);
         vaultManager = startingInfo.vaultManager;
+
         vaultFactory = msg.sender;
         specialRefer = startingInfo.factoryOwner;
-        console.log(" 2 Stargin balance", startingBalance);
         internalDeposit(startingBalance, startingInfo.vaultManager);
-        oracleFee = startingFee;
+        oracleFee = startingFee[0];
+        vaultActionFee = startingFee[1];
         balanceRequest = _req;
         _asset.approve(startingInfo.gainsAddress, type(uint256).max);
     }
+
+    string public constant trade_path = "totalCollateral;blockNumber";
 
     function startAction(
         address receiver,
@@ -142,7 +135,20 @@ contract AutoVault is
         Choice choice,
         uint256 slippage
     ) external returns (bytes32 requestId) {
-        requestId = _sendChainlinkRequest(balanceRequest, fee);
+        string memory path = trade_path;
+        Trade[] memory trades = GainsNetwork.getTrades(address(this));
+
+        for (uint i = 0; i < trades.length; i++) {
+            path = string.concat(path, ";latestPrices,");
+            path = string.concat(path, i.toString());
+        }
+
+        balanceRequest._add("path", path);
+        requestId = VaultFactory(vaultFactory).sendInfoRequest(
+            msg.sender,
+            balanceRequest,
+            fee
+        );
         requestToAction[requestId] = VaultAction(
             msg.sender,
             receiver,
@@ -162,26 +168,26 @@ contract AutoVault is
     function preformAction(
         bytes32 requestId,
         uint256[] memory data
-    ) external recordChainlinkFulfillment(requestId) {
+    ) external onlyFactory {
         VaultAction memory vaultAction = requestToAction[requestId];
         currentUser.set(vaultAction.msgSender);
-        console.log("Setting var below", data[0]);
         if (_asset.decimals() < 10) {
             uint256 decimalDifference = 10 - _asset.decimals();
             data[0] = data[0] / (10 ** decimalDifference);
         } else {
-            uint256 decimalDifference = _asset.decimals() - 10;
+            uint256 decimalDifference = _asset.decimals() - 18;
             data[0] = data[0] * (10 ** decimalDifference);
         }
         totalValueCollateral.set(data[0] > 0 ? data[0] + 1 : 1);
+        for (uint i = 2; i < data.length; i++) {
+            tArray.push(data[i]);
+        }
 
         if ((data[1] / (10 ** 10)) + MAX_BLOCK_DIFFERENCE < block.number) {
             revert BlockDifferenceTooLarge(block.number - data[1] / (10 ** 10));
         }
         uint256 result;
-        console.log("Choice", uint256(vaultAction.choice));
         if (vaultAction.choice == Choice.DEPOSIT) {
-            console.log("Choice is to deposit");
             result = this.deposit(vaultAction.amount, vaultAction.receiver);
         } else if (vaultAction.choice == Choice.MINT) {
             result = this.mint(vaultAction.amount, vaultAction.receiver);
@@ -200,7 +206,6 @@ contract AutoVault is
         } else {
             revert InvalidAction();
         }
-        console.log(vaultAction.slippage, result);
         if (vaultAction.slippage > result) revert Slippage();
 
         totalValueCollateral.set(0);
@@ -216,8 +221,6 @@ contract AutoVault is
         uint256 feeMultiplier;
         address caller;
     }
-    uint256 public oracleFee;
-    mapping(bytes32 => RewardInfo) public rewardBot;
 
     function executeStrategy(
         uint256 strategy
@@ -227,7 +230,11 @@ contract AutoVault is
             (uint256, Chainlink.Request, bytes)
         );
 
-        requestId = _sendChainlinkRequest(req, fee);
+        requestId = VaultFactory(vaultFactory).sendInfoRequest(
+            msg.sender,
+            req,
+            fee
+        );
 
         requestToStrategy[requestId] = strategy;
         rewardBot[requestId] = RewardInfo({
@@ -259,18 +266,19 @@ contract AutoVault is
     function fulfill(
         bytes32 requestId,
         uint256[] calldata data
-    ) public whenNotPaused recordChainlinkFulfillment(requestId) {
+    ) public whenNotPaused onlyFactory {
         // console.log(data.leWngth);
-        if ((data[1] / (10 ** 10)) + MAX_BLOCK_DIFFERENCE < block.number) {
-            revert BlockDifferenceTooLarge(block.number - data[1] / (10 ** 10));
+        if ((data[1] / (10 ** 18)) + MAX_BLOCK_DIFFERENCE < block.number) {
+            revert BlockDifferenceTooLarge(block.number - data[1] / (10 ** 18));
         }
         uint256 strategy = requestToStrategy[requestId];
         uint256 action = processStrategy(strategy, data);
         // c.push(action);
         // c.push(data[0]);
         // c.push(data[1]);
-        // c.push(data.length);
-        // if (action == 0) revert NoAction();
+        // c.push(data[2]);
+        // c.push(uint64(data[0] / (10 ** 8)));
+        if (action == 0) revert NoAction();
 
         uint32 index = strategyToIndex[strategy];
         if (index == 0) {
@@ -278,13 +286,13 @@ contract AutoVault is
                 address(this),
                 CounterType(0)
             );
-            index = counter.currentIndex;
+            index = counter.currentIndex + 1;
         }
         RewardInfo memory rewardInfo = rewardBot[requestId];
 
         executeAction(
-            index,
-            uint64(data[0]),
+            index - 1,
+            uint64(data[0] / (10 ** 8)),
             rewardInfo.feeMultiplier,
             action,
             strategy
@@ -342,7 +350,7 @@ contract AutoVault is
         if (actionType != 0 && !strategyToActive[strategy]) {
             revert StrategyNotActive();
         }
-
+        console.log(actionType);
         if (actionType == 0) {
             (Trade memory trade, uint32 posPercent) = extractTrade(
                 action,
@@ -368,7 +376,7 @@ contract AutoVault is
 
             GainsNetwork.openTrade(trade, uint16(action >> 236), specialRefer);
             strategyToActive[strategy] = true;
-            strategyToIndex[strategy] = index;
+            strategyToIndex[strategy] = index + 1;
         } else if (actionType == 1) {
             GainsNetwork.updateSl(
                 index,
@@ -397,20 +405,52 @@ contract AutoVault is
             GainsNetwork.cancelOpenOrder(index);
             strategyToActive[strategy] = false;
         } else if (actionType == 5) {
-            GainsNetwork.closeTradeMarket(index);
+            GainsNetwork.closeTradeMarket(index, openPrice);
             strategyToActive[strategy] = false;
         } else if (actionType == 6) {
             GainsNetwork.updateLeverage(index, uint24(action >> 228));
         } else if (actionType == 7) {
+            Trade memory trade = GainsNetwork.getTrade(address(this), index);
             GainsNetwork.decreasePositionSize(
                 index,
-                uint32(action >> 220),
-                uint24(action >> 196)
+                uint120(
+                    Math.mulDiv(
+                        trade.collateralAmount,
+                        uint32(action >> 220),
+                        1_000_000
+                    )
+                ),
+                uint24(action >> 196),
+                uint64(Math.mulDiv(openPrice, uint32(action >> 164), 1_000_000))
             );
         } else if (actionType == 8) {
+            Trade memory trade = GainsNetwork.getTrade(address(this), index);
+            // c.push(index);
+            // c.push(
+            //     uint120(
+            //         Math.mulDiv(
+            //             trade.collateralAmount,
+            //             uint32(action >> 204),
+            //             1_000_000
+            //         )
+            //     )
+            // );
+            // c.push(uint24(action >> 180));
+            // c.push(
+            //     uint64(Math.mulDiv(openPrice, uint32(action >> 148), 1_000_000))
+            // );
+            // c.push(uint16(action >> 236));
+            // [ 0n, 3112883n, 2000n, 584959900000000n, 10000n ]
+
             GainsNetwork.increasePositionSize(
                 index,
-                uint32(action >> 204),
+                uint120(
+                    Math.mulDiv(
+                        trade.collateralAmount,
+                        uint32(action >> 204),
+                        1_000_000
+                    )
+                ),
                 uint24(action >> 180),
                 uint64(
                     Math.mulDiv(openPrice, uint32(action >> 148), 1_000_000)
@@ -426,6 +466,7 @@ contract AutoVault is
         uint64 currentOpen
     ) internal view returns (Trade memory, uint32 collateralPercentage) {
         collateralPercentage = uint32(action >> 152);
+
         uint120 collateralAmount = uint120(
             Math.mulDiv(
                 IERC20(asset()).balanceOf(address(this)),
@@ -483,18 +524,14 @@ contract AutoVault is
         uint256 assetsWithdrawn
     ) internal override {
         //This is to prevent arbitrage
-        console.log(
-            _lastMintTimestamp[user],
-            block.timestamp + COOLDOWN_PERIOD
-        );
+
         if (_lastMintTimestamp[user] + COOLDOWN_PERIOD > block.timestamp) {
             revert CoolDownViolated();
         }
 
         Trade[] memory trades = GainsNetwork.getTrades(address(this));
+        if (trades.length == 0) return;
         uint256 _totalAssets = this.totalAssets();
-        uint256 totalValueOfTrades = _totalAssets -
-            IERC20(asset()).balanceOf(address(this));
 
         for (uint i = 0; i < trades.length; i++) {
             uint120 collateralToWithdraw = uint120(
@@ -505,9 +542,10 @@ contract AutoVault is
                 )
             );
             GainsNetwork.decreasePositionSize(
-                trades[i].index,
-                collateralToWithdraw,
-                0
+                trades[i].index, //Trade Index
+                collateralToWithdraw, //COLLATERAL DELTA
+                0, //LEVERAGE DELTA
+                uint64(tArray.get(i)) // EXPECTED PRICE GOES HERE
             );
         }
     }
@@ -526,7 +564,7 @@ contract AutoVault is
     }
 
     function _getMinFee() internal view override returns (uint256) {
-        return oracleFee;
+        return vaultActionFee;
     }
 
     function _doesRecipientPayFee() internal view override returns (bool) {
@@ -576,6 +614,7 @@ contract AutoVault is
     function unpause() external whenPaused onlyOwner {
         super._unpause();
     }
+
     //Fees
     //The protocol will exist of 3 different fees
     //Withdraw,Deposit, and Swap
@@ -584,4 +623,8 @@ contract AutoVault is
     //A fixed fee will be applied for strategy execution
     //A fixed fee will be paid for the calling of info
     //A public API fee
+
+    function owner() public view returns (address) {
+        return vaultManager;
+    }
 }

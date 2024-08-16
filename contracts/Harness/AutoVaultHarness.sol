@@ -36,7 +36,7 @@ contract AutoVaultHarness is AutoVault {
             ),
             startingBalance,
             startInfo,
-            10,
+            [uint256(10), 20],
             _name,
             _symbol,
             _equations

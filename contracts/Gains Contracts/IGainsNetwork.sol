@@ -89,14 +89,20 @@ interface IGainsNetwork {
 
     function cancelOpenOrder(uint32 _index) external;
 
-    function closeTradeMarket(uint32 _index) external;
+    function closeTradeMarket(uint32 _index, uint64 _expectedPrice) external;
 
     function closeTradeMarketTimeout(Id memory _orderId) external;
+
+    function getTrade(
+        address _trader,
+        uint32 _index
+    ) external view returns (Trade memory);
 
     function decreasePositionSize(
         uint32 _index,
         uint120 _collateralDelta,
-        uint24 _leverageDelta
+        uint24 _leverageDelta,
+        uint64 _expectedPrice
     ) external;
 
     function increasePositionSize(

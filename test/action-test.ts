@@ -120,6 +120,8 @@ describe("Action Tests ", function () {
 
     const x = new Decimal(10).pow(10);
     const currentPrice = new Decimal(60).mul(x);
+    console.log("FWA");
+
     const trade = (
       await autoVaultHarness.call_extractTrade(
         longAciton,
@@ -127,9 +129,12 @@ describe("Action Tests ", function () {
         currentPrice.toFixed()
       )
     )[0] as TradeStruct;
-    console.log(trade.user);
-    const totalAssets = await USDC.balanceOf(autoVaultHarness.target);
 
+    console.log(trade.user);
+    console.log("FWA");
+
+    const totalAssets = await USDC.balanceOf(autoVaultHarness.target);
+    console.log("FWA");
     assert.equal(autoVaultHarness.target, trade.user);
     assert.equal(0, trade.index);
     assert.equal(pairIndex, trade.pairIndex);
@@ -249,6 +254,7 @@ describe("Action Tests ", function () {
       );
   });
   describe("Active Positions ", function () {
+    let collateralAmount: Decimal;
     this.beforeEach(async () => {
       const maxSlippage = 1000;
       const pairIndex = 0;
@@ -292,7 +298,9 @@ describe("Action Tests ", function () {
       const swapFee = totalAssets
         .mul(SWAP_FEE)
         .dividedBy(SWAP_FEE_SCALE) as Decimal;
-
+      collateralAmount = collateralPercent
+        .mul(totalAssets.sub(swapFee))
+        .dividedBy("1000000");
       const expectedTrade = [
         autoVaultHarness.target.toString(),
         "0",
@@ -302,10 +310,7 @@ describe("Action Tests ", function () {
         isOpen,
         collateralType,
         orderType,
-        collateralPercent
-          .mul(totalAssets.sub(swapFee))
-          .dividedBy("1000000")
-          .toFixed(),
+        collateralAmount.toFixed(),
         openPricePercent
           .mul(currentPrice.toString())
           .dividedBy("1000000")
@@ -475,17 +480,20 @@ describe("Action Tests ", function () {
         .to.emit(FakeGainsNetwork, "UpdateLeverageCalled")
         .withArgs(0, newLeverage);
     });
-    it("can execute a decrease position size action", async () => {
+    it("can execute a decrease position size action ", async () => {
       const collateralDelta = new Decimal(100000); // 10% of current collateral
       const leverageDelta = 1000; // 1x leverage decrease
+
       const decreasePositionSizeAction =
         await Helper.createDecreasePositionSizeAction(
           collateralDelta.toFixed(),
-          leverageDelta
+          leverageDelta,
+          0
         );
 
       const x = new Decimal(10).pow(10);
       const currentPrice = new Decimal(60).mul(x);
+
       const call = autoVaultHarness.call_executeAction(
         0,
         currentPrice.toFixed(),
@@ -496,9 +504,13 @@ describe("Action Tests ", function () {
 
       await expect(call)
         .to.emit(FakeGainsNetwork, "DecreasePositionSizeCalled")
-        .withArgs(0, collateralDelta.toFixed(), leverageDelta);
+        .withArgs(
+          0,
+          collateralDelta.mul(collateralAmount).dividedBy(1000000).toFixed(),
+          leverageDelta
+        );
     });
-    it("can execute an increase position size action", async () => {
+    it("can execute an increase position size action hutt", async () => {
       const maxSlippage = 1000;
       const collateralDelta = new Decimal(200000); // 20% of current collateral
       const leverageDelta = 2000; // 2x leverage increase
@@ -531,7 +543,7 @@ describe("Action Tests ", function () {
         .to.emit(FakeGainsNetwork, "IncreasePositionSizeCalled")
         .withArgs(
           0,
-          collateralDelta.toFixed(),
+          collateralDelta.mul(collateralAmount).dividedBy(1000000).toFixed(),
           leverageDelta,
           expectedPrice,
           maxSlippage

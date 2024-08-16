@@ -2,6 +2,7 @@
 pragma solidity ^0.8.24;
 import "./IGainsNetwork.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "hardhat/console.sol";
 
 contract FakeGainsNetwork is IGainsNetwork {
     IERC20 USDC = IERC20(0x4cC7EbEeD5EA3adf3978F19833d2E1f3e8980cD6);
@@ -110,10 +111,13 @@ contract FakeGainsNetwork is IGainsNetwork {
     }
 
     function updateSl(uint32 _index, uint64 _newSl) external override {
+        console.log("HOW IS THIS CALLING THAT");
+
         emit UpdateSlCalled(_index, _newSl);
     }
 
     function updateTp(uint32 _index, uint64 _newTp) external override {
+        console.log("Hi");
         emit UpdateTpCalled(_index, _newTp);
     }
 
@@ -135,7 +139,10 @@ contract FakeGainsNetwork is IGainsNetwork {
         emit CancelOpenOrderCalled(_index);
     }
 
-    function closeTradeMarket(uint32 _index) external override {
+    function closeTradeMarket(
+        uint32 _index,
+        uint64 expectedPrice
+    ) external override {
         Trade[] storage trades = userToTrades[msg.sender];
         for (uint i = 0; i < trades.length; i++) {
             uint32 tradeIndex = trades[i].index;
@@ -158,7 +165,8 @@ contract FakeGainsNetwork is IGainsNetwork {
     function decreasePositionSize(
         uint32 _index,
         uint120 _collateralDelta,
-        uint24 _leverageDelta
+        uint24 _leverageDelta,
+        uint64 _expectedPrice
     ) external override {
         Trade[] storage trades = userToTrades[msg.sender];
 
@@ -212,6 +220,16 @@ contract FakeGainsNetwork is IGainsNetwork {
         address _trader
     ) external view override returns (Trade[] memory) {
         return userToTrades[_trader];
+    }
+
+    function getTrade(
+        address _trader,
+        uint32 _index
+    ) public view override returns (Trade memory) {
+        Trade[] memory trades = userToTrades[_trader];
+        for (uint i = 0; i < trades.length; i++) {
+            if (trades[i].index == _index) return trades[i];
+        }
     }
 
     function getTradeBorrowingFee(

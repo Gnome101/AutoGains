@@ -24,7 +24,7 @@ import dotenv from "dotenv";
 import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 import { trace } from "console";
 import { FEE_MULTIPLIER_SCALE } from "@gainsnetwork/sdk";
-import { AddressLike, assertArgument } from "ethers";
+import { AddressLike, assertArgument, BigNumberish } from "ethers";
 import { getAmountDec } from "./strategy-test";
 import { AutoVaultHarness__factory } from "../typechain-types/factories/contracts/Harness/AutoVaultHarness.sol";
 import { copyFileSync } from "fs";
@@ -49,7 +49,7 @@ describe("Operation Tests ", function () {
   const SWAP_FEE = 2_000;
   const SWAP_FEE_SCALE = 10 ** 6;
 
-  const USDCFEE = getAmountDec("0.04", 6);
+  const USDCFEE = getAmountDec("0.85", 6);
   const publicAPI = "publicAPI";
   const PUBLIC_FEE = 1_500_000;
 
@@ -137,7 +137,7 @@ describe("Operation Tests ", function () {
   describe("Vault Created ", function () {
     let autoVault: AutoVault;
     let otherAutoVault: AutoVault;
-    const decimals = new Decimal(10).pow(10);
+    const decimals = new Decimal(10).pow(18);
     beforeEach(async () => {
       const initalAmount = await getAmount(USDC, "10");
 
@@ -177,7 +177,7 @@ describe("Operation Tests ", function () {
         12000000,
         8000000
       );
-      const decimals = new Decimal(10).pow(10);
+      const decimals = new Decimal(10).pow(18);
 
       // if x1< 30 then longAction else nothing
       const longStrategy = [
@@ -230,7 +230,7 @@ describe("Operation Tests ", function () {
         initalAmount.toFixed()
       );
     });
-    describe("Cooldowns", function () {
+    describe("Cooldowns ", function () {
       it("user can not purchase and redeem within the cooldown period ", async () => {
         const depositAmount = await getAmount(USDC, "10");
         await USDC.approve(autoVault.target, depositAmount.toFixed());
@@ -264,7 +264,7 @@ describe("Operation Tests ", function () {
         );
       });
     });
-    describe("Strategy Block Expiry", function () {
+    describe("Strategy Block Expiry ", function () {
       //Show the stuff here
       it("strategy execution can expire ", async () => {
         const requestID = await autoVault.executeStrategy.staticCall(0);
@@ -287,22 +287,22 @@ describe("Operation Tests ", function () {
         //beause it mines a block
 
         await expect(
-          impersonateOracleFulfill(autoVault, requestID, input, 20)
+          impersonateOracleFulfill(vaultFactory, requestID, input, 20)
         ).to.be.rejectedWith(error);
       });
-      it("vault action can expire aaw", async () => {
+      it("vault action can expire trt", async () => {
         let requestID = await autoVault.executeStrategy.staticCall(0);
         const tx4 = await autoVault.executeStrategy(0);
         await tx4.wait();
         //When its below 70, then its rejected
-        const currentPrice = getAmountDec("60", 10);
+        const currentPrice = getAmountDec("60", 18);
 
         let input = [
           currentPrice.toFixed(),
           new Decimal(25).mul(decimals).toFixed(),
         ];
         console.log("A");
-        await impersonateOracleFulfill(autoVault, requestID, input, 0);
+        await impersonateOracleFulfill(vaultFactory, requestID, input, 0);
         console.log("A");
 
         const depositAmount = await getAmount(USDC, "1");
@@ -320,11 +320,11 @@ describe("Operation Tests ", function () {
           choice,
           depositAmount.toFixed()
         );
-        input = [getAmountDec("0", 10).toFixed()];
+        input = [getAmountDec("0", 18).toFixed()];
         const error = `BlockDifferenceTooLarge(21)`; // Its one larger
         await expect(
           impersonateOracleDoVaultAction(
-            otherAutoVault,
+            vaultFactory,
             requestID,
             input,
             Number(await USDC.decimals()),
@@ -352,7 +352,7 @@ describe("Operation Tests ", function () {
           .mul(SWAP_FEE)
           .dividedBy(SWAP_FEE_SCALE) as Decimal;
         expect(
-          await impersonateOracleFulfill(autoVault, requestID, input, 0)
+          await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
         ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
 
         const trades = await FakeGainsNetwork.getTrades(autoVault.target);
@@ -392,7 +392,7 @@ describe("Operation Tests ", function () {
           await USDC.balanceOf(vaultCreator.address)
         );
         expect(
-          await impersonateOracleFulfill(autoVault, requestID, input, 0)
+          await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
         ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
 
         const assetFactoryBalanceAfter = toDecimal(
@@ -439,7 +439,7 @@ describe("Operation Tests ", function () {
           await USDC.balanceOf(vaultCreator.address)
         );
         expect(
-          await impersonateOracleFulfill(autoVault, requestID, input, 0)
+          await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
         ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
 
         const assetFactoryBalanceAfter = toDecimal(
@@ -466,14 +466,14 @@ describe("Operation Tests ", function () {
     describe("Vault Maker Roles ", function () {
       it("only vault maker can pause the contract", async () => {
         await expect(autoVault.connect(otherUser).pause()).to.be.rejectedWith(
-          "Only callable by owner"
+          "vaultManagerOnly()"
         );
         await expect(autoVault.pause()).to.emit(autoVault, "Paused");
       });
       it("only vault maker can unpause contract", async () => {
         await autoVault.pause();
         await expect(autoVault.connect(otherUser).unpause()).to.be.rejectedWith(
-          "Only callable by owner"
+          "vaultManagerOnly()"
         );
         await expect(autoVault.unpause()).to.emit(autoVault, "Unpaused");
       });
@@ -481,7 +481,7 @@ describe("Operation Tests ", function () {
         const amount = "1";
         await expect(
           autoVault.connect(otherUser).setOracleFee(amount)
-        ).to.be.rejectedWith("Only callable by owner");
+        ).to.be.rejectedWith("vaultManagerOnly()");
 
         await expect(autoVault.setOracleFee(amount)).to.emit(
           autoVault,
@@ -505,21 +505,21 @@ describe("Operation Tests ", function () {
   describe("Factory Roles ", function () {
     it("only the factory owner can set starting fees ", async () => {
       const exampleToken = [USDC.target];
-      const exampleAmounts = [1];
+      const exampleAmounts = [[1, 0]] as [BigNumberish, BigNumberish][];
       const rejectedAddress = vaultCreator.address;
       await expect(
         vaultFactory.setStartingFees(exampleToken, exampleAmounts)
-      ).to.be.rejectedWith(
-        `OwnableUnauthorizedAccount("${rejectedAddress.toString()}")`
-      );
+      ).to.be.rejectedWith("Only callable by owner");
       await expect(
         vaultFactory
           .connect(otherUser)
           .setStartingFees(exampleToken, exampleAmounts)
       ).to.emit(vaultFactory, "SetStartingFee");
-      const newFee = await vaultFactory.tokenToOracleFee(USDC.target);
+      const newFee0 = await vaultFactory.tokenToOracleFee(USDC.target, 0);
+      const newFee1 = await vaultFactory.tokenToOracleFee(USDC.target, 1);
+
       assert.equal(
-        newFee.toString(),
+        `${newFee0.toString()},${newFee1.toString()}`,
         exampleAmounts[0].toString(),
         "Starting Fee not set right"
       );
@@ -529,9 +529,7 @@ describe("Operation Tests ", function () {
       const rejectedAddress = vaultCreator.address;
       await expect(
         vaultFactory.setOracleAddress(exampleOracle)
-      ).to.be.rejectedWith(
-        `OwnableUnauthorizedAccount("${rejectedAddress.toString()}")`
-      );
+      ).to.be.rejectedWith("Only callable by owner");
       await expect(
         vaultFactory.connect(otherUser).setOracleAddress(exampleOracle)
       ).to.emit(vaultFactory, "OracleAddressSet");
@@ -547,9 +545,7 @@ describe("Operation Tests ", function () {
       const rejectedAddress = vaultCreator.address;
       await expect(
         vaultFactory.setChainLinkToken(exampleToken)
-      ).to.be.rejectedWith(
-        `OwnableUnauthorizedAccount("${rejectedAddress.toString()}")`
-      );
+      ).to.be.rejectedWith("Only callable by owner");
       await expect(
         vaultFactory.connect(otherUser).setChainLinkToken(exampleToken)
       ).to.emit(vaultFactory, "ChainLinkTokenSet");
@@ -565,9 +561,7 @@ describe("Operation Tests ", function () {
       const rejectedAddress = vaultCreator.address;
       await expect(
         vaultFactory.setGainsAddress(exampleGainsAddress)
-      ).to.be.rejectedWith(
-        `OwnableUnauthorizedAccount("${rejectedAddress.toString()}")`
-      );
+      ).to.be.rejectedWith("Only callable by owner");
       await expect(
         vaultFactory.connect(otherUser).setGainsAddress(exampleGainsAddress)
       ).to.emit(vaultFactory, "GainsAddressSet");
@@ -590,11 +584,10 @@ describe("Operation Tests ", function () {
       );
 
       const rejectedAddress = vaultCreator.address;
+
       await expect(
         vaultFactory.claimFunds(USDC, amount.toFixed())
-      ).to.be.rejectedWith(
-        `OwnableUnauthorizedAccount("${rejectedAddress.toString()}")`
-      );
+      ).to.be.rejectedWith("Only callable by owner");
       await expect(
         vaultFactory.connect(otherUser).claimFunds(USDC, amount.toFixed())
       ).to.emit(vaultFactory, "FundsClaimed");
@@ -658,7 +651,7 @@ describe("Operation Tests ", function () {
         12000000,
         8000000
       );
-      const decimals = new Decimal(10).pow(10);
+      const decimals = new Decimal(10).pow(18);
 
       // if x1< 30 then longAction else nothing
       const longStrategy = [

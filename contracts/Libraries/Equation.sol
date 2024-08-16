@@ -4,8 +4,8 @@ pragma solidity ^0.8.24;
 import "solmate/src/utils/SSTORE2.sol";
 
 library Equation {
-    uint8 constant OPCODE_CONST = 0;
-    uint8 constant OPCODE_VAR = 1;
+    uint8 constant OPCODE_CONST = 0; // 0, 30
+    uint8 constant OPCODE_VAR = 1; // 1,2 it gives you the 3rd in the array (price,blockNumber,rsi)
     uint8 constant OPCODE_SQRT = 2;
     uint8 constant OPCODE_NOT = 3;
     uint8 constant OPCODE_ADD = 4;
@@ -14,17 +14,21 @@ library Equation {
     uint8 constant OPCODE_DIV = 7;
     uint8 constant OPCODE_EXP = 8;
     uint8 constant OPCODE_PCT = 9;
-    uint8 constant OPCODE_EQ = 10;
-    uint8 constant OPCODE_NE = 11;
+    uint8 constant OPCODE_EQ = 10; //equals
+    uint8 constant OPCODE_NE = 11; //not equals
     uint8 constant OPCODE_LT = 12;
     uint8 constant OPCODE_GT = 13;
-    uint8 constant OPCODE_LE = 14;
-    uint8 constant OPCODE_GE = 15;
-    uint8 constant OPCODE_AND = 16;
-    uint8 constant OPCODE_OR = 17;
-    uint8 constant OPCODE_IF = 18;
+    uint8 constant OPCODE_LE = 14; //less than or equal to
+    uint8 constant OPCODE_GE = 15; //greater than or equal to
+    uint8 constant OPCODE_AND = 16; //takes two bools returns one bool
+    uint8 constant OPCODE_OR = 17; //takes two bools return one bool
+    uint8 constant OPCODE_IF = 18; // Takes one bool returns 2 potential outputs
     uint8 constant OPCODE_INVALID = 19;
 
+    //if x2 < 50 then 100 else 0
+    //(conditional) ?(return this) :(else this)
+    //You can string together if statements, but else is the required end
+    // 18, 14, 1,2, 0,50,0,100,18,
     function init(
         uint256[] calldata _expressions
     ) external pure returns (bytes memory) {

@@ -42,7 +42,12 @@ import {
 import { writeFileSync } from "fs";
 import WebSocket from "ws";
 import { transformOi, transformFrom1e10 } from "./getBorrowFees";
-class PriceUpdater {
+import axios, { AxiosRequestConfig, Method } from "axios";
+import { Contract, Provider } from "ethers";
+import { abi } from "../DiamondABI";
+import { ErrorDecoder } from "ethers-decode-error";
+import type { DecodedError } from "ethers-decode-error";
+export class PriceUpdater {
   private ws: WebSocket;
   private prices: Map<string, number> = new Map();
   private isReady: boolean = false;
@@ -102,23 +107,77 @@ class PriceUpdater {
 const priceUpdater = new PriceUpdater();
 
 async function main() {
-  await priceUpdater.waitForReady(); // Wait for WebSocket to be ready
+  // await priceUpdater.waitForReady(); // Wait for WebSocket to be ready
 
   const accounts = await ethers.getSigners();
   const chainID = network.config.chainId;
   if (chainID == undefined) throw "Cannot find chainID";
 
-  const Gains = (await ethers.getContractAt(
-    "ICoolGains",
-    contracts[chainID].GainsNetwork
-  )) as unknown as ICoolGains;
+  const vault = (await ethers.getContractAt(
+    "AutoVault",
+    "0x267906eaEd3d8861D1Bd96bB29C02C09fCB3B70E"
+  )) as unknown as AutoVault;
+  const vaultAddress = "0x267906eaEd3d8861D1Bd96bB29C02C09fCB3B70E";
+  // await network.provider.send("hardhat_setBalance", [
+  //   vaultAddress,
+  //   "0x56BC75E2D63100000", // 100 ETH
+  // ]);
+  // const errorDecoder = ErrorDecoder.create([abi]);
+  // // Impersonate the oracle account
+  // await network.provider.request({
+  //   method: "hardhat_impersonateAccount",
+  //   params: [vaultAddress],
+  // });
+  // const impersonatedSigner = await ethers.getSigner(vaultAddress);
 
-  const trades = await Gains.getTrades(
-    "0x63948d45273f47f828bfb7fc645E853163686c65"
-  );
-  console.log(trades);
+  // // const GainsNetwork = new Contract(
+  // //   "0xd659a15812064c79e189fd950a189b15c75d3186",
+  // //   abi,
+  // //   impersonatedSigner
+  // // );
+  // const GainsNetwork = new Contract(
+  //   "0xd659a15812064c79e189fd950a189b15c75d3186",
+  //   abi,
+  //   impersonatedSigner
+  // );
+
+  // try {
+  //   await GainsNetwork.updateLeverage(0, 12000);
+  // } catch (err) {
+  //   const decodedError: DecodedError = await errorDecoder.decode(err);
+  //   console.log(`Revert reason: ${decodedError.reason}`);
+  // }
 }
 
+async function updateResponse(res: Decimal, provider: Provider, rsi: Decimal) {
+  const latestBlock = await provider.getBlock("latest");
+  if (latestBlock == undefined) throw "undefined";
+  const blockNumber = new Decimal(latestBlock.number.toString());
+  // const x = new Decimal(10).pow(18);
+
+  const body = `{"input_index": 1, "input_json": {"price": "${res.toFixed()}", "blockNumber":"${blockNumber.toFixed()}", "rsi": "${rsi.toFixed()}" }}`;
+  console.log(body);
+  const headers = `["Content-Type", "application/json", "apikey","${process.env.API}"]`;
+  const parsedHeaders: Record<string, string> = {};
+  const headerArray: string[] = JSON.parse(headers);
+
+  for (let i = 0; i < headerArray.length; i += 2) {
+    if (headerArray[i].toLowerCase() === "accept") {
+      parsedHeaders["Content-Type"] = headerArray[i + 1];
+    } else {
+      parsedHeaders[headerArray[i]] = headerArray[i + 1];
+    }
+  }
+  const config: AxiosRequestConfig = {
+    method: "POST" as Method,
+    url: `https://xpzyihmcunwwykjpfdgy.supabase.co/rest/v1/rpc/process_indexed_json`,
+    headers: parsedHeaders,
+    data: body ? JSON.parse(body) : undefined,
+  };
+
+  const response = await axios(config);
+  return response.data;
+}
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

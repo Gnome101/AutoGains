@@ -3,6 +3,7 @@ import { network, deployments as hardhatDeployments, ethers } from "hardhat";
 import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import { verify } from "../utils/verify";
 import { Decimal } from "decimal.js";
+import { BigNumberish } from "ethers";
 
 interface NamedAccounts {
   deployer: string;
@@ -53,11 +54,22 @@ module.exports = async function ({
   );
   const tokens = [startInfo.DAI, startInfo.USDC, startInfo.WETH];
   const amounts = [
-    getAmountDec("0.04", 18).toFixed(),
-    getAmountDec("0.04", 6).toFixed(),
-    getAmountDec("0.00002", 18).toFixed(),
-  ];
-  await vaultFactory.setStartingFees(tokens, amounts);
+    [getAmountDec("0.85", 18).toFixed(), getAmountDec("0.04", 18).toFixed()],
+    [getAmountDec("0.85", 6).toFixed(), getAmountDec("0.04", 6).toFixed()],
+    [
+      getAmountDec("0.00040", 18).toFixed(),
+      getAmountDec("0.00002", 18).toFixed(),
+    ],
+  ] as [BigNumberish, BigNumberish][];
+
+  let tx = await vaultFactory.setStartingFees(tokens, amounts);
+  await tx.wait();
+  if (chainId == 31337) {
+    tx = await vaultFactory.toggleCaller(
+      "0x793448209ef713cae41437c7daa219b59bef1a4a"
+    );
+  }
+  await tx.wait();
   if (chainId != 31337) {
     log("Verifying...");
     await verify(

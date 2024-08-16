@@ -81,12 +81,14 @@ contract Helper {
 
     function createDecreasePositionSizeAction(
         uint32 collateralDelta,
-        uint24 leverage
+        uint24 leverage,
+        uint32 expectedPrice
     ) public pure returns (uint256) {
         uint256 action = 0;
         action |= uint256(7) << 252; // Action type 7
         action |= uint256(collateralDelta) << 220;
         action |= uint256(leverage) << 196;
+        action |= uint256(expectedPrice) << 164;
         return action;
     }
 

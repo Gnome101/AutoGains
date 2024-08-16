@@ -1,0 +1,290 @@
+{
+  "address": "0x09868B0acC0dbf0613AAFC32fAe617215f1EdA0A",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "createCancelOpenOrderAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "createCloseTradeMarketAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "collateralDelta",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint24",
+          "name": "leverage",
+          "type": "uint24"
+        },
+        {
+          "internalType": "uint32",
+          "name": "expectedPrice",
+          "type": "uint32"
+        }
+      ],
+      "name": "createDecreasePositionSizeAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "maxSlippage",
+          "type": "uint16"
+        },
+        {
+          "internalType": "uint32",
+          "name": "collateralDelta",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint24",
+          "name": "leverage",
+          "type": "uint24"
+        },
+        {
+          "internalType": "uint32",
+          "name": "expectedPrice",
+          "type": "uint32"
+        }
+      ],
+      "name": "createIncreasePositionSizeAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "maxSlippage",
+          "type": "uint16"
+        },
+        {
+          "internalType": "uint16",
+          "name": "pairIndex",
+          "type": "uint16"
+        },
+        {
+          "internalType": "uint24",
+          "name": "leverage",
+          "type": "uint24"
+        },
+        {
+          "internalType": "bool",
+          "name": "long",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "isOpen",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint8",
+          "name": "collateralIndex",
+          "type": "uint8"
+        },
+        {
+          "internalType": "enum TradeType",
+          "name": "tradeType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint32",
+          "name": "collateralPercentage",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "openPrice",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "tp",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "sl",
+          "type": "uint32"
+        }
+      ],
+      "name": "createOpenTradeAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint24",
+          "name": "leverage",
+          "type": "uint24"
+        }
+      ],
+      "name": "createUpdateLeverageAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "maxSlippage",
+          "type": "uint16"
+        },
+        {
+          "internalType": "uint32",
+          "name": "triggerPrice",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "tp",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "sl",
+          "type": "uint32"
+        }
+      ],
+      "name": "createUpdateOpenOrderAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "sl",
+          "type": "uint32"
+        }
+      ],
+      "name": "createUpdateSLAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "tp",
+          "type": "uint32"
+        }
+      ],
+      "name": "createUpdateTPAction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x63b11a9051deb8e287e3e7341f936249f40124b22e3d101c1e948d2ab207498b",
+  "receipt": {
+    "to": null,
+    "from": "0x793448209Ef713CAe41437C7DaA219b59BEF1A4A",
+    "contractAddress": "0x09868B0acC0dbf0613AAFC32fAe617215f1EdA0A",
+    "transactionIndex": 1,
+    "gasUsed": "347570",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x034c7b0a9d0316656360410587b2be046623f9567fd4aaedde758a3ee6e27a46",
+    "transactionHash": "0x63b11a9051deb8e287e3e7341f936249f40124b22e3d101c1e948d2ab207498b",
+    "logs": [],
+    "blockNumber": 71374323,
+    "cumulativeGasUsed": "347570",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "76c3b5d1f613da26b065e9a1ed36d70a",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.26+commit.8a97fa7a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"createCancelOpenOrderAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"createCloseTradeMarketAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"collateralDelta\",\"type\":\"uint32\"},{\"internalType\":\"uint24\",\"name\":\"leverage\",\"type\":\"uint24\"},{\"internalType\":\"uint32\",\"name\":\"expectedPrice\",\"type\":\"uint32\"}],\"name\":\"createDecreasePositionSizeAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"maxSlippage\",\"type\":\"uint16\"},{\"internalType\":\"uint32\",\"name\":\"collateralDelta\",\"type\":\"uint32\"},{\"internalType\":\"uint24\",\"name\":\"leverage\",\"type\":\"uint24\"},{\"internalType\":\"uint32\",\"name\":\"expectedPrice\",\"type\":\"uint32\"}],\"name\":\"createIncreasePositionSizeAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"maxSlippage\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"pairIndex\",\"type\":\"uint16\"},{\"internalType\":\"uint24\",\"name\":\"leverage\",\"type\":\"uint24\"},{\"internalType\":\"bool\",\"name\":\"long\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"isOpen\",\"type\":\"bool\"},{\"internalType\":\"uint8\",\"name\":\"collateralIndex\",\"type\":\"uint8\"},{\"internalType\":\"enum TradeType\",\"name\":\"tradeType\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"collateralPercentage\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"openPrice\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"tp\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"sl\",\"type\":\"uint32\"}],\"name\":\"createOpenTradeAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint24\",\"name\":\"leverage\",\"type\":\"uint24\"}],\"name\":\"createUpdateLeverageAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"maxSlippage\",\"type\":\"uint16\"},{\"internalType\":\"uint32\",\"name\":\"triggerPrice\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"tp\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"sl\",\"type\":\"uint32\"}],\"name\":\"createUpdateOpenOrderAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"sl\",\"type\":\"uint32\"}],\"name\":\"createUpdateSLAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"tp\",\"type\":\"uint32\"}],\"name\":\"createUpdateTPAction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Helper.sol\":\"Helper\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[]},\"sources\":{\"contracts/Gains Contracts/IGainsNetwork.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.24;\\nenum TradeType {\\n    TRADE,\\n    LIMIT,\\n    STOP\\n}\\nstruct Trade {\\n    address user;\\n    uint32 index;\\n    uint16 pairIndex;\\n    uint24 leverage;\\n    bool long;\\n    bool isOpen;\\n    uint8 collateralIndex;\\n    TradeType tradeType;\\n    uint120 collateralAmount;\\n    uint64 openPrice;\\n    uint64 tp;\\n    uint64 sl;\\n    uint192 __placeholder;\\n}\\nstruct Id {\\n    address user;\\n    uint32 index;\\n}\\nstruct TradeInfo {\\n    uint32 createdBlock;\\n    uint32 tpLastUpdatedBlock;\\n    uint32 slLastUpdatedBlock;\\n    uint16 maxSlippageP;\\n    uint48 lastOiUpdateTs;\\n    uint48 collateralPriceUsd;\\n    uint48 __placeholder;\\n}\\nstruct Counter {\\n    uint32 currentIndex;\\n    uint32 openCount;\\n    uint192 __placeholder;\\n}\\nenum CounterType {\\n    TRADE,\\n    PENDING_ORDER\\n}\\nstruct BorrowingFeeInput {\\n    uint8 collateralIndex;\\n    address trader;\\n    uint16 pairIndex;\\n    uint32 index;\\n    bool long;\\n    uint256 collateral;\\n    uint256 leverage;\\n}\\n\\ninterface IGainsNetwork {\\n    function getTradeBorrowingFee(\\n        BorrowingFeeInput calldata _input\\n    ) external view returns (uint256 feeAmountCollateral);\\n\\n    function getPnlPercent(\\n        uint64 _openPrice,\\n        uint64 _currentPrice,\\n        bool _long,\\n        uint24 _leverage\\n    ) external pure returns (int256);\\n\\n    function updateOpenOrder(\\n        uint32 _index,\\n        uint64 _triggerPrice,\\n        uint64 _tp,\\n        uint64 _sl,\\n        uint16 _maxSlippageP\\n    ) external;\\n\\n    function getCounters(\\n        address _trader,\\n        CounterType _type\\n    ) external view returns (Counter memory);\\n\\n    function openTrade(\\n        Trade memory,\\n        uint16 maxSlippageP,\\n        address refferer\\n    ) external;\\n\\n    function updateSl(uint32 _index, uint64 _newSl) external;\\n\\n    function updateTp(uint32 _index, uint64 _newTp) external;\\n\\n    function cancelOpenOrder(uint32 _index) external;\\n\\n    function closeTradeMarket(uint32 _index, uint64 _expectedPrice) external;\\n\\n    function closeTradeMarketTimeout(Id memory _orderId) external;\\n\\n    function getTrade(\\n        address _trader,\\n        uint32 _index\\n    ) external view returns (Trade memory);\\n\\n    function decreasePositionSize(\\n        uint32 _index,\\n        uint120 _collateralDelta,\\n        uint24 _leverageDelta,\\n        uint64 _expectedPrice\\n    ) external;\\n\\n    function increasePositionSize(\\n        uint32 _index,\\n        uint120 _collateralDelta,\\n        uint24 _leverageDelta,\\n        uint64 _expectedPrice,\\n        uint16 _maxSlippageP\\n    ) external;\\n\\n    function updateLeverage(uint32 _index, uint24 _newLeverage) external;\\n\\n    function getTradeInfos(\\n        address _trader\\n    ) external view returns (TradeInfo[] memory);\\n\\n    function getTrades(address _trader) external view returns (Trade[] memory);\\n}\\n\",\"keccak256\":\"0x238d1b151401a1a01ec1fce44c249d4a5fc3420b949afa4bad3aa45b7d363f9d\",\"license\":\"MIT\"},\"contracts/Helper.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\nimport \\\"./Gains Contracts/IGainsNetwork.sol\\\";\\npragma solidity ^0.8.24;\\n\\ncontract Helper {\\n    function createOpenTradeAction(\\n        uint16 maxSlippage,\\n        uint16 pairIndex,\\n        uint24 leverage,\\n        bool long,\\n        bool isOpen,\\n        uint8 collateralIndex,\\n        TradeType tradeType,\\n        uint32 collateralPercentage,\\n        uint32 openPrice,\\n        uint32 tp,\\n        uint32 sl\\n    ) public pure returns (uint256) {\\n        uint256 action = 0;\\n        action |= uint256(0) << 252; // Action type 0\\n        action |= uint256(maxSlippage) << 236;\\n        action |= uint256(pairIndex) << 220;\\n        action |= uint256(leverage) << 196;\\n        action |= uint256(long ? 1 : 0) << 195;\\n        action |= uint256(isOpen ? 1 : 0) << 194;\\n        action |= uint256(collateralIndex) << 186;\\n        action |= uint256(tradeType) << 184;\\n        action |= uint256(collateralPercentage) << 152;\\n        action |= uint256(openPrice) << 120;\\n        action |= uint256(tp) << 88;\\n        action |= uint256(sl) << 56;\\n        return action;\\n    }\\n\\n    function createUpdateSLAction(uint32 sl) public pure returns (uint256) {\\n        uint256 action = 0;\\n        action |= uint256(1) << 252; // Action type 1\\n        action |= uint256(sl) << 220;\\n        return action;\\n    }\\n\\n    function createUpdateTPAction(uint32 tp) public pure returns (uint256) {\\n        uint256 action = 0;\\n        action |= uint256(2) << 252; // Action type 2\\n        action |= uint256(tp) << 220;\\n        return action;\\n    }\\n\\n    function createUpdateOpenOrderAction(\\n        uint16 maxSlippage,\\n        uint32 triggerPrice,\\n        uint32 tp,\\n        uint32 sl\\n    ) public pure returns (uint256) {\\n        uint256 action = 0;\\n        action |= uint256(3) << 252; // Action type 3\\n        action |= uint256(maxSlippage) << 236;\\n        action |= uint256(triggerPrice) << 204;\\n        action |= uint256(tp) << 172;\\n        action |= uint256(sl) << 140;\\n        return action;\\n    }\\n\\n    function createCancelOpenOrderAction() public pure returns (uint256) {\\n        return uint256(4) << 252; // Action type 4\\n    }\\n\\n    function createCloseTradeMarketAction() public pure returns (uint256) {\\n        return uint256(5) << 252; // Action type 5\\n    }\\n\\n    function createUpdateLeverageAction(\\n        uint24 leverage\\n    ) public pure returns (uint256) {\\n        uint256 action = 0;\\n        action |= uint256(6) << 252; // Action type 6\\n        action |= uint256(leverage) << 228;\\n        return action;\\n    }\\n\\n    function createDecreasePositionSizeAction(\\n        uint32 collateralDelta,\\n        uint24 leverage,\\n        uint32 expectedPrice\\n    ) public pure returns (uint256) {\\n        uint256 action = 0;\\n        action |= uint256(7) << 252; // Action type 7\\n        action |= uint256(collateralDelta) << 220;\\n        action |= uint256(leverage) << 196;\\n        action |= uint256(expectedPrice) << 164;\\n        return action;\\n    }\\n\\n    function createIncreasePositionSizeAction(\\n        uint16 maxSlippage,\\n        uint32 collateralDelta,\\n        uint24 leverage,\\n        uint32 expectedPrice\\n    ) public pure returns (uint256) {\\n        uint256 action = 0;\\n        action |= uint256(8) << 252; // Action type 8\\n        action |= uint256(maxSlippage) << 236;\\n        action |= uint256(collateralDelta) << 204;\\n        action |= uint256(leverage) << 180;\\n        action |= uint256(expectedPrice) << 148;\\n        return action;\\n    }\\n}\\n\",\"keccak256\":\"0x2cfd9b3d25c87950acb7f1e5674d58a7d1035792dd4e648df12aa91ea90617fe\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x6080604052348015600e575f80fd5b506105518061001c5f395ff3fe608060405234801561000f575f80fd5b5060043610610081575f3560e01c80630b232fd9146100855780634340e932146100bd57806352b78c18146100e3578063804d6ccb14610138578063811a5dae1461015d578063902d637814610167578063aaa1772c1461017a578063c9b9db0414610184578063cd73d3b7146101ca575b5f80fd5b6100ab610093366004610302565b63ffffffff60dc1b60dc9190911b16600160fd1b1790565b60405190815260200160405180910390f35b6100ab6100cb366004610302565b63ffffffff60dc1b60dc9190911b16600160fc1b1790565b6100ab6100f1366004610333565b63ffffffff608c1b608c82901b1663ffffffff60ac1b60ac84901b1663ffffffff60cc1b60cc86901b1661ffff60ec1b60ec88901b16171717600360fc1b17949350505050565b6100ab610146366004610396565b62ffffff60e41b60e49190911b16600360fd1b1790565b600160fe1b6100ab565b6100ab6101753660046103be565b61021e565b600560fc1b6100ab565b6100ab61019236600461048f565b63ffffffff60a41b60a482901b1662ffffff60c41b60c484901b1663ffffffff60dc1b60dc86901b161717600760fc1b179392505050565b6100ab6101d83660046104cf565b63ffffffff60941b609482901b1662ffffff60b41b60b484901b1663ffffffff60cc1b60cc86901b1661ffff60ec1b60ec88901b16171717600160ff1b17949350505050565b5f62ffffff60c41b60c48b901b1661ffff60dc1b60dc8d901b1661ffff60ec1b60ec8f901b16171760c38a610253575f610256565b60015b60ff16901b1760c289610269575f61026c565b60015b60ff16901b8117905060ba8860ff16901b8117905060b887600281111561029557610295610507565b901b1760989590951b63ffffffff60981b169490941760789390931b63ffffffff60781b169290921760589190911b63ffffffff60581b161760389190911b63ffffffff60381b161798975050505050505050565b803563ffffffff811681146102fd575f80fd5b919050565b5f60208284031215610312575f80fd5b61031b826102ea565b9392505050565b803561ffff811681146102fd575f80fd5b5f805f8060808587031215610346575f80fd5b61034f85610322565b935061035d602086016102ea565b925061036b604086016102ea565b9150610379606086016102ea565b905092959194509250565b803562ffffff811681146102fd575f80fd5b5f602082840312156103a6575f80fd5b61031b82610384565b803580151581146102fd575f80fd5b5f805f805f805f805f805f6101608c8e0312156103d9575f80fd5b6103e28c610322565b9a506103f060208d01610322565b99506103fe60408d01610384565b985061040c60608d016103af565b975061041a60808d016103af565b965060a08c013560ff8116811461042f575f80fd5b955060c08c013560038110610442575f80fd5b945061045060e08d016102ea565b935061045f6101008d016102ea565b925061046e6101208d016102ea565b915061047d6101408d016102ea565b90509295989b509295989b9093969950565b5f805f606084860312156104a1575f80fd5b6104aa846102ea565b92506104b860208501610384565b91506104c6604085016102ea565b90509250925092565b5f805f80608085870312156104e2575f80fd5b6104eb85610322565b93506104f9602086016102ea565b925061036b60408601610384565b634e487b7160e01b5f52602160045260245ffdfea264697066735822122041da8a3b025bb763c525c02e1cfc469c4acf1ef296db4ff51bbeb1bfb9c75acf64736f6c634300081a0033",
+  "deployedBytecode": "0x608060405234801561000f575f80fd5b5060043610610081575f3560e01c80630b232fd9146100855780634340e932146100bd57806352b78c18146100e3578063804d6ccb14610138578063811a5dae1461015d578063902d637814610167578063aaa1772c1461017a578063c9b9db0414610184578063cd73d3b7146101ca575b5f80fd5b6100ab610093366004610302565b63ffffffff60dc1b60dc9190911b16600160fd1b1790565b60405190815260200160405180910390f35b6100ab6100cb366004610302565b63ffffffff60dc1b60dc9190911b16600160fc1b1790565b6100ab6100f1366004610333565b63ffffffff608c1b608c82901b1663ffffffff60ac1b60ac84901b1663ffffffff60cc1b60cc86901b1661ffff60ec1b60ec88901b16171717600360fc1b17949350505050565b6100ab610146366004610396565b62ffffff60e41b60e49190911b16600360fd1b1790565b600160fe1b6100ab565b6100ab6101753660046103be565b61021e565b600560fc1b6100ab565b6100ab61019236600461048f565b63ffffffff60a41b60a482901b1662ffffff60c41b60c484901b1663ffffffff60dc1b60dc86901b161717600760fc1b179392505050565b6100ab6101d83660046104cf565b63ffffffff60941b609482901b1662ffffff60b41b60b484901b1663ffffffff60cc1b60cc86901b1661ffff60ec1b60ec88901b16171717600160ff1b17949350505050565b5f62ffffff60c41b60c48b901b1661ffff60dc1b60dc8d901b1661ffff60ec1b60ec8f901b16171760c38a610253575f610256565b60015b60ff16901b1760c289610269575f61026c565b60015b60ff16901b8117905060ba8860ff16901b8117905060b887600281111561029557610295610507565b901b1760989590951b63ffffffff60981b169490941760789390931b63ffffffff60781b169290921760589190911b63ffffffff60581b161760389190911b63ffffffff60381b161798975050505050505050565b803563ffffffff811681146102fd575f80fd5b919050565b5f60208284031215610312575f80fd5b61031b826102ea565b9392505050565b803561ffff811681146102fd575f80fd5b5f805f8060808587031215610346575f80fd5b61034f85610322565b935061035d602086016102ea565b925061036b604086016102ea565b9150610379606086016102ea565b905092959194509250565b803562ffffff811681146102fd575f80fd5b5f602082840312156103a6575f80fd5b61031b82610384565b803580151581146102fd575f80fd5b5f805f805f805f805f805f6101608c8e0312156103d9575f80fd5b6103e28c610322565b9a506103f060208d01610322565b99506103fe60408d01610384565b985061040c60608d016103af565b975061041a60808d016103af565b965060a08c013560ff8116811461042f575f80fd5b955060c08c013560038110610442575f80fd5b945061045060e08d016102ea565b935061045f6101008d016102ea565b925061046e6101208d016102ea565b915061047d6101408d016102ea565b90509295989b509295989b9093969950565b5f805f606084860312156104a1575f80fd5b6104aa846102ea565b92506104b860208501610384565b91506104c6604085016102ea565b90509250925092565b5f805f80608085870312156104e2575f80fd5b6104eb85610322565b93506104f9602086016102ea565b925061036b60408601610384565b634e487b7160e01b5f52602160045260245ffdfea264697066735822122041da8a3b025bb763c525c02e1cfc469c4acf1ef296db4ff51bbeb1bfb9c75acf64736f6c634300081a0033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}
