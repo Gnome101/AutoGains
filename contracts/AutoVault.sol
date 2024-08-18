@@ -54,11 +54,11 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     IGainsNetwork public GainsNetwork;
     uint256 private fee;
     address public specialRefer = 0xB46838207D4CDc3b0F6d8862b8F0d29fee938051;
-    address private vaultManager;
+    address public vaultManager;
     address private vaultFactory;
 
-    uint256 private constant ENTRY_FEE = 80; //0.5% fee
-    uint256 private constant EXIT_FEE = 80; //
+    uint256 public constant ENTRY_FEE = 80; //0.5% fee
+    uint256 public constant EXIT_FEE = 80; //
 
     tuint256 public totalValueCollateral;
     taddress public currentUser;
@@ -85,7 +85,8 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
 
     uint256 public oracleFee; // Around 87 cents
     uint256 public vaultActionFee; // Around 4 cents
-
+    uint256 public tradeFee; //Around 23 cents
+    //A vault can have only active trades at a time
     mapping(bytes32 => RewardInfo) public rewardBot;
 
     struct StartInfo {
@@ -123,6 +124,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         internalDeposit(startingBalance, startingInfo.vaultManager);
         oracleFee = startingFee[0];
         vaultActionFee = startingFee[1];
+        // tradeFee = startingFee[2];
         balanceRequest = _req;
         _asset.approve(startingInfo.gainsAddress, type(uint256).max);
     }
@@ -142,7 +144,11 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             path = string.concat(path, ";latestPrices,");
             path = string.concat(path, i.toString());
         }
-
+        for (uint i = 0; i < trades.length; i++) {
+            path = string.concat(path, ";newCollateralArray,");
+            path = string.concat(path, i.toString());
+        }
+        console.log(path);
         balanceRequest._add("path", path);
         requestId = VaultFactory(vaultFactory).sendInfoRequest(
             msg.sender,
@@ -156,6 +162,10 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             choice,
             slippage
         );
+        _pause();
+        // We have to pause the contract here,
+        // because a trade could be opened in between
+        //start and preform action
     }
 
     event ApprovalExtended(address indexed msgSender);
@@ -169,6 +179,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         bytes32 requestId,
         uint256[] memory data
     ) external onlyFactory {
+        _unpause();
         VaultAction memory vaultAction = requestToAction[requestId];
         currentUser.set(vaultAction.msgSender);
         if (_asset.decimals() < 10) {
@@ -519,21 +530,27 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         }
     }
 
+    error IncorrectTradeData(uint256, uint256);
+
     function beforeWithdraw(
         address user,
         uint256 assetsWithdrawn
     ) internal override {
         //This is to prevent arbitrage
-
         if (_lastMintTimestamp[user] + COOLDOWN_PERIOD > block.timestamp) {
             revert CoolDownViolated();
         }
 
         Trade[] memory trades = GainsNetwork.getTrades(address(this));
         if (trades.length == 0) return;
+        uint256 tradeLength = trades.length;
+        if (tradeLength * 2 != tArray.length()) {
+            revert IncorrectTradeData(tradeLength, tArray.length());
+        }
+
         uint256 _totalAssets = this.totalAssets();
 
-        for (uint i = 0; i < trades.length; i++) {
+        for (uint i = 0; i < tradeLength; i++) {
             uint120 collateralToWithdraw = uint120(
                 Math.mulDiv(
                     assetsWithdrawn,
@@ -541,12 +558,19 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
                     _totalAssets
                 )
             );
-            GainsNetwork.decreasePositionSize(
-                trades[i].index, //Trade Index
-                collateralToWithdraw, //COLLATERAL DELTA
-                0, //LEVERAGE DELTA
-                uint64(tArray.get(i)) // EXPECTED PRICE GOES HERE
-            );
+            if (uint64(tArray.get(i)) < collateralToWithdraw) {
+                GainsNetwork.closeTradeMarket(
+                    trades[i].index,
+                    uint64(tArray.get(i + tradeLength))
+                );
+            } else {
+                GainsNetwork.decreasePositionSize(
+                    trades[i].index, //Trade Index
+                    collateralToWithdraw, //COLLATERAL DELTA
+                    0, //LEVERAGE DELTA
+                    uint64(tArray.get(i)) // EXPECTED PRICE GOES HERE
+                );
+            }
         }
     }
 
@@ -564,7 +588,8 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     }
 
     function _getMinFee() internal view override returns (uint256) {
-        return vaultActionFee;
+        //Trade[] memory trades = GainsNetwork.getTrades(address(this));
+        return vaultActionFee; //+ tradeFee * trades.length;
     }
 
     function _doesRecipientPayFee() internal view override returns (bool) {

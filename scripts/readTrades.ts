@@ -115,38 +115,38 @@ async function main() {
 
   const vault = (await ethers.getContractAt(
     "AutoVault",
-    "0x267906eaEd3d8861D1Bd96bB29C02C09fCB3B70E"
+    "0x123c9cA4afDA6616Dd5Bfe951D128FF4449924b9"
   )) as unknown as AutoVault;
-  const vaultAddress = "0x267906eaEd3d8861D1Bd96bB29C02C09fCB3B70E";
-  // await network.provider.send("hardhat_setBalance", [
-  //   vaultAddress,
-  //   "0x56BC75E2D63100000", // 100 ETH
-  // ]);
-  // const errorDecoder = ErrorDecoder.create([abi]);
-  // // Impersonate the oracle account
-  // await network.provider.request({
-  //   method: "hardhat_impersonateAccount",
-  //   params: [vaultAddress],
-  // });
-  // const impersonatedSigner = await ethers.getSigner(vaultAddress);
+  const vaultAddress = "0x123c9cA4afDA6616Dd5Bfe951D128FF4449924b9";
+  await network.provider.send("hardhat_setBalance", [
+    vaultAddress,
+    "0x56BC75E2D63100000", // 100 ETH
+  ]);
+  const errorDecoder = ErrorDecoder.create([abi]);
+  // Impersonate the oracle account
+  await network.provider.request({
+    method: "hardhat_impersonateAccount",
+    params: [vaultAddress],
+  });
+  const impersonatedSigner = await ethers.getSigner(vaultAddress);
 
-  // // const GainsNetwork = new Contract(
-  // //   "0xd659a15812064c79e189fd950a189b15c75d3186",
-  // //   abi,
-  // //   impersonatedSigner
-  // // );
   // const GainsNetwork = new Contract(
   //   "0xd659a15812064c79e189fd950a189b15c75d3186",
   //   abi,
   //   impersonatedSigner
   // );
+  const GainsNetwork = new Contract(
+    "0xd659a15812064c79e189fd950a189b15c75d3186",
+    abi,
+    impersonatedSigner
+  );
 
-  // try {
-  //   await GainsNetwork.updateLeverage(0, 12000);
-  // } catch (err) {
-  //   const decodedError: DecodedError = await errorDecoder.decode(err);
-  //   console.log(`Revert reason: ${decodedError.reason}`);
-  // }
+  try {
+    await GainsNetwork.decreasePositionSize(0, 50000000, 0, 591710000000000);
+  } catch (err) {
+    const decodedError: DecodedError = await errorDecoder.decode(err);
+    console.log(`Revert reason: ${decodedError.reason}`);
+  }
 }
 
 async function updateResponse(res: Decimal, provider: Provider, rsi: Decimal) {

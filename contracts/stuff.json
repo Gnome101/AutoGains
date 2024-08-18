@@ -1,0 +1,51 @@
+{
+  "tradeResults": [
+    {
+      "pairIndex": 0,
+      "collateralAmount": 33.004,
+      "collateralValueUsd": 33.02050199999999,
+      "resultDiff": 1.975572899825293,
+      "tradeValue": 31.0449291001747
+    },
+    {
+      "pairIndex": 7,
+      "collateralAmount": 36.004,
+      "collateralValueUsd": 0,
+      "resultDiff": 29.07388774143259,
+      "tradeValue": -29.07388774143259
+    },
+    {
+      "pairIndex": 109,
+      "collateralAmount": 36.004,
+      "collateralValueUsd": 24.932519052119996,
+      "resultDiff": 23.189799783451054,
+      "tradeValue": 1.7427192686689423
+    },
+    {
+      "pairIndex": 0,
+      "collateralAmount": 34.00016,
+      "collateralValueUsd": 585.8647908578064,
+      "resultDiff": -9.294401649836612,
+      "tradeValue": 595.159192507643
+    },
+    {
+      "pairIndex": 0,
+      "collateralAmount": 43.001387,
+      "collateralValueUsd": 30.600363207785797,
+      "resultDiff": -9.413376856842802,
+      "tradeValue": 40.0137400646286
+    },
+    {
+      "pairIndex": 0,
+      "collateralAmount": 53.001387,
+      "collateralValueUsd": 37.9209182573061,
+      "resultDiff": -9.783180410851143,
+      "tradeValue": 47.70409866815724
+    }
+  ],
+  "totalCollateral": 235.01493399999998,
+  "totalResultDiff": 25.74830150717837,
+  "totalTradeValue": 686.5907918678398,
+  "blockNumber": "71841768",
+  "latestPrices": [0, 59288.01, 7, 111.0903, 109, 0.538969]
+}

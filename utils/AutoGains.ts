@@ -8,9 +8,14 @@ import {
   mineUpTo,
 } from "@nomicfoundation/hardhat-network-helpers";
 import Decimal from "decimal.js";
-import { AutoVaultHarness__factory } from "../typechain-types";
+import { AutoVault, AutoVaultHarness__factory } from "../typechain-types";
 import { expect } from "chai";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import {
+  toDecimal,
+  calculateFeeOnTotal,
+  calculateFeeOnRaw,
+} from "../test/vault-test";
 
 export async function impersonateOracleRequestAndFulfill(
   testContract: any,
@@ -193,6 +198,8 @@ export async function impersonateOracleDoVaultAction(
     new Decimal(latestBlock.number).mul(x).toFixed().toString()
   );
   fulfillValue.push(new Decimal(100).mul(x).toFixed());
+  fulfillValue.push(new Decimal(100).mul(x).toFixed());
+
   await oracleContract.preformAction(requestID.toString(), fulfillValue);
 
   // Stop impersonating the account (optional, but good practice)
@@ -200,4 +207,137 @@ export async function impersonateOracleDoVaultAction(
     method: "hardhat_stopImpersonatingAccount",
     params: [oracleAddress],
   });
+}
+export async function previewDeposit(
+  autoVault: AutoVault,
+  runner: string,
+  depositAmount: Decimal,
+  totalAssets: Decimal
+): Promise<PreviewAmounts> {
+  const totalSupply = new Decimal((await autoVault.totalSupply()).toString());
+
+  const entryFee = toDecimal(await autoVault.ENTRY_FEE());
+  const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
+  const minFee = toDecimal(await autoVault.vaultActionFee());
+  let expectedFee = calculateFeeOnTotal(
+    depositAmount,
+    entryFee,
+    MOVEMENT_FEE_SCALE,
+    minFee
+  );
+  const vaultManager = await autoVault.vaultManager();
+  if (vaultManager == runner) {
+    expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
+  }
+
+  const expectedShares = depositAmount
+    .sub(expectedFee)
+    .mul(totalSupply.plus(1))
+    .dividedBy(totalAssets.plus(1))
+    .floor();
+
+  return { expectedAmount: expectedShares, expectedFee: expectedFee };
+}
+export async function previewMint(
+  autoVault: AutoVault,
+  runner: string,
+  mintAmount: Decimal,
+  totalAssets: Decimal
+): Promise<PreviewAmounts> {
+  const totalSupply = new Decimal((await autoVault.totalSupply()).toString());
+
+  const entryFee = toDecimal(await autoVault.ENTRY_FEE());
+  const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
+  const minFee = toDecimal(await autoVault.vaultActionFee());
+
+  const expectedAssetsPaid = mintAmount
+    .mul(totalAssets.plus(1))
+    .dividedBy(totalSupply.plus(1))
+    .ceil();
+
+  let expectedFee = calculateFeeOnRaw(
+    expectedAssetsPaid,
+    entryFee,
+    MOVEMENT_FEE_SCALE,
+    minFee
+  );
+  const vaultManager = await autoVault.vaultManager();
+  if (vaultManager == runner) {
+    expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
+  }
+
+  return {
+    expectedAmount: expectedAssetsPaid.plus(expectedFee),
+    expectedFee: expectedFee,
+  };
+}
+export async function previewWithdraw(
+  autoVault: AutoVault,
+  runner: string,
+  withdrawAmount: Decimal,
+  totalAssets: Decimal
+): Promise<PreviewAmounts> {
+  const totalSupply = new Decimal((await autoVault.totalSupply()).toString());
+
+  const exitFee = toDecimal(await autoVault.EXIT_FEE());
+  const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
+  const minFee = toDecimal(await autoVault.vaultActionFee());
+  let expectedFee = calculateFeeOnRaw(
+    withdrawAmount,
+    exitFee,
+    MOVEMENT_FEE_SCALE,
+    minFee
+  );
+  const vaultManager = await autoVault.vaultManager();
+  if (vaultManager == runner) {
+    expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
+  }
+
+  const expectedSoldShares = withdrawAmount
+    .plus(expectedFee)
+    .mul(totalSupply.plus(1))
+    .dividedBy(totalAssets.plus(1))
+    .ceil();
+
+  return {
+    expectedAmount: expectedSoldShares,
+    expectedFee: expectedFee,
+  };
+}
+export async function previewRedeem(
+  autoVault: AutoVault,
+  runner: string,
+  redeemAmount: Decimal,
+  totalAssets: Decimal
+): Promise<PreviewAmounts> {
+  const totalSupply = new Decimal((await autoVault.totalSupply()).toString());
+
+  const exitFee = toDecimal(await autoVault.EXIT_FEE());
+  const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
+  const minFee = toDecimal(await autoVault.vaultActionFee());
+
+  let expectedAssetsEarned = redeemAmount
+    .mul(totalAssets.plus(1))
+    .dividedBy(totalSupply.plus(1))
+    .floor();
+
+  let expectedFee = calculateFeeOnTotal(
+    expectedAssetsEarned,
+    exitFee,
+    MOVEMENT_FEE_SCALE,
+    minFee
+  );
+  const vaultManager = await autoVault.vaultManager();
+  if (vaultManager == runner) {
+    expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
+  }
+
+  return {
+    expectedAmount: expectedAssetsEarned.sub(expectedFee),
+    expectedFee: expectedFee,
+  };
+}
+export interface PreviewAmounts {
+  expectedAmount: Decimal;
+  expectedFee: Decimal;
 }

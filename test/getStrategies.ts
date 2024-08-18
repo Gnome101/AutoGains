@@ -35,14 +35,14 @@ export async function getStrategies(Helper: Helper): Promise<BigNumberish[][]> {
   const updateLeverageAction = await Helper.createUpdateLeverageAction(12000);
 
   const decreasePositionAction = await Helper.createDecreasePositionSizeAction(
-    400000,
+    100000,
     0,
     1000000
   );
   const increasePositionSize = await Helper.createIncreasePositionSizeAction(
     10000,
-    100000,
-    1000,
+    600000,
+    6000,
     1000000
   );
   const strategy1 = getStrategy(longAction, updateSLAction, updateTpAction);
