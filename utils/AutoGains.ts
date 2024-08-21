@@ -16,7 +16,7 @@ import {
   calculateFeeOnTotal,
   calculateFeeOnRaw,
 } from "../test/vault-test";
-
+Decimal.set({ precision: 40 });
 export async function impersonateOracleRequestAndFulfill(
   testContract: any,
   fulfillValue: string
@@ -68,7 +68,7 @@ export async function impersonateOracleFulfill(
   testContract: any,
   requestID: BytesLike,
   fulfillValue: BigNumberish[],
-  addToBlockNumber: number //This is used to manipulate the block number
+  addToTimeStamp: number //This is used to manipulate the block number
 ): Promise<void> {
   const chainId = network.config.chainId;
   if (chainId === undefined) throw new Error("Chain ID is undefined");
@@ -93,10 +93,14 @@ export async function impersonateOracleFulfill(
   const oracleContract = testContract.connect(impersonatedSigner);
   const x = new Decimal(10).pow(18);
 
-  fulfillValue.splice(1, 0, new Decimal(latestBlock.number).mul(x).toFixed());
-  if (addToBlockNumber == 0) addToBlockNumber++;
+  fulfillValue.splice(
+    1,
+    0,
+    new Decimal(latestBlock.timestamp - addToTimeStamp).mul(x).toFixed()
+  );
+  if (addToTimeStamp == 0) addToTimeStamp++;
 
-  await mineUpTo(latestBlock.number + addToBlockNumber);
+  // await mineUpTo(latestBlock.timestamp + addToTimeStamp);
   await oracleContract.fulfill(requestID.toString(), fulfillValue);
 
   // Stop impersonating the account (optional, but good practice)
@@ -109,7 +113,7 @@ export async function impersonateOracleFulfillAndCheck(
   testContract: any,
   requestID: BytesLike,
   fulfillValue: BigNumberish[],
-  addToBlockNumber: number, //This is used to manipulate the block number,
+  addToTimeStamp: number, //This is used to manipulate the block number,
   contractToCheck: any,
   EventToCheck: string,
   tradeCheck: any
@@ -137,10 +141,14 @@ export async function impersonateOracleFulfillAndCheck(
   const oracleContract = testContract.connect(impersonatedSigner);
   const x = new Decimal(10).pow(18);
 
-  fulfillValue.splice(1, 0, new Decimal(latestBlock.number).mul(x).toFixed());
-  if (addToBlockNumber == 0) addToBlockNumber++;
+  fulfillValue.splice(
+    1,
+    0,
+    new Decimal(latestBlock.timestamp - addToTimeStamp).mul(x).toFixed()
+  );
+  if (addToTimeStamp == 0) addToTimeStamp++;
 
-  await mineUpTo(latestBlock.number + addToBlockNumber);
+  // await mineUpTo(latestBlock.timestamp + addToTimeStamp);
   if (tradeCheck) {
     await expect(oracleContract.fulfill(requestID.toString(), fulfillValue))
       .to.emit(contractToCheck, EventToCheck)
@@ -162,7 +170,8 @@ export async function impersonateOracleDoVaultAction(
   requestID: BytesLike,
   fulfillValue: BigNumberish[],
   tokenDecimals: number,
-  addToBlockNumber: number
+  addToTimeStamp: number,
+  customCollateralWorth: string = "100"
 ): Promise<void> {
   const chainId = network.config.chainId;
   if (chainId === undefined) throw new Error("Chain ID is undefined");
@@ -182,24 +191,36 @@ export async function impersonateOracleDoVaultAction(
     params: [oracleAddress],
   });
 
-  if (addToBlockNumber == 0) addToBlockNumber++;
+  if (addToTimeStamp == 0) addToTimeStamp++;
 
   const impersonatedSigner = await ethers.getSigner(oracleAddress);
   const oracleContract = testContract.connect(impersonatedSigner);
-  await mineUpTo(latestBlock.number + addToBlockNumber);
+  // await mineUpTo(latestBlock.timestamp + addToTimeStamp);
   let value = new Decimal(fulfillValue[0].toString());
-  const decimalAdj = 10 - tokenDecimals;
+  const decimalAdj = 18 - tokenDecimals;
   console.log(fulfillValue);
   value = value.mul(new Decimal(10).pow(decimalAdj));
   fulfillValue[0] = value.toFixed();
-  const x = new Decimal(10).pow(10);
+  const x = new Decimal(10).pow(18);
+  //Broken
+  fulfillValue.push(
+    new Decimal(latestBlock.timestamp - addToTimeStamp)
+      .mul(x)
+      .toFixed()
+      .toString()
+  );
 
   fulfillValue.push(
-    new Decimal(latestBlock.number).mul(x).toFixed().toString()
+    new Decimal(customCollateralWorth)
+      .mul(new Decimal(10).pow(decimalAdj))
+      .toFixed()
   );
-  fulfillValue.push(new Decimal(100).mul(x).toFixed());
-  fulfillValue.push(new Decimal(100).mul(x).toFixed());
-
+  fulfillValue.push(
+    new Decimal(customCollateralWorth)
+      .mul(new Decimal(10).pow(decimalAdj))
+      .toFixed()
+  );
+  console.log(fulfillValue);
   await oracleContract.preformAction(requestID.toString(), fulfillValue);
 
   // Stop impersonating the account (optional, but good practice)
@@ -208,6 +229,75 @@ export async function impersonateOracleDoVaultAction(
     params: [oracleAddress],
   });
 }
+export async function impersonateOracleDoVaultActionAndCheck(
+  testContract: any,
+  requestID: BytesLike,
+  fulfillValue: BigNumberish[],
+  tokenDecimals: number,
+  addToTimeStamp: number,
+  customCollateralWorth: string = "100",
+  contractToCheck: any,
+  EventToCheck: string
+): Promise<void> {
+  const chainId = network.config.chainId;
+  if (chainId === undefined) throw new Error("Chain ID is undefined");
+  const latestBlock = await ethers.provider.getBlock("latest");
+  if (latestBlock == undefined) throw "BlockNumber is null";
+  const oracleAddress = contracts[chainId].OracleAddress;
+
+  // Set balance for the oracle address
+  await network.provider.send("hardhat_setBalance", [
+    oracleAddress,
+    "0x56BC75E2D63100000", // 100 ETH
+  ]);
+
+  // Impersonate the oracle account
+  await network.provider.request({
+    method: "hardhat_impersonateAccount",
+    params: [oracleAddress],
+  });
+
+  if (addToTimeStamp == 0) addToTimeStamp++;
+
+  const impersonatedSigner = await ethers.getSigner(oracleAddress);
+  const oracleContract = testContract.connect(impersonatedSigner);
+  // await mineUpTo(latestBlock.timestamp + addToTimeStamp);
+  let value = new Decimal(fulfillValue[0].toString());
+  const decimalAdj = 18 - tokenDecimals;
+  console.log(fulfillValue);
+  value = value.mul(new Decimal(10).pow(decimalAdj));
+  fulfillValue[0] = value.toFixed();
+  const x = new Decimal(10).pow(18);
+  //Broken
+  fulfillValue.push(
+    new Decimal(latestBlock.timestamp - addToTimeStamp)
+      .mul(x)
+      .toFixed()
+      .toString()
+  );
+
+  fulfillValue.push(
+    new Decimal(customCollateralWorth)
+      .mul(new Decimal(10).pow(decimalAdj))
+      .toFixed()
+  );
+  fulfillValue.push(
+    new Decimal(customCollateralWorth)
+      .mul(new Decimal(10).pow(decimalAdj))
+      .toFixed()
+  );
+  console.log(fulfillValue);
+  await expect(
+    oracleContract.preformAction(requestID.toString(), fulfillValue)
+  ).to.emit(contractToCheck, EventToCheck);
+
+  // Stop impersonating the account (optional, but good practice)
+  await network.provider.request({
+    method: "hardhat_stopImpersonatingAccount",
+    params: [oracleAddress],
+  });
+}
+
 export async function previewDeposit(
   autoVault: AutoVault,
   runner: string,
@@ -215,20 +305,27 @@ export async function previewDeposit(
   totalAssets: Decimal
 ): Promise<PreviewAmounts> {
   const totalSupply = new Decimal((await autoVault.totalSupply()).toString());
-
-  const entryFee = toDecimal(await autoVault.ENTRY_FEE());
+  let entryFee = await autoVault.ENTRY_FEE();
+  console.log(entryFee);
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
-  const minFee = toDecimal(await autoVault.vaultActionFee());
+  const minFee = await autoVault.vaultActionFee();
+
   let expectedFee = calculateFeeOnTotal(
     depositAmount,
-    entryFee,
+    toDecimal(entryFee),
     MOVEMENT_FEE_SCALE,
-    minFee
+    toDecimal(minFee)
   );
   const vaultManager = await autoVault.vaultManager();
   if (vaultManager == runner) {
     expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
   }
+  console.log(
+    "JavaScwa",
+    depositAmount.sub(expectedFee),
+    totalSupply,
+    totalAssets
+  );
 
   const expectedShares = depositAmount
     .sub(expectedFee)
@@ -282,6 +379,7 @@ export async function previewWithdraw(
   const exitFee = toDecimal(await autoVault.EXIT_FEE());
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
   const minFee = toDecimal(await autoVault.vaultActionFee());
+  console.log(`min Fee:${minFee}`);
   let expectedFee = calculateFeeOnRaw(
     withdrawAmount,
     exitFee,
@@ -315,7 +413,12 @@ export async function previewRedeem(
   const exitFee = toDecimal(await autoVault.EXIT_FEE());
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
   const minFee = toDecimal(await autoVault.vaultActionFee());
-
+  console.log(
+    "More TS",
+    redeemAmount,
+    totalAssets.plus(1),
+    totalSupply.plus(1)
+  );
   let expectedAssetsEarned = redeemAmount
     .mul(totalAssets.plus(1))
     .dividedBy(totalSupply.plus(1))
@@ -327,11 +430,13 @@ export async function previewRedeem(
     MOVEMENT_FEE_SCALE,
     minFee
   );
+  console.log("TS", expectedAssetsEarned, expectedFee);
   const vaultManager = await autoVault.vaultManager();
   if (vaultManager == runner) {
     expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
   }
-
+  if (expectedAssetsEarned.sub(expectedFee).lessThanOrEqualTo(0))
+    throw "Fee is greater than amount";
   return {
     expectedAmount: expectedAssetsEarned.sub(expectedFee),
     expectedFee: expectedFee,

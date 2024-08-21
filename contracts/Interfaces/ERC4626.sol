@@ -170,7 +170,6 @@ abstract contract ERC4626 is ERC20, IERC4626 {
 
     /** @dev See {IERC4626-maxRedeem}. */
     function maxRedeem(address owner) public view virtual returns (uint256) {
-        console.log(balanceOf(owner));
         return balanceOf(owner);
     }
 
@@ -242,7 +241,6 @@ abstract contract ERC4626 is ERC20, IERC4626 {
         }
 
         uint256 shares = previewWithdraw(assets);
-        console.log("Sending him", assets, shares);
 
         _withdraw(_msgSender(), receiver, owner, assets, shares);
 
@@ -255,7 +253,6 @@ abstract contract ERC4626 is ERC20, IERC4626 {
         address receiver,
         address owner
     ) public virtual returns (uint256) {
-        console.log(shares, receiver, owner);
         uint256 maxShares = maxRedeem(owner);
         if (shares > maxShares) {
             revert ERC4626ExceededMaxRedeem(owner, shares, maxShares);

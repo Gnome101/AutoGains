@@ -57,7 +57,8 @@ describe("Vault Tests eeep", function () {
   const MAX_BLOCK_DIFFERENCE = 16;
   const SWAP_FEE = 2_000;
   const SWAP_FEE_SCALE = 10 ** 6;
-  const MIN_FEE = getAmountDec("0.04", 6);
+  let MIN_FEE: Decimal;
+  const collateralIndex = 1;
 
   beforeEach(async () => {
     const chainID = network.config.chainId;
@@ -117,13 +118,13 @@ describe("Vault Tests eeep", function () {
 
     USDC = (await ethers.getContractAt(
       "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20",
-      contracts[chainID].USDC,
+      contracts[chainID].DAI,
       vaultCreator
     )) as unknown as ERC20;
 
     otherUSDC = (await ethers.getContractAt(
       "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20",
-      contracts[chainID].USDC,
+      contracts[chainID].DAI,
       otherUser
     )) as unknown as ERC20;
 
@@ -137,10 +138,12 @@ describe("Vault Tests eeep", function () {
     await vaultFactory
       .connect(otherUser)
       .setGainsAddress(FakeGainsNetwork.target);
+
+    MIN_FEE = await getAmount(USDC, "0.85");
   });
 
   it("can create a vault with 1 strategy  ", async () => {
-    const initalAmount = await getAmount(USDC, "10");
+    const initalAmount = await getAmount(USDC, "100");
 
     await USDC.approve(vaultFactory.target, initalAmount.toFixed());
 
@@ -242,7 +245,7 @@ describe("Vault Tests eeep", function () {
     let otherAutoVault: AutoVault;
     const decimals = new Decimal(10).pow(18);
     beforeEach(async () => {
-      const initalAmount = await getAmount(USDC, "10");
+      const initalAmount = await getAmount(USDC, "100");
 
       await USDC.approve(vaultFactory.target, initalAmount.toFixed());
 
@@ -265,7 +268,7 @@ describe("Vault Tests eeep", function () {
         5000,
         true,
         true,
-        3,
+        collateralIndex,
         0,
         200000, // Should be 2%
         10000000,
@@ -342,12 +345,13 @@ describe("Vault Tests eeep", function () {
           userBalanceBefore.add(expectedShares.toString()).toFixed()
         );
       });
-      it("other user can deposit for a fee ", async () => {
+      it("other user can deposit for a fee gyat", async () => {
         const depositAmount = await getAmount(USDC, "2");
+        console.log("Amount", depositAmount);
         await otherUSDC.approve(autoVault.target, depositAmount.toFixed());
 
         const expectedFee = calculateFeeOnTotal(depositAmount, ENTRY_FEE);
-
+        console.log("Expected fee", expectedFee);
         const expectedShares = depositAmount.sub(expectedFee);
 
         const Before = await getImportantInfo(
@@ -442,7 +446,7 @@ describe("Vault Tests eeep", function () {
       describe("Removing Funds", function () {
         beforeEach(async () => {
           //We need to deposit funds for otherUser
-          const depositAmount = await getAmount(USDC, "2");
+          const depositAmount = await getAmount(USDC, "3");
           await otherUSDC.approve(autoVault.target, depositAmount.toFixed());
 
           await otherAutoVault.deposit(
@@ -472,7 +476,7 @@ describe("Vault Tests eeep", function () {
           );
         });
         it("other user can withdraw for a fee ", async () => {
-          const withdrawAmount = await getAmount(USDC, "1");
+          const withdrawAmount = await getAmount(USDC, ".5");
 
           const expectedFee = calculateFeeOnRaw(withdrawAmount, EXIT_FEE);
           console.log(withdrawAmount, "expected", expectedFee);
@@ -597,7 +601,7 @@ describe("Vault Tests eeep", function () {
           await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
         ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
       });
-      it("action should revert without getting collateral value ", async () => {
+      it("action should revert without getting collateral value awwaw", async () => {
         const depositAmount = await getAmount(USDC, "2");
         await USDC.approve(autoVault.target, depositAmount.toFixed());
 
@@ -644,7 +648,7 @@ describe("Vault Tests eeep", function () {
               FACTORY_SHARE
             );
           });
-          it("withdraw should work with minimal fee awad  ", async () => {
+          it("withdraw should work with minimal fee ", async () => {
             await test_withdraw(
               USDC,
               autoVault,
@@ -671,7 +675,7 @@ describe("Vault Tests eeep", function () {
         });
         describe("Other User ", function () {
           beforeEach(async () => {
-            const depositAmount = await getAmount(USDC, "2");
+            const depositAmount = await getAmount(USDC, "4");
             await otherUSDC.approve(
               otherAutoVault.target,
               depositAmount.toFixed()
@@ -777,7 +781,8 @@ describe("Vault Tests eeep", function () {
           totalCollateral = totalCollateral.mul(collateralWorth).floor();
         });
         describe("Vault Creator ", function () {
-          it("deposit should work with minimal fee ", async () => {
+          it("deposit should work with minimal fee wasaw", async () => {
+            console.log(`Starting test...`);
             await test_deposit(
               USDC,
               autoVault,
@@ -824,7 +829,7 @@ describe("Vault Tests eeep", function () {
         });
         describe("Other User ", function () {
           beforeEach(async () => {
-            const depositAmount = await getAmount(USDC, "2");
+            const depositAmount = await getAmount(USDC, "4");
             await otherUSDC.approve(
               otherAutoVault.target,
               depositAmount.toFixed()
@@ -976,7 +981,7 @@ describe("Vault Tests eeep", function () {
         });
         describe("Other User ", function () {
           beforeEach(async () => {
-            const depositAmount = await getAmount(USDC, "2");
+            const depositAmount = await getAmount(USDC, "4");
             await otherUSDC.approve(
               otherAutoVault.target,
               depositAmount.toFixed()
@@ -1113,7 +1118,7 @@ describe("Vault Tests eeep", function () {
               FakeGainsNetwork
             );
           });
-          it("redeem should work with minimal fee ", async () => {
+          it("redeem should work with minimal fee poop", async () => {
             await test_redeem(
               USDC,
               autoVault,
@@ -1128,7 +1133,7 @@ describe("Vault Tests eeep", function () {
         });
         describe("Other User ", function () {
           beforeEach(async () => {
-            const depositAmount = await getAmount(USDC, "2");
+            const depositAmount = await getAmount(USDC, "4");
             await otherUSDC.approve(
               otherAutoVault.target,
               depositAmount.toFixed()
@@ -1189,7 +1194,7 @@ describe("Vault Tests eeep", function () {
               FACTORY_SHARE
             );
           });
-          it("withdraw should work with a fee ", async () => {
+          it("withdraw should work with a fee  ", async () => {
             await test_withdraw(
               otherUSDC,
               otherAutoVault,
@@ -1202,6 +1207,59 @@ describe("Vault Tests eeep", function () {
             );
           });
           it("redeem should work with a fee ", async () => {
+            await test_redeem(
+              otherUSDC,
+              otherAutoVault,
+              totalCollateral,
+              collateralAmounts,
+              otherUser,
+              vaultFactory,
+              FACTORY_SHARE,
+              FakeGainsNetwork
+            );
+          });
+          it("user can do all of it ", async () => {
+            await test_deposit(
+              otherUSDC,
+              otherAutoVault,
+              totalCollateral,
+              otherUser,
+              vaultFactory,
+              FACTORY_SHARE
+            );
+            await test_mint(
+              otherUSDC,
+              otherAutoVault,
+              totalCollateral,
+              otherUser,
+              vaultFactory,
+              FACTORY_SHARE
+            );
+            await test_withdraw(
+              otherUSDC,
+              otherAutoVault,
+              totalCollateral,
+              collateralAmounts,
+              otherUser,
+              vaultFactory,
+              FACTORY_SHARE,
+              FakeGainsNetwork
+            );
+
+            //We have to re update this
+            totalCollateral = new Decimal("0");
+            collateralAmounts = [] as Decimal[];
+
+            const trades = await FakeGainsNetwork.getTrades(autoVault.target);
+            for (const trade of trades) {
+              const collateralAmount = trade.collateralAmount;
+
+              collateralAmounts.push(new Decimal(collateralAmount.toString()));
+              totalCollateral = totalCollateral.plus(
+                collateralAmount.toString()
+              );
+            }
+            totalCollateral = totalCollateral.mul(collateralWorth).floor();
             await test_redeem(
               otherUSDC,
               otherAutoVault,
@@ -1335,13 +1393,19 @@ async function test_deposit(
   const assetsInVault = await USDC.balanceOf(autoVault.target);
   const totalAssets = totalCollateral.plus(assetsInVault.toString());
   const choice = 0;
+
   const vaultCreatorAddress = await autoVault.vaultManager();
+  console.log(
+    `Total Assets: ${totalCollateral.toFixed()} and vault: ${assetsInVault}`
+  );
   const { expectedAmount, expectedFee } = await previewDeposit(
     autoVault,
     userDepositing.address,
     depositAmount,
     totalAssets
   );
+
+  console.log(`Expected Fee: ${expectedFee} and Amount ${expectedAmount}`);
   const expectedShares = expectedAmount;
   const requestID = await autoVault.startAction.staticCall(
     userDepositing.address,
@@ -1518,7 +1582,7 @@ async function test_withdraw(
   FACTORY_SHARE: Decimal,
   FakeGainsNetwork: FakeGainsNetwork
 ) {
-  const withdrawAmount = await getAmount(USDC, "1");
+  const withdrawAmount = await getAmount(USDC, ".1");
   const choice = 2;
 
   const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
@@ -1633,7 +1697,7 @@ async function test_redeem(
   FACTORY_SHARE: Decimal,
   FakeGainsNetwork: FakeGainsNetwork
 ) {
-  const redeemAmount = await getAmount(autoVault, "1");
+  const redeemAmount = await getAmount(autoVault, "2");
   const choice = 3;
   const vaultCreatorAddress = await autoVault.vaultManager();
 
@@ -1660,7 +1724,7 @@ async function test_redeem(
     totalAssets
   );
   const expectedAssetsEarned = expectedAmount;
-
+  console.log(`Bruh`, expectedAssetsEarned);
   await autoVault.startAction(
     userDepositing.address,
     redeemAmount.toFixed(),
@@ -1709,6 +1773,7 @@ async function test_redeem(
     redeemAmount.toFixed(),
     "vaultCreator balance should decrease by correct amount"
   );
+
   assert.equal(
     After.assetBalance.sub(Before.assetBalance).toFixed(),
     expectedAssetsEarned.toFixed()

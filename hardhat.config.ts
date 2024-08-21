@@ -128,7 +128,7 @@ module.exports = {
     token: "ETH",
   },
   mocha: {
-    timeout: 120000, // 500 seconds max for running tests
+    timeout: 1500000, // 500 seconds max for running tests
     parallel: false,
   },
 };

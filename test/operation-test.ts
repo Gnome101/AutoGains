@@ -17,6 +17,11 @@ import { contracts } from "../Addresses"; // assuming Addresses.ts exports an ob
 import {
   impersonateOracleFulfill,
   impersonateOracleDoVaultAction,
+  impersonateOracleDoVaultActionAndCheck,
+  previewRedeem,
+  previewDeposit,
+  previewMint,
+  previewWithdraw,
 } from "../utils/AutoGains";
 import { erc20 } from "../typechain-types/@openzeppelin/contracts/token";
 import { Decimal } from "decimal.js";
@@ -283,14 +288,14 @@ describe("Operation Tests ", function () {
         const swapFee = amount
           .mul(SWAP_FEE)
           .dividedBy(SWAP_FEE_SCALE) as Decimal;
-        const error = `BlockDifferenceTooLarge(21)`; // Its one larger
+        const error = `TimeStampDifferenceTooLarge(21)`; // Its one larger
         //beause it mines a block
 
         await expect(
-          impersonateOracleFulfill(vaultFactory, requestID, input, 20)
+          impersonateOracleFulfill(vaultFactory, requestID, input, 21)
         ).to.be.rejectedWith(error);
       });
-      it("vault action can expire trt", async () => {
+      it("vault action can expire ", async () => {
         let requestID = await autoVault.executeStrategy.staticCall(0);
         const tx4 = await autoVault.executeStrategy(0);
         await tx4.wait();
@@ -301,9 +306,8 @@ describe("Operation Tests ", function () {
           currentPrice.toFixed(),
           new Decimal(25).mul(decimals).toFixed(),
         ];
-        console.log("A");
+
         await impersonateOracleFulfill(vaultFactory, requestID, input, 0);
-        console.log("A");
 
         const depositAmount = await getAmount(USDC, "1");
         const choice = 0;
@@ -321,14 +325,15 @@ describe("Operation Tests ", function () {
           depositAmount.toFixed()
         );
         input = [getAmountDec("0", 18).toFixed()];
-        const error = `BlockDifferenceTooLarge(21)`; // Its one larger
+        const error = `TimeStampDifferenceTooLarge(21)`; // Its one larger
+
         await expect(
           impersonateOracleDoVaultAction(
             vaultFactory,
             requestID,
             input,
             Number(await USDC.decimals()),
-            20
+            21
           )
         ).to.be.rejectedWith(error);
       });
@@ -501,6 +506,395 @@ describe("Operation Tests ", function () {
         "ApprovalExtended"
       );
     });
+    it("can not have use the same strategy twice wass", async () => {
+      const requestID = await autoVault.executeStrategy.staticCall(0);
+      const tx1 = await autoVault.executeStrategy(0);
+      await tx1.wait();
+      //When its below 70, then its rejected
+      const currentPrice = getAmountDec("60", 10);
+
+      let input = [
+        currentPrice.toFixed(),
+        new Decimal(25).mul(decimals).toFixed(),
+      ];
+      const totalAssets = toDecimal(await USDC.balanceOf(autoVault.target));
+      const percent = 200_000;
+      const amount = totalAssets.mul(percent).dividedBy(1_000_000);
+      const swapFee = amount.mul(SWAP_FEE).dividedBy(SWAP_FEE_SCALE) as Decimal;
+      const error = `BlockDifferenceTooLarge(21)`; // Its one larger
+      //beause it mines a block
+
+      await impersonateOracleFulfill(vaultFactory, requestID, input, 0);
+      const requestID2 = await autoVault.executeStrategy.staticCall(0);
+      const tx2 = await autoVault.executeStrategy(0);
+      await tx2.wait();
+      input = [currentPrice.toFixed(), new Decimal(20).mul(decimals).toFixed()];
+      await expect(
+        impersonateOracleFulfill(vaultFactory, requestID2, input, 0)
+      ).to.be.rejectedWith("StrategyAlreadyActive()");
+
+      // await impersonateOracleFulfill(vaultFactory, requestID2, input, 0);
+    });
+    describe("Vault Actions Upon Withdrawal", function () {
+      let totalCollateral: Decimal;
+      const collateralWorth = new Decimal("1");
+
+      beforeEach(async () => {
+        const requestID = await autoVault.executeStrategy.staticCall(1);
+        const tx4 = await autoVault.executeStrategy(1);
+        await tx4.wait();
+        //When its below 70, then its rejected
+        const currentPrice = getAmountDec("60", 10);
+
+        const input = [
+          currentPrice.toFixed(),
+          new Decimal(25).mul(decimals).toFixed(),
+        ];
+        const totalAssets = toDecimal(await USDC.balanceOf(autoVault.target));
+        const percent = 200_000;
+        const amount = totalAssets.mul(percent).dividedBy(SWAP_FEE_SCALE);
+        let swapFee = amount.mul(SWAP_FEE).dividedBy(SWAP_FEE_SCALE) as Decimal;
+
+        swapFee = swapFee.mul(PUBLIC_FEE).dividedBy(SWAP_FEE_SCALE).ceil();
+
+        expect(
+          await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
+        ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
+        await time.increase(60);
+
+        totalCollateral = new Decimal("0");
+
+        const trades = await FakeGainsNetwork.getTrades(autoVault.target);
+        for (const trade of trades) {
+          const collateralAmount = trade.collateralAmount;
+
+          totalCollateral = totalCollateral.plus(collateralAmount.toString());
+        }
+        totalCollateral = totalCollateral.mul(collateralWorth).floor();
+      });
+      it("vault decreases position size when possible arara", async () => {
+        const redeemAmount = await getAmount(USDC, "1");
+        const choice = 3;
+        const requestID = await autoVault.startAction.staticCall(
+          vaultCreator.address,
+          redeemAmount.toFixed(),
+          choice,
+          redeemAmount.toFixed()
+        );
+        const assetsInVault = await USDC.balanceOf(autoVault.target);
+        const totalAssets = totalCollateral.plus(assetsInVault.toString());
+        const { expectedAmount, expectedFee } = await previewRedeem(
+          autoVault,
+          vaultCreator.address,
+          redeemAmount,
+          totalAssets
+        );
+        //Now there is an active trade
+        await autoVault.startAction(
+          vaultCreator.address,
+          redeemAmount.toFixed(),
+          choice,
+          redeemAmount.toFixed()
+        );
+        const trades = await FakeGainsNetwork.getTrades(
+          autoVault.target.toString()
+        );
+        const assetsWithdrawn = expectedAmount;
+        let collateralToWithdraw = new Decimal(0);
+        for (const trade of trades) {
+          const collateralAmount = new Decimal(
+            trade.collateralAmount.toString()
+          );
+          console.log(assetsWithdrawn, collateralAmount, totalAssets);
+          collateralToWithdraw = assetsWithdrawn
+            .mul(collateralAmount)
+            .dividedBy(totalAssets)
+            .floor();
+          collateralToWithdraw = collateralToWithdraw
+            .mul(1_100_000)
+            .dividedBy(1_000_000);
+          console.log(`The trade will lose ${collateralToWithdraw}`);
+        }
+        const input = [totalCollateral.toFixed()];
+        //if collateralWorth > collateralToWithdraw then decrease else close
+
+        const collateralWorth = collateralToWithdraw.plus(1);
+        expect(
+          await impersonateOracleDoVaultActionAndCheck(
+            vaultFactory,
+            requestID,
+            input,
+            Number(await USDC.decimals()),
+            0,
+            collateralWorth.toFixed(),
+            FakeGainsNetwork,
+            "DecreasePositionSizeCalled"
+          )
+        ).to.emit(FakeGainsNetwork, "DecreasePositionSizeCalled");
+      });
+      it("vault closes positions when above threshold arara", async () => {
+        const redeemAmount = await getAmount(USDC, "1");
+        const choice = 3;
+        const requestID = await autoVault.startAction.staticCall(
+          vaultCreator.address,
+          redeemAmount.toFixed(),
+          choice,
+          redeemAmount.toFixed()
+        );
+        const assetsInVault = await USDC.balanceOf(autoVault.target);
+        const totalAssets = totalCollateral.plus(assetsInVault.toString());
+        const { expectedAmount, expectedFee } = await previewRedeem(
+          autoVault,
+          vaultCreator.address,
+          redeemAmount,
+          totalAssets
+        );
+        //Now there is an active trade
+        await autoVault.startAction(
+          vaultCreator.address,
+          redeemAmount.toFixed(),
+          choice,
+          redeemAmount.toFixed()
+        );
+        const trades = await FakeGainsNetwork.getTrades(
+          autoVault.target.toString()
+        );
+        const assetsWithdrawn = expectedAmount;
+        let collateralToWithdraw = new Decimal(0);
+        for (const trade of trades) {
+          const collateralAmount = new Decimal(
+            trade.collateralAmount.toString()
+          );
+          console.log(assetsWithdrawn, collateralAmount, totalAssets);
+          collateralToWithdraw = assetsWithdrawn
+            .mul(collateralAmount)
+            .dividedBy(totalAssets)
+            .floor();
+          collateralToWithdraw = collateralToWithdraw
+            .mul(1_100_000)
+            .dividedBy(1_000_000);
+          console.log(`The trade will lose ${collateralToWithdraw}`);
+        }
+        const input = [totalCollateral.toFixed()];
+        //if collateralWorth > collateralToWithdraw then decrease else close
+
+        const collateralWorth = collateralToWithdraw;
+        expect(
+          await impersonateOracleDoVaultActionAndCheck(
+            vaultFactory,
+            requestID,
+            input,
+            Number(await USDC.decimals()),
+            0,
+            collateralWorth.toFixed(),
+            FakeGainsNetwork,
+            "CloseTradeMarketCalled"
+          )
+        ).to.emit(FakeGainsNetwork, "CloseTradeMarketCalled");
+      });
+    });
+    describe("Slippage Controls Work ", function () {
+      let totalCollateral: Decimal;
+      const collateralWorth = new Decimal("1");
+
+      beforeEach(async () => {
+        const requestID = await autoVault.executeStrategy.staticCall(1);
+        const tx4 = await autoVault.executeStrategy(1);
+        await tx4.wait();
+        //When its below 70, then its rejected
+        const currentPrice = getAmountDec("60", 10);
+
+        const input = [
+          currentPrice.toFixed(),
+          new Decimal(25).mul(decimals).toFixed(),
+        ];
+        const totalAssets = toDecimal(await USDC.balanceOf(autoVault.target));
+        const percent = 200_000;
+        const amount = totalAssets.mul(percent).dividedBy(SWAP_FEE_SCALE);
+        let swapFee = amount.mul(SWAP_FEE).dividedBy(SWAP_FEE_SCALE) as Decimal;
+
+        swapFee = swapFee.mul(PUBLIC_FEE).dividedBy(SWAP_FEE_SCALE).ceil();
+
+        expect(
+          await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
+        ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
+        await time.increase(60);
+
+        totalCollateral = new Decimal("0");
+
+        const trades = await FakeGainsNetwork.getTrades(autoVault.target);
+        for (const trade of trades) {
+          const collateralAmount = trade.collateralAmount;
+
+          totalCollateral = totalCollateral.plus(collateralAmount.toString());
+        }
+        totalCollateral = totalCollateral.mul(collateralWorth).floor();
+      });
+      it("slippage can be triggered for deposit ", async () => {
+        const depositAmount = await getAmount(USDC, "1");
+        const choice = 0;
+        const requestID = await autoVault.startAction.staticCall(
+          vaultCreator.address,
+          depositAmount.toFixed(),
+          choice,
+          depositAmount.toFixed()
+        );
+        const assetsInVault = await USDC.balanceOf(autoVault.target);
+        const totalAssets = totalCollateral.plus(assetsInVault.toString());
+        const { expectedAmount, expectedFee } = await previewDeposit(
+          autoVault,
+          vaultCreator.address,
+          depositAmount,
+          totalAssets
+        );
+
+        await USDC.approve(autoVault.target, depositAmount.toFixed());
+        //Now there is an active trade
+        await autoVault.startAction(
+          vaultCreator.address,
+          depositAmount.toFixed(),
+          choice,
+          expectedAmount.plus(1).toFixed()
+        );
+
+        const input = [totalCollateral.toFixed()];
+        //if collateralWorth > collateralToWithdraw then decrease else close
+
+        await expect(
+          impersonateOracleDoVaultAction(
+            vaultFactory,
+            requestID,
+            input,
+            Number(await USDC.decimals()),
+            0,
+            collateralWorth.toFixed()
+          )
+        ).to.be.rejectedWith("Slippage()");
+      });
+      it("slippage can be triggered for minting ", async () => {
+        const mintAmount = await getAmount(USDC, "1");
+        const choice = 1;
+        const requestID = await autoVault.startAction.staticCall(
+          vaultCreator.address,
+          mintAmount.toFixed(),
+          choice,
+          mintAmount.toFixed()
+        );
+        const assetsInVault = await USDC.balanceOf(autoVault.target);
+        const totalAssets = totalCollateral.plus(assetsInVault.toString());
+        const { expectedAmount, expectedFee } = await previewMint(
+          autoVault,
+          vaultCreator.address,
+          mintAmount,
+          totalAssets
+        );
+
+        await USDC.approve(autoVault.target, expectedAmount.toFixed());
+        //Now there is an active trade
+        await autoVault.startAction(
+          vaultCreator.address,
+          mintAmount.toFixed(),
+          choice,
+          expectedAmount.sub(1).toFixed()
+        );
+
+        const input = [totalCollateral.toFixed()];
+        //if collateralWorth > collateralToWithdraw then decrease else close
+
+        await expect(
+          impersonateOracleDoVaultAction(
+            vaultFactory,
+            requestID,
+            input,
+            Number(await USDC.decimals()),
+            0,
+            collateralWorth.toFixed()
+          )
+        ).to.be.rejectedWith("Slippage()");
+      });
+      it("slippage can be triggered for withdrawing ", async () => {
+        const withdrawAmount = await getAmount(USDC, "1");
+        const choice = 2;
+        const requestID = await autoVault.startAction.staticCall(
+          vaultCreator.address,
+          withdrawAmount.toFixed(),
+          choice,
+          withdrawAmount.toFixed()
+        );
+
+        const assetsInVault = await USDC.balanceOf(autoVault.target);
+        const totalAssets = totalCollateral.plus(assetsInVault.toString());
+        const { expectedAmount, expectedFee } = await previewWithdraw(
+          autoVault,
+          vaultCreator.address,
+          withdrawAmount,
+          totalAssets
+        );
+
+        //Now there is an active trade
+        await autoVault.startAction(
+          vaultCreator.address,
+          withdrawAmount.toFixed(),
+          choice,
+          expectedAmount.plus(1).toFixed()
+        );
+
+        const input = [totalCollateral.toFixed()];
+        //if collateralWorth > collateralToWithdraw then decrease else close
+
+        await expect(
+          impersonateOracleDoVaultAction(
+            vaultFactory,
+            requestID,
+            input,
+            Number(await USDC.decimals()),
+            0,
+            collateralWorth.toFixed()
+          )
+        ).to.be.rejectedWith("Slippage()");
+      });
+      it("slippage can be triggered for redeeming ", async () => {
+        const redeemAmount = await getAmount(USDC, "1");
+        const choice = 3;
+        const requestID = await autoVault.startAction.staticCall(
+          vaultCreator.address,
+          redeemAmount.toFixed(),
+          choice,
+          redeemAmount.toFixed()
+        );
+
+        const assetsInVault = await USDC.balanceOf(autoVault.target);
+        const totalAssets = totalCollateral.plus(assetsInVault.toString());
+        const { expectedAmount, expectedFee } = await previewRedeem(
+          autoVault,
+          vaultCreator.address,
+          redeemAmount,
+          totalAssets
+        );
+
+        //Now there is an active trade
+        await autoVault.startAction(
+          vaultCreator.address,
+          redeemAmount.toFixed(),
+          choice,
+          expectedAmount.sub(1).toFixed()
+        );
+
+        const input = [totalCollateral.toFixed()];
+        //if collateralWorth > collateralToWithdraw then decrease else close
+
+        await expect(
+          impersonateOracleDoVaultAction(
+            vaultFactory,
+            requestID,
+            input,
+            Number(await USDC.decimals()),
+            0,
+            collateralWorth.toFixed()
+          )
+        ).to.be.rejectedWith("Slippage()");
+      });
+    });
   });
   describe("Factory Roles ", function () {
     it("only the factory owner can set starting fees ", async () => {
@@ -612,7 +1006,7 @@ describe("Operation Tests ", function () {
     });
   });
   describe("Other", function () {
-    it("can not make fee with unknown token ", async () => {
+    it("can not make vault with unknown token ", async () => {
       const initalAmount = await getAmount(USDC, "10");
 
       await USDC.approve(vaultFactory.target, initalAmount.toFixed());
@@ -677,6 +1071,72 @@ describe("Operation Tests ", function () {
           [longStrategy, longStrategy]
         )
       ).to.rejectedWith("CollateralNotAdded()");
+    });
+    it("can not make vault with uneven amount of strategies and apis ", async () => {
+      const initalAmount = await getAmount(USDC, "10");
+
+      await USDC.approve(vaultFactory.target, initalAmount.toFixed());
+
+      const APIInfos = [
+        {
+          method: "",
+          url: "",
+          headers: "",
+          body: "",
+          path: "",
+          jobIDs: "",
+        },
+        {
+          method: "",
+          url: publicAPI,
+          headers: "",
+          body: "",
+          path: "",
+          jobIDs: "",
+        },
+      ] as VaultFactory.APIInfoStruct[];
+      //According to ChatGPT, if RSI is above 70 then its too high. If its below 30 then its too low
+      //So what I will do is have two strategies, if the RSI goes to 50 then it will close either position
+      //if 70 < x1 then longBTC else do nothing
+      const longAciton = await Helper.createOpenTradeAction(
+        1000,
+        0,
+        5000,
+        true,
+        true,
+        3,
+        0,
+        200000, // Should be 2%
+        10000000,
+        12000000,
+        8000000
+      );
+      const decimals = new Decimal(10).pow(18);
+
+      // if x1< 30 then longAction else nothing
+      const longStrategy = [
+        18,
+        14,
+        1,
+        2,
+        0,
+        new Decimal(30).mul(decimals).toFixed(),
+        0,
+        longAciton,
+        0,
+        0,
+      ];
+      console.log(initalAmount.toFixed());
+      //Two strategies are used, 0 has a custom api, 1 has a public one
+
+      await expect(
+        vaultFactory.createVault(
+          USDC.target,
+          initalAmount.toFixed(),
+          APIInfos, // There are two apis
+          [longStrategy] // There is only 1 API
+        )
+      ).to.rejectedWith("StrategiesAndAPIsSameLength(2, 1)");
     });
   });
 });

@@ -12,13 +12,14 @@ import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 contract VaultFactory is ChainlinkClient, ConfirmedOwner {
     using SafeERC20 for IERC20Metadata;
     using Chainlink for Chainlink.Request;
     using Math for uint256;
     using Clones for address;
-
+    using Strings for address;
     // mapping(address => address[]) userToVaults; read events
     uint256 private constant minimumDeposit = 100;
     address public oracleAddress;
@@ -79,6 +80,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         APIInfo[] calldata apiInfo,
         uint256[][] calldata listOfStrategies
     ) external returns (address payable clonedVault) {
+        if (5 < listOfStrategies.length) revert();
         require(initialAmount > minimumDeposit, "Deposit too low");
         if (tokenToOracleFee[collateral][0] == 0) revert CollateralNotAdded();
 
@@ -121,14 +123,14 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         "https://xpzyihmcunwwykjpfdgy.supabase.co/functions/v1/get-trading-variables";
     string public constant trade_headers =
         '["accept", "application/json", "Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwenlpaG1jdW53d3lranBmZGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0MjU3ODIsImV4cCI6MjAzODAwMTc4Mn0.mgu_pc2fGZgAQPSlMTY_FPLcsIvepIZb3geDXA7au-0"]';
-    string public constant trade_body =
-        '{"userAddress": "0x793448209Ef713CAe41437C7DaA219b59BEF1A4A"}';
-    string public constant trade_job = "e20c7567b2bb4e3690c615d03457b5d3";
+
+    string public constant trade_job = "168535c73f7b46cd8fd9a7f21bdbedc1";
+    string public bodyA;
 
     function buildChainlinkTradeRequest(
         address vaultAddress,
         uint256 tokenDecimals
-    ) internal view returns (Chainlink.Request memory req) {
+    ) internal returns (Chainlink.Request memory req) {
         req = _buildOperatorRequest(
             bytes32(bytes(trade_job)),
             this.preformAction.selector
@@ -136,20 +138,37 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         req._add("method", trade_method);
         req._add("url", trade_url);
         req._add("headers", trade_headers);
-        req._add("body", trade_body);
+        string memory body = '{"userAddress": "';
+        body = string.concat(body, vaultAddress.toHexString());
+        body = string.concat(body, '"}');
+        bodyA = body;
+        req._add("body", body);
         req._add("contact", "A"); // PLEASE ENTER YOUR CONTACT INFO. this allows us to notify you in the event of any emergencies related to your request (ie, bugs, downtime, etc.). example values: 'derek_linkwellnodes.io' (Discord handle) OR 'derek@linkwellnodes.io' OR '+1-617-545-4721'
         // req._add("path", trade_path);
-        req._addInt("multiplier", int256(10 ** tokenDecimals));
+        req._addInt("multiplier", int256(10 ** 18));
+        return req;
     }
+
+    error StrategiesAndAPIsSameLength(
+        uint256 apiLength,
+        uint256 strategyLength
+    );
 
     function getAddressKeys(
         APIInfo[] calldata apiInfo,
         uint256[][] calldata listOfStrategies
     ) internal returns (address[] memory finalArr) {
-        require(apiInfo.length == listOfStrategies.length);
+        if (apiInfo.length != listOfStrategies.length) {
+            revert StrategiesAndAPIsSameLength(
+                apiInfo.length,
+                listOfStrategies.length
+            );
+        }
+        // require(apiInfo.length == listOfStrategies.length);
         // console.log(listOfStrategies.length);
         // console.log("# of strategies:", listOfStrategies.length);
         finalArr = new address[](listOfStrategies.length);
+
         for (uint i = 0; i < listOfStrategies.length; i++) {
             Chainlink.Request memory req = _buildOperatorRequest(
                 bytes32(bytes(apiInfo[i].jobIDs)),
@@ -224,6 +243,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
 
     uint256 private ownerPercentShare = 7_000_000; //10e5 percision
     uint256 private constant percentShareScaling = 10_000_000;
+
     event FundsClaimed(
         address indexed owner,
         IERC20Metadata indexed asset,
@@ -264,7 +284,10 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         requestToCaller[requestId].fulfill(requestId, data);
     }
 
-    function preformAction(bytes32 requestId, uint256[] memory data) external {
+    function preformAction(
+        bytes32 requestId,
+        uint256[] memory data
+    ) public recordChainlinkFulfillment(requestId) {
         requestToCaller[requestId].preformAction(requestId, data);
     }
 }

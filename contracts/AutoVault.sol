@@ -18,6 +18,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     using Chainlink for Chainlink.Request;
     using SafeERC20 for IERC20;
     using SafeERC20 for IERC20Metadata;
+    using Math for uint120;
     using Strings for uint256;
     enum Choice {
         DEPOSIT,
@@ -46,7 +47,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
 
     mapping(bytes32 => uint256) public requestToStrategy;
     mapping(uint256 => uint32) public strategyToIndex;
-    mapping(uint256 => bool) public strategyToActive;
+    mapping(uint32 => uint256) public indexToStrategy;
     mapping(uint256 => uint256) public indexToPercentPosition;
     mapping(bytes32 => VaultAction) public requestToAction;
 
@@ -71,12 +72,14 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     error Slippage();
     error CoolDownViolated();
     error StrategyNotActive();
-    error BlockDifferenceTooLarge(uint256 blockDifference);
+    error StrategyAlreadyActive();
+
+    error TimeStampDifferenceTooLarge(uint256 timeStampDifference);
     error FactoryManagerOnly();
 
     Chainlink.Request public balanceRequest; // This request returns the totalBalance of alltrades on GNS
 
-    uint256 public constant MAX_BLOCK_DIFFERENCE = 20;
+    uint256 public constant MAX_TIME_DIFFERENCE = 20;
 
     //The cooldown period exists to prevent reselling the tokens
     uint256 private constant COOLDOWN_PERIOD = 60;
@@ -129,7 +132,12 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         _asset.approve(startingInfo.gainsAddress, type(uint256).max);
     }
 
-    string public constant trade_path = "totalCollateral;blockNumber";
+    string public constant trade_path = "totalnewCollateral;blockTimestamp";
+    string public saveDataBefore;
+
+    function getPublicDataBef() public view returns (string memory) {
+        return saveDataBefore;
+    }
 
     function startAction(
         address receiver,
@@ -148,11 +156,12 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             path = string.concat(path, ";newCollateralArray,");
             path = string.concat(path, i.toString());
         }
-        console.log(path);
-        balanceRequest._add("path", path);
+        saveDataBefore = path;
+        Chainlink.Request memory req = balanceRequest;
+        req._add("path", path);
         requestId = VaultFactory(vaultFactory).sendInfoRequest(
             msg.sender,
-            balanceRequest,
+            req,
             fee
         );
         requestToAction[requestId] = VaultAction(
@@ -162,7 +171,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             choice,
             slippage
         );
-        _pause();
         // We have to pause the contract here,
         // because a trade could be opened in between
         //start and preform action
@@ -175,50 +183,66 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         emit ApprovalExtended(msg.sender);
     }
 
+    uint256[] public saveData;
+
+    function getPublicData() public view returns (uint256[] memory) {
+        return saveData;
+    }
+
     function preformAction(
         bytes32 requestId,
         uint256[] memory data
-    ) external onlyFactory {
-        _unpause();
+    ) public onlyFactory {
+        //just saving the data works
+        //probably an error with the processing
+        saveData = data;
         VaultAction memory vaultAction = requestToAction[requestId];
         currentUser.set(vaultAction.msgSender);
-        if (_asset.decimals() < 10) {
-            uint256 decimalDifference = 10 - _asset.decimals();
-            data[0] = data[0] / (10 ** decimalDifference);
-        } else {
-            uint256 decimalDifference = _asset.decimals() - 18;
-            data[0] = data[0] * (10 ** decimalDifference);
-        }
+        data[0] = _adjustForDecimals(data[0], 18, _asset.decimals());
+
         totalValueCollateral.set(data[0] > 0 ? data[0] + 1 : 1);
         for (uint i = 2; i < data.length; i++) {
             tArray.push(data[i]);
         }
-
-        if ((data[1] / (10 ** 10)) + MAX_BLOCK_DIFFERENCE < block.number) {
-            revert BlockDifferenceTooLarge(block.number - data[1] / (10 ** 10));
+        // saveData.push(block.number);
+        if ((data[1] / (10 ** 18)) + MAX_TIME_DIFFERENCE < block.timestamp) {
+            revert TimeStampDifferenceTooLarge(
+                block.timestamp - data[1] / (10 ** 18)
+            );
         }
         uint256 result;
         if (vaultAction.choice == Choice.DEPOSIT) {
             result = this.deposit(vaultAction.amount, vaultAction.receiver);
+            console.log("slip", vaultAction.slippage, result);
+            if (vaultAction.slippage > result) revert Slippage();
         } else if (vaultAction.choice == Choice.MINT) {
             result = this.mint(vaultAction.amount, vaultAction.receiver);
+            console.log("slip", vaultAction.slippage, result);
+
+            if (vaultAction.slippage < result) revert Slippage();
         } else if (vaultAction.choice == Choice.WITHDRAW) {
             result = this.withdraw(
                 vaultAction.amount,
                 vaultAction.receiver,
                 _msgSender()
             );
+            console.log("slip", vaultAction.slippage, result);
+
+            if (vaultAction.slippage > result) revert Slippage();
         } else if (vaultAction.choice == Choice.REDEEM) {
             result = this.redeem(
                 vaultAction.amount,
                 vaultAction.receiver,
                 _msgSender()
             );
+            console.log("slip", vaultAction.slippage, result);
+
+            if (vaultAction.slippage < result) revert Slippage();
         } else {
             revert InvalidAction();
         }
-        if (vaultAction.slippage > result) revert Slippage();
-
+        saveData.push(vaultAction.slippage);
+        saveData.push(result);
         totalValueCollateral.set(0);
         currentUser.set(address(0));
     }
@@ -279,9 +303,12 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         uint256[] calldata data
     ) public whenNotPaused onlyFactory {
         // console.log(data.leWngth);
-        if ((data[1] / (10 ** 18)) + MAX_BLOCK_DIFFERENCE < block.number) {
-            revert BlockDifferenceTooLarge(block.number - data[1] / (10 ** 18));
+        if ((data[1] / (10 ** 18)) + MAX_TIME_DIFFERENCE < block.timestamp) {
+            revert TimeStampDifferenceTooLarge(
+                block.timestamp - data[1] / (10 ** 18)
+            );
         }
+
         uint256 strategy = requestToStrategy[requestId];
         uint256 action = processStrategy(strategy, data);
         // c.push(action);
@@ -289,6 +316,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         // c.push(data[1]);
         // c.push(data[2]);
         // c.push(uint64(data[0] / (10 ** 8)));
+
         if (action == 0) revert NoAction();
 
         uint32 index = strategyToIndex[strategy];
@@ -358,10 +386,15 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         uint256 strategy
     ) internal {
         uint256 actionType = uint8(action >> 252);
-        if (actionType != 0 && !strategyToActive[strategy]) {
+
+        //This reverts when a user is attempting to open another trade on the same strategy
+        if (actionType == 0 && strategyToIndex[strategy] != 0) {
+            revert StrategyAlreadyActive();
+        }
+        if (actionType != 0 && strategyToIndex[strategy] == 0) {
             revert StrategyNotActive();
         }
-        console.log(actionType);
+
         if (actionType == 0) {
             (Trade memory trade, uint32 posPercent) = extractTrade(
                 action,
@@ -386,7 +419,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             // c.push(trade.sl);
 
             GainsNetwork.openTrade(trade, uint16(action >> 236), specialRefer);
-            strategyToActive[strategy] = true;
+            indexToStrategy[index] = strategy + 1;
             strategyToIndex[strategy] = index + 1;
         } else if (actionType == 1) {
             GainsNetwork.updateSl(
@@ -414,10 +447,11 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             );
         } else if (actionType == 4) {
             GainsNetwork.cancelOpenOrder(index);
-            strategyToActive[strategy] = false;
+            indexToStrategy[index] = 0;
         } else if (actionType == 5) {
             GainsNetwork.closeTradeMarket(index, openPrice);
-            strategyToActive[strategy] = false;
+            indexToStrategy[index] = 0;
+            strategyToIndex[strategy] = 0;
         } else if (actionType == 6) {
             GainsNetwork.updateLeverage(index, uint24(action >> 228));
         } else if (actionType == 7) {
@@ -532,6 +566,24 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
 
     error IncorrectTradeData(uint256, uint256);
 
+    function _adjustForDecimals(
+        uint256 x,
+        uint256 currentDecimals,
+        uint256 desiredDecimals
+    ) internal pure returns (uint256) {
+        if (desiredDecimals < currentDecimals) {
+            uint256 decimalDifference = currentDecimals - desiredDecimals;
+            x = x / (10 ** decimalDifference);
+        } else {
+            uint256 decimalDifference = desiredDecimals - currentDecimals;
+            x = x * (10 ** decimalDifference);
+        }
+        return x;
+    }
+
+    uint256 public constant closeTolerance = 1_100_000;
+
+    //A higher tolerance means that its more likely to close a position
     function beforeWithdraw(
         address user,
         uint256 assetsWithdrawn
@@ -549,6 +601,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         }
 
         uint256 _totalAssets = this.totalAssets();
+        uint256 assetDecimals = this.decimals();
 
         for (uint i = 0; i < tradeLength; i++) {
             uint120 collateralToWithdraw = uint120(
@@ -558,17 +611,42 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
                     _totalAssets
                 )
             );
-            if (uint64(tArray.get(i)) < collateralToWithdraw) {
+            saveData.push(
+                uint64(_adjustForDecimals(tArray.get(i), 18, assetDecimals))
+            );
+            saveData.push(collateralToWithdraw);
+            saveData.push(
+                uint64(
+                    _adjustForDecimals(
+                        tArray.get(i + tradeLength),
+                        18,
+                        assetDecimals
+                    )
+                )
+            );
+            saveData.push(trades[i].collateralAmount);
+
+            if (
+                uint64(
+                    _adjustForDecimals(
+                        tArray.get(i + tradeLength),
+                        18,
+                        assetDecimals
+                    )
+                ) <= collateralToWithdraw.mulDiv(closeTolerance, 1_000_000)
+            ) {
                 GainsNetwork.closeTradeMarket(
                     trades[i].index,
-                    uint64(tArray.get(i + tradeLength))
+                    uint64(_adjustForDecimals(tArray.get(i), 18, 10))
                 );
+                indexToStrategy[trades[i].index] = 0;
+                //When we close a position, we need to update that strategy
             } else {
                 GainsNetwork.decreasePositionSize(
                     trades[i].index, //Trade Index
                     collateralToWithdraw, //COLLATERAL DELTA
                     0, //LEVERAGE DELTA
-                    uint64(tArray.get(i)) // EXPECTED PRICE GOES HERE
+                    uint64(_adjustForDecimals(tArray.get(i), 18, 10)) // EXPECTED PRICE GOES HERE
                 );
             }
         }

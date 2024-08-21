@@ -54,11 +54,11 @@ module.exports = async function ({
   );
   const tokens = [startInfo.DAI, startInfo.USDC, startInfo.WETH];
   const amounts = [
-    [getAmountDec("0.85", 18).toFixed(), getAmountDec("0.04", 18).toFixed()],
-    [getAmountDec("0.85", 6).toFixed(), getAmountDec("0.04", 6).toFixed()],
+    [getAmountDec("0.85", 18).toFixed(), getAmountDec("0.85", 18).toFixed()],
+    [getAmountDec("0.85", 6).toFixed(), getAmountDec("0.85", 6).toFixed()],
     [
       getAmountDec("0.00040", 18).toFixed(),
-      getAmountDec("0.00002", 18).toFixed(),
+      getAmountDec("0.00040", 18).toFixed(),
     ],
   ] as [BigNumberish, BigNumberish][];
 

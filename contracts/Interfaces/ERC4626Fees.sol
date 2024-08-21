@@ -17,7 +17,6 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 assets
     ) public virtual override returns (uint256) {
         uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints(), _msgSender());
-        console.log("real fee", fee);
         return super.previewDeposit(assets - fee);
     }
 
@@ -44,6 +43,7 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 shares
     ) public virtual override returns (uint256) {
         uint256 assets = super.previewRedeem(shares);
+
         return
             assets - _feeOnTotal(assets, _exitFeeBasisPoints(), _msgSender());
     }
@@ -62,7 +62,6 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints(), _msgSender());
 
         (address recipient1, address recipient2) = _entryFeeRecipient();
-        console.log("Fee", fee, assets, shares);
 
         if (fee > 0 && recipient2 == receiver) {
             SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee);

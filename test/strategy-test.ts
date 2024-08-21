@@ -215,7 +215,7 @@ describe("Strategy Tests ", function () {
 
     //could use an event in the factory here instead
   });
-  it("RSI-based strategy works as expected ", async () => {
+  it("RSI-based strategy works as expected tonic", async () => {
     const initialAmount = await getAmount(USDC, "10");
     const apiKey = process.env.API_KEY;
     const method = "";
@@ -375,7 +375,7 @@ describe("Strategy Tests ", function () {
       impersonateOracleFulfill(vaultFactory, requestID, input, 0)
     ).to.be.rejectedWith("StrategyNotActive");
   });
-  describe("Testing All Methods jello", function () {
+  describe("Testing All Methods ", function () {
     let autoVault: AutoVault;
     const decimals = new Decimal(10).pow(18);
     beforeEach(async () => {
