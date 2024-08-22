@@ -100,6 +100,7 @@ contract FakeGainsNetwork is IGainsNetwork {
         address _refferer
     ) external override {
         userToTrades[msg.sender].push(_trade);
+
         if (_trade.collateralIndex == 3) {
             USDC.transferFrom(
                 msg.sender,

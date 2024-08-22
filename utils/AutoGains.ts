@@ -235,7 +235,7 @@ export async function impersonateOracleDoVaultActionAndCheck(
   fulfillValue: BigNumberish[],
   tokenDecimals: number,
   addToTimeStamp: number,
-  customCollateralWorth: string = "100",
+  tradePrice: string = "100",
   contractToCheck: any,
   EventToCheck: string
 ): Promise<void> {
@@ -277,15 +277,9 @@ export async function impersonateOracleDoVaultActionAndCheck(
   );
 
   fulfillValue.push(
-    new Decimal(customCollateralWorth)
-      .mul(new Decimal(10).pow(decimalAdj))
-      .toFixed()
+    new Decimal(tradePrice).mul(new Decimal(10).pow(decimalAdj)).toFixed()
   );
-  fulfillValue.push(
-    new Decimal(customCollateralWorth)
-      .mul(new Decimal(10).pow(decimalAdj))
-      .toFixed()
-  );
+
   console.log(fulfillValue);
   await expect(
     oracleContract.preformAction(requestID.toString(), fulfillValue)
@@ -388,6 +382,9 @@ export async function previewWithdraw(
   );
   const vaultManager = await autoVault.vaultManager();
   if (vaultManager == runner) {
+    expectedFee = new Decimal(0);
+  }
+  if (vaultManager == runner) {
     expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
   }
 
@@ -430,8 +427,12 @@ export async function previewRedeem(
     MOVEMENT_FEE_SCALE,
     minFee
   );
-  console.log("TS", expectedAssetsEarned, expectedFee);
   const vaultManager = await autoVault.vaultManager();
+
+  if (vaultManager == runner) {
+    expectedFee = new Decimal(0);
+  }
+  console.log("TS", expectedAssetsEarned, expectedFee);
   if (vaultManager == runner) {
     expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
   }

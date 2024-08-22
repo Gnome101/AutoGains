@@ -53,6 +53,7 @@ module.exports = async function ({
     VaultFactory.address
   );
   const tokens = [startInfo.DAI, startInfo.USDC, startInfo.WETH];
+
   const amounts = [
     [getAmountDec("0.85", 18).toFixed(), getAmountDec("0.85", 18).toFixed()],
     [getAmountDec("0.85", 6).toFixed(), getAmountDec("0.85", 6).toFixed()],

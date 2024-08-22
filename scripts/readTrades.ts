@@ -113,38 +113,45 @@ async function main() {
   const chainID = network.config.chainId;
   if (chainID == undefined) throw "Cannot find chainID";
 
-  // const vault = (await ethers.getContractAt(
-  //   "AutoVault",
-  //   "0xec90a10e4bed4903fe68cfa57a7cbdcebb104bfb"
-  // )) as unknown as AutoVault;
-  // const vaultAddress = "0xec90a10e4bed4903fe68cfa57a7cbdcebb104bfb";
+  const vault = (await ethers.getContractAt(
+    "AutoVault",
+    "0x5fd819c68cb94bb0a174ac366ea65d94230654ea"
+  )) as unknown as AutoVault;
+  const vaultAddress = "0x5fd819c68cb94bb0a174ac366ea65d94230654ea";
 
-  // const errorDecoder = ErrorDecoder.create([abi]);
-  // // Impersonate the oracle account
-  // const VaultFactory = "0x3151278D2d6c7c361C1F6d2e80501B984c49A8A0";
-  // await network.provider.send("hardhat_setBalance", [
-  //   VaultFactory,
-  //   "0x56BC75E2D63100000", // 100 ETH
-  // ]);
-  // await network.provider.request({
-  //   method: "hardhat_impersonateAccount",
-  //   params: [VaultFactory],
-  // });
-  // const impersonatedSigner = await ethers.getSigner(VaultFactory);
+  const errorDecoder = ErrorDecoder.create([abi]);
+  // Impersonate the oracle account
+  const VaultFactory = "0x2B82399BEdCabDd46431246F266972bfaC35eD42";
+  await network.provider.send("hardhat_setBalance", [
+    VaultFactory,
+    "0x56BC75E2D63100000", // 100 ETH
+  ]);
+  await network.provider.request({
+    method: "hardhat_impersonateAccount",
+    params: [VaultFactory],
+  });
+  const impersonatedSigner = await ethers.getSigner(VaultFactory);
 
-  // const AutoVault = await ethers.getContractAt(
-  //   "AutoVault",
-  //   vaultAddress,
-  //   impersonatedSigner
+  const AutoVault = await ethers.getContractAt(
+    "AutoVault",
+    vaultAddress,
+    impersonatedSigner
+  );
+  // const AutoVault = new Contract("VaultFactory", impersonatedSigner);
+
+  // await autoVault.startAction(
+  //   user.address,
+  //   balanceBefore.toFixed(),
+  //   3,
+  //   expectedShares.mul("10.15").floor().toFixed()
   // );
-  // // const AutoVault = new Contract("VaultFactory", impersonatedSigner);
 
-  // try {
-  //   await AutoVault.preformAction(0, 50000000, 0, 591710000000000);
-  // } catch (err) {
-  //   const decodedError: DecodedError = await errorDecoder.decode(err);
-  //   console.log(`Revert reason: ${decodedError.reason}`);
-  // }
+  try {
+    await AutoVault.preformAction(0, 50000000, 0, 591710000000000);
+  } catch (err) {
+    const decodedError: DecodedError = await errorDecoder.decode(err);
+    console.log(`Revert reason: ${decodedError.reason}`);
+  }
 }
 
 async function updateResponse(res: Decimal, provider: Provider, rsi: Decimal) {

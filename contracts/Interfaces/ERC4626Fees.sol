@@ -43,7 +43,11 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 shares
     ) public virtual override returns (uint256) {
         uint256 assets = super.previewRedeem(shares);
-
+        console.log(
+            "G",
+            assets,
+            _feeOnTotal(assets, _exitFeeBasisPoints(), _msgSender())
+        );
         return
             assets - _feeOnTotal(assets, _exitFeeBasisPoints(), _msgSender());
     }

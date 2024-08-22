@@ -292,7 +292,7 @@ describe("Live Testnet Vault Tests", function () {
 
       //   await testAction("Deposit");
     });
-    it("User can redeem egore", async function () {
+    it("User can redeem ", async function () {
       const add = await autoVault.asset();
       console.log("Asset", add);
       profiler.start("Get Most Recent Data");
@@ -313,7 +313,7 @@ describe("Live Testnet Vault Tests", function () {
       const totalAssets = await getVaultTotalAssets(
         autoVault.target.toString()
       );
-      const redeemAmount = await getAmount(USDC, "1.5");
+      const redeemAmount = await getAmount(USDC, "3");
       const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
 
       const redeemPreview = await previewRedeem(
@@ -332,7 +332,7 @@ describe("Live Testnet Vault Tests", function () {
         user.address,
         redeemAmount.toFixed(),
         3,
-        expectedShares.mul("1.1").floor().toFixed()
+        expectedShares.mul("1.5").floor().toFixed()
       );
 
       profiler.end("Start Action");
@@ -356,7 +356,7 @@ describe("Live Testnet Vault Tests", function () {
 
       //   await testAction("Deposit");
     });
-    it("User can redeem everything and the position closes", async function () {
+    it("User can redeem everything and the position closes egore", async function () {
       const add = await autoVault.asset();
       console.log("Asset", add);
       profiler.start("Get Most Recent Data");
@@ -825,7 +825,6 @@ describe("Live Testnet Vault Tests", function () {
             "|",
             JSON.stringify(previousTrade)
           );
-          console.log(await autoVault.getC());
           if (JSON.stringify(lastTrade) != JSON.stringify(previousTrade)) {
             clearInterval(intervalId);
             resolve(lastTrade);
@@ -858,8 +857,8 @@ describe("Live Testnet Vault Tests", function () {
           const latestBalance = await getBalance();
 
           console.log(previousBalance.toFixed(), "|", latestBalance.toFixed());
-          console.log(await autoVault.getC());
-          console.log(await autoVault.getPublicDataBef());
+          // console.log(await autoVault.getC());
+          // console.log(await autoVault.getPublicDataBef());
           console.log(await autoVault.getPublicData());
           console.log(await vaultFactory.bodyA());
 

@@ -14,17 +14,24 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 import "./VaultFactory.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
+//To Do
+//1. Add withdraw period
+//2. No one can withdraw from vault until someone calls withdraw period
+//3. When they click enter withdraw period, then 7 days later there is a withdraw period for 2 hours
+//4. No trade can occur within this period, all trades must be closed
+//5.
 contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     using Chainlink for Chainlink.Request;
     using SafeERC20 for IERC20;
     using SafeERC20 for IERC20Metadata;
     using Math for uint120;
+    using Math for uint256;
+
     using Strings for uint256;
     enum Choice {
         DEPOSIT,
         MINT,
-        WITHDRAW,
-        REDEEM
+        WITHDRAW_PERIOD
     }
 
     struct VaultAction {
@@ -82,7 +89,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     uint256 public constant MAX_TIME_DIFFERENCE = 20;
 
     //The cooldown period exists to prevent reselling the tokens
-    uint256 private constant COOLDOWN_PERIOD = 60;
+    uint256 private constant COOLDOWN_PERIOD = 0;
     mapping(address => uint256) private _lastMintTimestamp;
     uint256 public constant SWAP_FEE = 2_000; // 0.2% swap fee
 
@@ -133,11 +140,12 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     }
 
     string public constant trade_path = "totalnewCollateral;blockTimestamp";
-    string public saveDataBefore;
 
-    function getPublicDataBef() public view returns (string memory) {
-        return saveDataBefore;
-    }
+    // string public saveDataBefore;
+
+    // function getPublicDataBef() public view returns (string memory) {
+    //     return saveDataBefore;
+    // }
 
     function startAction(
         address receiver,
@@ -145,6 +153,8 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         Choice choice,
         uint256 slippage
     ) external returns (bytes32 requestId) {
+        if (choice == Choice.WITHDRAW_PERIOD) _checkIfWithdrawPeriod();
+
         string memory path = trade_path;
         Trade[] memory trades = GainsNetwork.getTrades(address(this));
 
@@ -152,11 +162,8 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             path = string.concat(path, ";latestPrices,");
             path = string.concat(path, i.toString());
         }
-        for (uint i = 0; i < trades.length; i++) {
-            path = string.concat(path, ";newCollateralArray,");
-            path = string.concat(path, i.toString());
-        }
-        saveDataBefore = path;
+
+        // saveDataBefore = path;
         Chainlink.Request memory req = balanceRequest;
         req._add("path", path);
         requestId = VaultFactory(vaultFactory).sendInfoRequest(
@@ -199,50 +206,34 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         VaultAction memory vaultAction = requestToAction[requestId];
         currentUser.set(vaultAction.msgSender);
         data[0] = _adjustForDecimals(data[0], 18, _asset.decimals());
+        data[0] = data[0].mulDiv(900_000, 1_000_000);
 
         totalValueCollateral.set(data[0] > 0 ? data[0] + 1 : 1);
-        for (uint i = 2; i < data.length; i++) {
-            tArray.push(data[i]);
-        }
+
         // saveData.push(block.number);
+        saveData.push(data[0]);
+        saveData.push(data[1]);
+        saveData.push(block.timestamp);
+
         if ((data[1] / (10 ** 18)) + MAX_TIME_DIFFERENCE < block.timestamp) {
             revert TimeStampDifferenceTooLarge(
                 block.timestamp - data[1] / (10 ** 18)
             );
         }
+
         uint256 result;
         if (vaultAction.choice == Choice.DEPOSIT) {
             result = this.deposit(vaultAction.amount, vaultAction.receiver);
-            console.log("slip", vaultAction.slippage, result);
             if (vaultAction.slippage > result) revert Slippage();
         } else if (vaultAction.choice == Choice.MINT) {
             result = this.mint(vaultAction.amount, vaultAction.receiver);
-            console.log("slip", vaultAction.slippage, result);
-
             if (vaultAction.slippage < result) revert Slippage();
-        } else if (vaultAction.choice == Choice.WITHDRAW) {
-            result = this.withdraw(
-                vaultAction.amount,
-                vaultAction.receiver,
-                _msgSender()
-            );
-            console.log("slip", vaultAction.slippage, result);
-
-            if (vaultAction.slippage > result) revert Slippage();
-        } else if (vaultAction.choice == Choice.REDEEM) {
-            result = this.redeem(
-                vaultAction.amount,
-                vaultAction.receiver,
-                _msgSender()
-            );
-            console.log("slip", vaultAction.slippage, result);
-
-            if (vaultAction.slippage < result) revert Slippage();
+        } else if (vaultAction.choice == Choice.WITHDRAW_PERIOD) {
+            closeAllPositions(data);
         } else {
             revert InvalidAction();
         }
-        saveData.push(vaultAction.slippage);
-        saveData.push(result);
+
         totalValueCollateral.set(0);
         currentUser.set(address(0));
     }
@@ -292,11 +283,11 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     }
 
     // uint256 callerFeeShare = 3; // Can not be 0;
-    uint256[] public c;
+    // uint256[] public c;
 
-    function getC() public view returns (uint256[] memory) {
-        return c;
-    }
+    // function getC() public view returns (uint256[] memory) {
+    //     return c;
+    // }
 
     function fulfill(
         bytes32 requestId,
@@ -581,75 +572,18 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         return x;
     }
 
-    uint256 public constant closeTolerance = 1_100_000;
+    uint256 public constant closeTolerance = 900_000;
 
-    //A higher tolerance means that its more likely to close a position
+    //A lower tolerance means that its more likely to close a position
+
     function beforeWithdraw(
         address user,
         uint256 assetsWithdrawn
     ) internal override {
         //This is to prevent arbitrage
-        if (_lastMintTimestamp[user] + COOLDOWN_PERIOD > block.timestamp) {
-            revert CoolDownViolated();
-        }
-
-        Trade[] memory trades = GainsNetwork.getTrades(address(this));
-        if (trades.length == 0) return;
-        uint256 tradeLength = trades.length;
-        if (tradeLength * 2 != tArray.length()) {
-            revert IncorrectTradeData(tradeLength, tArray.length());
-        }
-
-        uint256 _totalAssets = this.totalAssets();
-        uint256 assetDecimals = this.decimals();
-
-        for (uint i = 0; i < tradeLength; i++) {
-            uint120 collateralToWithdraw = uint120(
-                Math.mulDiv(
-                    assetsWithdrawn,
-                    trades[i].collateralAmount,
-                    _totalAssets
-                )
-            );
-            saveData.push(
-                uint64(_adjustForDecimals(tArray.get(i), 18, assetDecimals))
-            );
-            saveData.push(collateralToWithdraw);
-            saveData.push(
-                uint64(
-                    _adjustForDecimals(
-                        tArray.get(i + tradeLength),
-                        18,
-                        assetDecimals
-                    )
-                )
-            );
-            saveData.push(trades[i].collateralAmount);
-
-            if (
-                uint64(
-                    _adjustForDecimals(
-                        tArray.get(i + tradeLength),
-                        18,
-                        assetDecimals
-                    )
-                ) <= collateralToWithdraw.mulDiv(closeTolerance, 1_000_000)
-            ) {
-                GainsNetwork.closeTradeMarket(
-                    trades[i].index,
-                    uint64(_adjustForDecimals(tArray.get(i), 18, 10))
-                );
-                indexToStrategy[trades[i].index] = 0;
-                //When we close a position, we need to update that strategy
-            } else {
-                GainsNetwork.decreasePositionSize(
-                    trades[i].index, //Trade Index
-                    collateralToWithdraw, //COLLATERAL DELTA
-                    0, //LEVERAGE DELTA
-                    uint64(_adjustForDecimals(tArray.get(i), 18, 10)) // EXPECTED PRICE GOES HERE
-                );
-            }
-        }
+        // if (_lastMintTimestamp[user] + COOLDOWN_PERIOD > block.timestamp) {
+        //     revert CoolDownViolated();
+        // }
     }
 
     function afterDeposit(
@@ -666,8 +600,9 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     }
 
     function _getMinFee() internal view override returns (uint256) {
-        //Trade[] memory trades = GainsNetwork.getTrades(address(this));
-        return vaultActionFee; //+ tradeFee * trades.length;
+        Trade[] memory trades = GainsNetwork.getTrades(address(this));
+        if (trades.length == 0) return vaultActionFee; // If there are no trades, make it not a max fee
+        return oracleFee; //If there are trades, make it the max fee
     }
 
     function _doesRecipientPayFee() internal view override returns (bool) {
@@ -729,5 +664,69 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
 
     function owner() public view returns (address) {
         return vaultManager;
+    }
+
+    uint256 public constant withdrawPeriodLength = 60 * 60 * 2; // 2 hours
+    uint256 public nextWithdrawPeriod; //This is the next time in which withdraws will be supported
+    uint256 public constant MIN_PERIOD_TIME = 60 * 60 * 24 * 7; // 7 days
+    error PastWithdrawPeriod(uint256 timeAfter);
+    error NotYetWithdrawPeriod(uint256 timeRemaining);
+    error NoWithdrawPeriodSet();
+    error WithdrawPeriodAlreadySet();
+
+    //  Current timestmap is 0
+    //Next one is 100
+    //Period is 10
+    // 111 - 100 = 1
+    function _checkIfWithdrawPeriod() internal view {
+        if (nextWithdrawPeriod == 0) {
+            revert NoWithdrawPeriodSet();
+        }
+        if (block.timestamp < nextWithdrawPeriod) {
+            revert NotYetWithdrawPeriod(nextWithdrawPeriod - block.timestamp);
+        }
+        if (block.timestamp - nextWithdrawPeriod > withdrawPeriodLength) {
+            revert PastWithdrawPeriod(
+                nextWithdrawPeriod - block.timestamp - withdrawPeriodLength
+            );
+        }
+    }
+
+    error NotTokenHolder(address);
+    event WithdrawPeriodSet(uint256 date);
+
+    function setWithdrawPeriod() external {
+        if (this.balanceOf(msg.sender) == 0) {
+            revert NotTokenHolder(msg.sender);
+        }
+        //If there is already a set withdraw period in the future, then revert
+        if (block.timestamp < nextWithdrawPeriod) {
+            revert WithdrawPeriodAlreadySet();
+        }
+        //If the withdraw period is in the past or 0, then we can set a new one
+        nextWithdrawPeriod = block.timestamp + MIN_PERIOD_TIME;
+        emit WithdrawPeriodSet(nextWithdrawPeriod);
+    }
+
+    event WithdrawPeriodStarted();
+
+    function closeAllPositions(uint256[] memory latestPrices) internal {
+        emit WithdrawPeriodStarted();
+        Trade[] memory trades = GainsNetwork.getTrades(address(this));
+        if (trades.length == 0) return;
+        uint256 tradeLength = trades.length;
+        if (tradeLength != latestPrices.length - 2) {
+            revert IncorrectTradeData(tradeLength, latestPrices.length);
+        }
+
+        for (uint i = 2; i < latestPrices.length; i++) {
+            GainsNetwork.closeTradeMarket(
+                trades[i - 2].index,
+                uint64(_adjustForDecimals(latestPrices[i], 18, 10))
+            );
+
+            indexToStrategy[trades[i - 2].index] = 0;
+        }
+        _asset.safeTransfer(vaultFactory, oracleFee);
     }
 }

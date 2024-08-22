@@ -19,7 +19,7 @@ async function fetchVaultCreatedEvents() {
   const provider = ethers.provider;
   const vaultFactory = await ethers.getContractAt(
     "VaultFactory",
-    "0xb5cd1c54624533cB009a1a7244Fc75D46d8EBd02"
+    "0xf8Ff5286481364b30acD46231332857C738bc824"
   );
   const filter = vaultFactory.filters.VaultCreated();
   const events = await vaultFactory.queryFilter(filter);
@@ -37,7 +37,7 @@ async function runBot() {
   await fetchVaultCreatedEvents();
   const vaultFactory = await ethers.getContractAt(
     "VaultFactory",
-    "0xb5cd1c54624533cB009a1a7244Fc75D46d8EBd02"
+    "0xf8Ff5286481364b30acD46231332857C738bc824"
   );
 
   // Run indefinitely
@@ -47,6 +47,8 @@ async function runBot() {
         "AutoVault",
         vaultAddresses[index]
       );
+      const strategies = await autoVault.returnStrategies();
+      console.log(strategies.length);
       const vaultAddress = vaultAddresses[index];
       console.log(`Fetching strategies...`);
       const apiInfo = await getStrategyResults(
@@ -60,12 +62,17 @@ async function runBot() {
         if (0 < action) {
           console.log(`Executing strategy ${i}`);
           console.log(action);
-          const activePosition = await autoVault.strategyToActive(i);
+          const activePosition = await autoVault.indexToStrategy(i);
           const strategyToIndex = await autoVault.strategyToIndex(i);
           console.log(activePosition, strategyToIndex, Number(action) >> 252);
 
-          if (activePosition && Number(action) >> 252 != 0)
-            await autoVault.executeStrategy(i);
+          if (Number(strategyToIndex) != 0 && Number(action) >> 252 != 0) {
+          } else {
+            console.log(
+              `Strategy ${i} for ${vaultAddress} already has an active position`
+            );
+          }
+          // await autoVault.executeStrategy(i);
         } else {
           console.log(`Not executing strategy ${i}`);
         }
@@ -105,8 +112,9 @@ async function getStrategyResults(
   const info = await vaultFactory.queryFilter(filter);
 
   let responses = [];
-  for (let slot = 0; slot < info.length; slot++) {
-    const apiInfo = info[slot].args.apiinfo[0] as ApiInfo;
+  const apiInfos = info[0].args.apiinfo;
+  for (let slot = 0; slot < apiInfos.length; slot++) {
+    const apiInfo = apiInfos[slot] as ApiInfo;
 
     // const method = apiInfo.method;
     // const url = apiInfo.url;
@@ -116,7 +124,6 @@ async function getStrategyResults(
     // const jobID = apiInfo.jobIDs;
 
     const res = await makeApiCall(apiInfo);
-
     const arr = parseJsonByPath(res, apiInfo.path);
     const decimal = new Decimal(10).pow(18);
     const finalArr = arr.map((x) =>

@@ -1318,7 +1318,7 @@ export interface StateInfo {
   factoryBalance: Decimal;
   vaultCreatorBalance: Decimal;
 }
-async function getImportantInfo(
+export async function getImportantInfo(
   autoVault: AutoVault,
   collateral: ERC20,
   address: AddressLike,
