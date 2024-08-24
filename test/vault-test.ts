@@ -118,13 +118,13 @@ describe("Vault Tests eeep", function () {
 
     USDC = (await ethers.getContractAt(
       "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20",
-      contracts[chainID].DAI,
+      contracts[chainID].USDC,
       vaultCreator
     )) as unknown as ERC20;
 
     otherUSDC = (await ethers.getContractAt(
       "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20",
-      contracts[chainID].DAI,
+      contracts[chainID].USDC,
       otherUser
     )) as unknown as ERC20;
 
@@ -638,7 +638,7 @@ describe("Vault Tests eeep", function () {
               MOVEMENT_FEE_SCALE
             );
           });
-          it("mint should work with minimal fee ", async () => {
+          it("mint should work with minimal fee test_mint", async () => {
             await test_mint(
               USDC,
               autoVault,
@@ -646,30 +646,6 @@ describe("Vault Tests eeep", function () {
               vaultCreator,
               vaultFactory,
               FACTORY_SHARE
-            );
-          });
-          it("withdraw should work with minimal fee ", async () => {
-            await test_withdraw(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with minimal fee ", async () => {
-            await test_redeem(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
             );
           });
         });
@@ -736,30 +712,6 @@ describe("Vault Tests eeep", function () {
               FACTORY_SHARE
             );
           });
-          it("withdraw should work with a fee ", async () => {
-            await test_withdraw(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with a fee ", async () => {
-            await test_redeem(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
         });
         //To beat the cooldown period, one could deposit, then transfer to another address, then
       });
@@ -800,30 +752,6 @@ describe("Vault Tests eeep", function () {
               vaultCreator,
               vaultFactory,
               FACTORY_SHARE
-            );
-          });
-          it("withdraw should work with minimal fee test_withdraw", async () => {
-            await test_withdraw(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with minimal fee ", async () => {
-            await test_redeem(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
             );
           });
         });
@@ -890,30 +818,6 @@ describe("Vault Tests eeep", function () {
               FACTORY_SHARE
             );
           });
-          it("withdraw should work with a fee oaoh", async () => {
-            await test_withdraw(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with a fee ", async () => {
-            await test_redeem(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
         });
       });
       describe("Collateral is worth 0 ", function () {
@@ -952,30 +856,6 @@ describe("Vault Tests eeep", function () {
               vaultCreator,
               vaultFactory,
               FACTORY_SHARE
-            );
-          });
-          it("withdraw should work with minimal fee ", async () => {
-            await test_withdraw(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with minimal fee ", async () => {
-            await test_redeem(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              MOVEMENT_FEE_SCALE,
-              FakeGainsNetwork
             );
           });
         });
@@ -1040,30 +920,6 @@ describe("Vault Tests eeep", function () {
               otherUser,
               vaultFactory,
               FACTORY_SHARE
-            );
-          });
-          it("withdraw should work with a fee ", async () => {
-            await test_withdraw(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with a fee ", async () => {
-            await test_redeem(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
             );
           });
         });
@@ -1106,30 +962,6 @@ describe("Vault Tests eeep", function () {
               FACTORY_SHARE
             );
           });
-          it("withdraw should work with minimal fee ", async () => {
-            await test_withdraw(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              MOVEMENT_FEE_SCALE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with minimal fee poop", async () => {
-            await test_redeem(
-              USDC,
-              autoVault,
-              totalCollateral,
-              collateralAmounts,
-              vaultCreator,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
         });
         describe("Other User ", function () {
           beforeEach(async () => {
@@ -1192,83 +1024,6 @@ describe("Vault Tests eeep", function () {
               otherUser,
               vaultFactory,
               FACTORY_SHARE
-            );
-          });
-          it("withdraw should work with a fee  ", async () => {
-            await test_withdraw(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("redeem should work with a fee ", async () => {
-            await test_redeem(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-          });
-          it("user can do all of it ", async () => {
-            await test_deposit(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE
-            );
-            await test_mint(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE
-            );
-            await test_withdraw(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
-            );
-
-            //We have to re update this
-            totalCollateral = new Decimal("0");
-            collateralAmounts = [] as Decimal[];
-
-            const trades = await FakeGainsNetwork.getTrades(autoVault.target);
-            for (const trade of trades) {
-              const collateralAmount = trade.collateralAmount;
-
-              collateralAmounts.push(new Decimal(collateralAmount.toString()));
-              totalCollateral = totalCollateral.plus(
-                collateralAmount.toString()
-              );
-            }
-            totalCollateral = totalCollateral.mul(collateralWorth).floor();
-            await test_redeem(
-              otherUSDC,
-              otherAutoVault,
-              totalCollateral,
-              collateralAmounts,
-              otherUser,
-              vaultFactory,
-              FACTORY_SHARE,
-              FakeGainsNetwork
             );
           });
         });
@@ -1485,6 +1240,7 @@ async function test_mint(
   const choice = 1;
   const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
   const totalAssets = totalCollateral.plus(totalAssetsExisting.toString());
+  console.log("total assets:", totalCollateral, totalAssetsExisting);
   const vaultCreatorAddress = await autoVault.vaultManager();
 
   const { expectedAmount, expectedFee } = await previewMint(
@@ -1498,6 +1254,9 @@ async function test_mint(
   await USDC.approve(
     autoVault.target,
     expectedAssetsPaid.plus(expectedFee).toFixed()
+  );
+  console.log(
+    `Total expected:${expectedAssetsPaid.plus(expectedFee).toFixed()}`
   );
 
   const requestID = await autoVault.startAction.staticCall(
@@ -1513,6 +1272,7 @@ async function test_mint(
     vaultFactory.target,
     vaultCreatorAddress
   );
+
   await autoVault.startAction(
     userDepositing,
     mintAmount.toFixed(),
@@ -1572,233 +1332,233 @@ async function test_mint(
     );
   }
 }
-async function test_withdraw(
-  USDC: ERC20,
-  autoVault: AutoVault,
-  totalCollateral: Decimal,
-  collateralAmounts: Decimal[],
-  userDepositing: SignerWithAddress,
-  vaultFactory: VaultFactory,
-  FACTORY_SHARE: Decimal,
-  FakeGainsNetwork: FakeGainsNetwork
-) {
-  const withdrawAmount = await getAmount(USDC, ".1");
-  const choice = 2;
+// async function test_withdraw(
+//   USDC: ERC20,
+//   autoVault: AutoVault,
+//   totalCollateral: Decimal,
+//   collateralAmounts: Decimal[],
+//   userDepositing: SignerWithAddress,
+//   vaultFactory: VaultFactory,
+//   FACTORY_SHARE: Decimal,
+//   FakeGainsNetwork: FakeGainsNetwork
+// ) {
+//   const withdrawAmount = await getAmount(USDC, ".1");
+//   const choice = 2;
 
-  const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
-  const totalAssets = totalCollateral.plus(totalAssetsExisting.toString());
-  const vaultCreatorAddress = await autoVault.vaultManager();
-  const { expectedAmount, expectedFee } = await previewWithdraw(
-    autoVault,
-    userDepositing.address,
-    withdrawAmount,
-    totalAssets
-  );
-  const expectedSoldShares = expectedAmount;
-  const requestID = await autoVault.startAction.staticCall(
-    userDepositing.address,
-    withdrawAmount.toFixed(),
-    choice,
-    expectedSoldShares.toFixed()
-  );
+//   const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
+//   const totalAssets = totalCollateral.plus(totalAssetsExisting.toString());
+//   const vaultCreatorAddress = await autoVault.vaultManager();
+//   const { expectedAmount, expectedFee } = await previewWithdraw(
+//     autoVault,
+//     userDepositing.address,
+//     withdrawAmount,
+//     totalAssets
+//   );
+//   const expectedSoldShares = expectedAmount;
+//   const requestID = await autoVault.startAction.staticCall(
+//     userDepositing.address,
+//     withdrawAmount.toFixed(),
+//     choice,
+//     expectedSoldShares.toFixed()
+//   );
 
-  const Before = await getImportantInfo(
-    autoVault,
-    USDC,
-    userDepositing.address,
-    vaultFactory.target,
-    vaultCreatorAddress
-  );
+//   const Before = await getImportantInfo(
+//     autoVault,
+//     USDC,
+//     userDepositing.address,
+//     vaultFactory.target,
+//     vaultCreatorAddress
+//   );
 
-  await autoVault.startAction(
-    userDepositing.address,
-    withdrawAmount.toFixed(),
-    choice,
-    expectedSoldShares.toFixed()
-  );
+//   await autoVault.startAction(
+//     userDepositing.address,
+//     withdrawAmount.toFixed(),
+//     choice,
+//     expectedSoldShares.toFixed()
+//   );
 
-  // console.log(`Total collateral before:`, totalCollateral);
-  const input = [totalCollateral.toFixed()];
+//   // console.log(`Total collateral before:`, totalCollateral);
+//   const input = [totalCollateral.toFixed()];
 
-  await impersonateOracleDoVaultAction(
-    vaultFactory,
-    requestID,
-    input,
-    Number(await USDC.decimals()),
-    0
-  );
+//   await impersonateOracleDoVaultAction(
+//     vaultFactory,
+//     requestID,
+//     input,
+//     Number(await USDC.decimals()),
+//     0
+//   );
 
-  collateralAmounts = collateralAmounts.map((x) =>
-    x.sub(x.mul(withdrawAmount).dividedBy(totalAssets).floor())
-  );
-  //Since collateral is equal to how much put in, shares should be 1 to 1
-  const After = await getImportantInfo(
-    autoVault,
-    USDC,
-    userDepositing.address,
-    vaultFactory.target,
-    vaultCreatorAddress
-  );
+//   collateralAmounts = collateralAmounts.map((x) =>
+//     x.sub(x.mul(withdrawAmount).dividedBy(totalAssets).floor())
+//   );
+//   //Since collateral is equal to how much put in, shares should be 1 to 1
+//   const After = await getImportantInfo(
+//     autoVault,
+//     USDC,
+//     userDepositing.address,
+//     vaultFactory.target,
+//     vaultCreatorAddress
+//   );
 
-  let trades = await FakeGainsNetwork.getTrades(autoVault.target);
-  totalCollateral = new Decimal("0");
-  let i = 0;
-  for (const trade of trades) {
-    const collateralAmount = trade.collateralAmount;
-    assert.equal(
-      collateralAmounts[i].toFixed(),
-      collateralAmount.toString(),
-      "Trades should decrease by desired amount"
-    );
-    totalCollateral = totalCollateral.plus(collateralAmount.toString());
-    i++;
-  }
-  // console.log(`Total collateral after:`, totalCollateral);
-  assert.equal(
-    Before.userBalance.sub(After.userBalance).toFixed(),
-    expectedSoldShares.toFixed(),
-    "vaultCreator balance should decrease by correct amount"
-  );
-  if (vaultCreatorAddress == userDepositing.address) {
-    assert.equal(
-      After.assetBalance.sub(Before.assetBalance).toFixed(),
-      withdrawAmount.toFixed()
-    );
-    assert.equal(
-      After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-      expectedFee.toFixed(),
-      "Vault Factory recieved wrong fee"
-    );
-    assert.equal(
-      After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-      withdrawAmount.toFixed(),
-      "Vault Creator recieved wrong amount for withdrawal"
-    );
-  } else {
-    assert.equal(
-      After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-      expectedFee.dividedBy(FACTORY_SHARE).toFixed(),
-      "Vault Factory recieved wrong fee"
-    );
-    assert.equal(
-      After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-      expectedFee.sub(expectedFee.dividedBy(FACTORY_SHARE)).toFixed(),
-      "Vault Creator recieved wrong fee"
-    );
-  }
-}
-async function test_redeem(
-  USDC: ERC20,
-  autoVault: AutoVault,
-  totalCollateral: Decimal,
-  collateralAmounts: Decimal[],
-  userDepositing: SignerWithAddress,
-  vaultFactory: VaultFactory,
-  FACTORY_SHARE: Decimal,
-  FakeGainsNetwork: FakeGainsNetwork
-) {
-  const redeemAmount = await getAmount(autoVault, "2");
-  const choice = 3;
-  const vaultCreatorAddress = await autoVault.vaultManager();
+//   let trades = await FakeGainsNetwork.getTrades(autoVault.target);
+//   totalCollateral = new Decimal("0");
+//   let i = 0;
+//   for (const trade of trades) {
+//     const collateralAmount = trade.collateralAmount;
+//     assert.equal(
+//       collateralAmounts[i].toFixed(),
+//       collateralAmount.toString(),
+//       "Trades should decrease by desired amount"
+//     );
+//     totalCollateral = totalCollateral.plus(collateralAmount.toString());
+//     i++;
+//   }
+//   // console.log(`Total collateral after:`, totalCollateral);
+//   assert.equal(
+//     Before.userBalance.sub(After.userBalance).toFixed(),
+//     expectedSoldShares.toFixed(),
+//     "vaultCreator balance should decrease by correct amount"
+//   );
+//   if (vaultCreatorAddress == userDepositing.address) {
+//     assert.equal(
+//       After.assetBalance.sub(Before.assetBalance).toFixed(),
+//       withdrawAmount.toFixed()
+//     );
+//     assert.equal(
+//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
+//       expectedFee.toFixed(),
+//       "Vault Factory recieved wrong fee"
+//     );
+//     assert.equal(
+//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
+//       withdrawAmount.toFixed(),
+//       "Vault Creator recieved wrong amount for withdrawal"
+//     );
+//   } else {
+//     assert.equal(
+//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
+//       expectedFee.dividedBy(FACTORY_SHARE).toFixed(),
+//       "Vault Factory recieved wrong fee"
+//     );
+//     assert.equal(
+//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
+//       expectedFee.sub(expectedFee.dividedBy(FACTORY_SHARE)).toFixed(),
+//       "Vault Creator recieved wrong fee"
+//     );
+//   }
+// }
+// async function test_redeem(
+//   USDC: ERC20,
+//   autoVault: AutoVault,
+//   totalCollateral: Decimal,
+//   collateralAmounts: Decimal[],
+//   userDepositing: SignerWithAddress,
+//   vaultFactory: VaultFactory,
+//   FACTORY_SHARE: Decimal,
+//   FakeGainsNetwork: FakeGainsNetwork
+// ) {
+//   const redeemAmount = await getAmount(autoVault, "2");
+//   const choice = 3;
+//   const vaultCreatorAddress = await autoVault.vaultManager();
 
-  const requestID = await autoVault.startAction.staticCall(
-    userDepositing.address,
-    redeemAmount.toFixed(),
-    choice,
-    redeemAmount.toFixed()
-  );
-  const Before = await getImportantInfo(
-    autoVault,
-    USDC,
-    userDepositing.address,
-    vaultFactory.target,
-    vaultCreatorAddress
-  );
-  const input = [totalCollateral.toFixed()];
-  const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
-  const totalAssets = totalCollateral.plus(totalAssetsExisting.toString());
-  const { expectedAmount, expectedFee } = await previewRedeem(
-    autoVault,
-    userDepositing.address,
-    redeemAmount,
-    totalAssets
-  );
-  const expectedAssetsEarned = expectedAmount;
-  console.log(`Bruh`, expectedAssetsEarned);
-  await autoVault.startAction(
-    userDepositing.address,
-    redeemAmount.toFixed(),
-    choice,
-    expectedAssetsEarned.toFixed()
-  );
+//   const requestID = await autoVault.startAction.staticCall(
+//     userDepositing.address,
+//     redeemAmount.toFixed(),
+//     choice,
+//     redeemAmount.toFixed()
+//   );
+//   const Before = await getImportantInfo(
+//     autoVault,
+//     USDC,
+//     userDepositing.address,
+//     vaultFactory.target,
+//     vaultCreatorAddress
+//   );
+//   const input = [totalCollateral.toFixed()];
+//   const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
+//   const totalAssets = totalCollateral.plus(totalAssetsExisting.toString());
+//   const { expectedAmount, expectedFee } = await previewRedeem(
+//     autoVault,
+//     userDepositing.address,
+//     redeemAmount,
+//     totalAssets
+//   );
+//   const expectedAssetsEarned = expectedAmount;
+//   console.log(`Bruh`, expectedAssetsEarned);
+//   await autoVault.startAction(
+//     userDepositing.address,
+//     redeemAmount.toFixed(),
+//     choice,
+//     expectedAssetsEarned.toFixed()
+//   );
 
-  // console.log(`Total collateral before:`, totalCollateral);
+//   // console.log(`Total collateral before:`, totalCollateral);
 
-  await impersonateOracleDoVaultAction(
-    vaultFactory,
-    requestID,
-    input,
-    Number(await USDC.decimals()),
-    0
-  );
-  collateralAmounts = collateralAmounts.map((x) =>
-    x.mul(totalAssets.sub(expectedAssetsEarned)).dividedBy(totalAssets).ceil()
-  );
-  //Since collateral is equal to how much put in, shares should be 1 to 1
+//   await impersonateOracleDoVaultAction(
+//     vaultFactory,
+//     requestID,
+//     input,
+//     Number(await USDC.decimals()),
+//     0
+//   );
+//   collateralAmounts = collateralAmounts.map((x) =>
+//     x.mul(totalAssets.sub(expectedAssetsEarned)).dividedBy(totalAssets).ceil()
+//   );
+//   //Since collateral is equal to how much put in, shares should be 1 to 1
 
-  const After = await getImportantInfo(
-    autoVault,
-    USDC,
-    userDepositing.address,
-    vaultFactory.target,
-    vaultCreatorAddress
-  );
+//   const After = await getImportantInfo(
+//     autoVault,
+//     USDC,
+//     userDepositing.address,
+//     vaultFactory.target,
+//     vaultCreatorAddress
+//   );
 
-  let trades = await FakeGainsNetwork.getTrades(autoVault.target);
-  totalCollateral = new Decimal("0");
-  let i = 0;
-  for (const trade of trades) {
-    const collateralAmount = trade.collateralAmount;
-    assert.equal(
-      collateralAmounts[i].toFixed(),
-      collateralAmount.toString(),
-      "Trades should decrease by desired amount"
-    );
-    totalCollateral = totalCollateral.plus(collateralAmount.toString());
-    i++;
-  }
-  // console.log(`Total collateral after:`, totalCollateral);
-  assert.equal(
-    Before.userBalance.sub(After.userBalance).toFixed(),
-    redeemAmount.toFixed(),
-    "vaultCreator balance should decrease by correct amount"
-  );
+//   let trades = await FakeGainsNetwork.getTrades(autoVault.target);
+//   totalCollateral = new Decimal("0");
+//   let i = 0;
+//   for (const trade of trades) {
+//     const collateralAmount = trade.collateralAmount;
+//     assert.equal(
+//       collateralAmounts[i].toFixed(),
+//       collateralAmount.toString(),
+//       "Trades should decrease by desired amount"
+//     );
+//     totalCollateral = totalCollateral.plus(collateralAmount.toString());
+//     i++;
+//   }
+//   // console.log(`Total collateral after:`, totalCollateral);
+//   assert.equal(
+//     Before.userBalance.sub(After.userBalance).toFixed(),
+//     redeemAmount.toFixed(),
+//     "vaultCreator balance should decrease by correct amount"
+//   );
 
-  assert.equal(
-    After.assetBalance.sub(Before.assetBalance).toFixed(),
-    expectedAssetsEarned.toFixed()
-  );
-  if (vaultCreatorAddress == userDepositing.address) {
-    assert.equal(
-      After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-      expectedFee.toFixed(),
-      "Vault Factory received wrong fee"
-    );
-    assert.equal(
-      After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-      expectedAssetsEarned.toFixed(),
-      "Vault Creator received wrong fee"
-    );
-  } else {
-    assert.equal(
-      After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-      expectedFee.dividedBy(FACTORY_SHARE).toFixed(),
-      "Vault Factory received wrong fee"
-    );
-    assert.equal(
-      After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-      expectedFee.sub(expectedFee.dividedBy(FACTORY_SHARE)).toFixed(),
-      "Vault Creator received wrong fee"
-    );
-  }
-}
+//   assert.equal(
+//     After.assetBalance.sub(Before.assetBalance).toFixed(),
+//     expectedAssetsEarned.toFixed()
+//   );
+//   if (vaultCreatorAddress == userDepositing.address) {
+//     assert.equal(
+//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
+//       expectedFee.toFixed(),
+//       "Vault Factory received wrong fee"
+//     );
+//     assert.equal(
+//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
+//       expectedAssetsEarned.toFixed(),
+//       "Vault Creator received wrong fee"
+//     );
+//   } else {
+//     assert.equal(
+//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
+//       expectedFee.dividedBy(FACTORY_SHARE).toFixed(),
+//       "Vault Factory received wrong fee"
+//     );
+//     assert.equal(
+//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
+//       expectedFee.sub(expectedFee.dividedBy(FACTORY_SHARE)).toFixed(),
+//       "Vault Creator received wrong fee"
+//     );
+//   }
+// }

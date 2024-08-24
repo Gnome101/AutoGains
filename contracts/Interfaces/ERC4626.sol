@@ -138,18 +138,22 @@ abstract contract ERC4626 is ERC20, IERC4626 {
     }
 
     /** @dev See {IERC4626-totalAssets}. */
-    function totalAssets() public virtual returns (uint256) {
+    function totalAssets() public view virtual returns (uint256) {
         // console.log("whenNotPaused", _asset.balanceOf(address(this)));
         return _asset.balanceOf(address(this));
     }
 
     /** @dev See {IERC4626-convertToShares}. */
-    function convertToShares(uint256 assets) public virtual returns (uint256) {
+    function convertToShares(
+        uint256 assets
+    ) public view virtual returns (uint256) {
         return _convertToShares(assets, Math.Rounding.Floor);
     }
 
     /** @dev See {IERC4626-convertToAssets}. */
-    function convertToAssets(uint256 shares) public virtual returns (uint256) {
+    function convertToAssets(
+        uint256 shares
+    ) public view virtual returns (uint256) {
         return _convertToAssets(shares, Math.Rounding.Floor);
     }
 
@@ -164,7 +168,7 @@ abstract contract ERC4626 is ERC20, IERC4626 {
     }
 
     /** @dev See {IERC4626-maxWithdraw}. */
-    function maxWithdraw(address owner) public virtual returns (uint256) {
+    function maxWithdraw(address owner) public view virtual returns (uint256) {
         return _convertToAssets(balanceOf(owner), Math.Rounding.Floor);
     }
 
@@ -174,22 +178,33 @@ abstract contract ERC4626 is ERC20, IERC4626 {
     }
 
     /** @dev See {IERC4626-previewDeposit}. */
-    function previewDeposit(uint256 assets) public virtual returns (uint256) {
+    function previewDeposit(
+        uint256 assets
+    ) public view virtual returns (uint256) {
+        console.log(
+            "Resultant",
+            assets,
+            _convertToShares(assets, Math.Rounding.Floor)
+        );
         return _convertToShares(assets, Math.Rounding.Floor);
     }
 
     /** @dev See {IERC4626-previewMint}. */
-    function previewMint(uint256 shares) public virtual returns (uint256) {
+    function previewMint(uint256 shares) public view virtual returns (uint256) {
         return _convertToAssets(shares, Math.Rounding.Ceil);
     }
 
     /** @dev See {IERC4626-previewWithdraw}. */
-    function previewWithdraw(uint256 assets) public virtual returns (uint256) {
+    function previewWithdraw(
+        uint256 assets
+    ) public view virtual returns (uint256) {
         return _convertToShares(assets, Math.Rounding.Ceil);
     }
 
     /** @dev See {IERC4626-previewRedeem}. */
-    function previewRedeem(uint256 shares) public virtual returns (uint256) {
+    function previewRedeem(
+        uint256 shares
+    ) public view virtual returns (uint256) {
         return _convertToAssets(shares, Math.Rounding.Floor);
     }
 
@@ -270,7 +285,7 @@ abstract contract ERC4626 is ERC20, IERC4626 {
     function _convertToShares(
         uint256 assets,
         Math.Rounding rounding
-    ) internal virtual returns (uint256) {
+    ) internal view virtual returns (uint256) {
         return
             assets.mulDiv(
                 totalSupply() + 10 ** _decimalsOffset(),
@@ -285,7 +300,8 @@ abstract contract ERC4626 is ERC20, IERC4626 {
     function _convertToAssets(
         uint256 shares,
         Math.Rounding rounding
-    ) internal virtual returns (uint256) {
+    ) internal view virtual returns (uint256) {
+        console.log("info", totalAssets(), totalSupply());
         return
             shares.mulDiv(
                 totalAssets() + 1,
@@ -312,7 +328,7 @@ abstract contract ERC4626 is ERC20, IERC4626 {
         // slither-disable-next-line reentrancy-no-eth
         SafeERC20.safeTransferFrom(_asset, caller, address(this), assets);
         _mint(receiver, shares);
-
+        console.log("assets,shares", assets, shares);
         emit Deposit(caller, receiver, assets, shares);
     }
 

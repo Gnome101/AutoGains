@@ -15,16 +15,22 @@ abstract contract ERC4626Fees is ERC4626 {
     /// @dev Preview taking an entry fee on deposit. See {IERC4626-previewDeposit}.
     function previewDeposit(
         uint256 assets
-    ) public virtual override returns (uint256) {
+    ) public view virtual override returns (uint256) {
         uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints(), _msgSender());
+        console.log("glip", assets, fee, assets - fee);
         return super.previewDeposit(assets - fee);
     }
 
     /// @dev Preview adding an entry fee on mint. See {IERC4626-previewMint}.
     function previewMint(
         uint256 shares
-    ) public virtual override returns (uint256) {
+    ) public view virtual override returns (uint256) {
         uint256 assets = super.previewMint(shares);
+        console.log(
+            "mint",
+            assets,
+            _feeOnRaw(assets, _entryFeeBasisPoints(), _msgSender())
+        );
 
         return assets + _feeOnRaw(assets, _entryFeeBasisPoints(), _msgSender());
     }
@@ -32,7 +38,7 @@ abstract contract ERC4626Fees is ERC4626 {
     /// @dev Preview adding an exit fee on withdraw. See {IERC4626-previewWithdraw}.
     function previewWithdraw(
         uint256 assets
-    ) public virtual override returns (uint256) {
+    ) public view virtual override returns (uint256) {
         uint256 fee = _feeOnRaw(assets, _exitFeeBasisPoints(), _msgSender());
 
         return super.previewWithdraw(assets + fee);
@@ -41,7 +47,7 @@ abstract contract ERC4626Fees is ERC4626 {
     /// @dev Preview taking an exit fee on redeem. See {IERC4626-previewRedeem}.
     function previewRedeem(
         uint256 shares
-    ) public virtual override returns (uint256) {
+    ) public view virtual override returns (uint256) {
         uint256 assets = super.previewRedeem(shares);
         console.log(
             "G",

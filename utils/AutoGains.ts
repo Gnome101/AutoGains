@@ -340,7 +340,7 @@ export async function previewMint(
   const entryFee = toDecimal(await autoVault.ENTRY_FEE());
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
   const minFee = toDecimal(await autoVault.vaultActionFee());
-
+  console.log("info js", totalAssets, totalSupply);
   const expectedAssetsPaid = mintAmount
     .mul(totalAssets.plus(1))
     .dividedBy(totalSupply.plus(1))
@@ -353,10 +353,11 @@ export async function previewMint(
     minFee
   );
   const vaultManager = await autoVault.vaultManager();
+
   if (vaultManager == runner) {
     expectedFee = expectedFee.sub(expectedFee.dividedBy("2").ceil());
   }
-
+  console.log("UOWW", expectedAssetsPaid, expectedFee);
   return {
     expectedAmount: expectedAssetsPaid.plus(expectedFee),
     expectedFee: expectedFee,

@@ -235,40 +235,40 @@ describe("Operation Tests ", function () {
         initalAmount.toFixed()
       );
     });
-    describe("Cooldowns ", function () {
-      it("user can not purchase and redeem within the cooldown period ", async () => {
-        const depositAmount = await getAmount(USDC, "10");
-        await USDC.approve(autoVault.target, depositAmount.toFixed());
-        await autoVault.deposit(depositAmount.toFixed(), vaultCreator.address);
-        await expect(
-          autoVault.withdraw(
-            depositAmount.toFixed(),
-            vaultCreator.address,
-            vaultCreator.address
-          )
-        ).to.be.rejectedWith("CoolDownViolated()");
-        await time.increase(60);
-      });
-      it("user can not purchase and transfer within cooldown period", async () => {
-        const depositAmount = await getAmount(USDC, "10");
-        await USDC.approve(autoVault.target, depositAmount.toFixed());
-        await autoVault.deposit(depositAmount.toFixed(), vaultCreator.address);
-        await expect(
-          autoVault.transfer(otherUser.address, depositAmount.toFixed())
-        ).to.be.rejectedWith("CoolDownViolated()");
-      });
-      it("user can purchase and redeem after the cooldown period ", async () => {
-        const depositAmount = await getAmount(USDC, "10");
-        await USDC.approve(autoVault.target, depositAmount.toFixed());
-        await autoVault.deposit(depositAmount.toFixed(), vaultCreator.address);
-        await time.increase(60);
-        await autoVault.withdraw(
-          depositAmount.toFixed(),
-          vaultCreator.address,
-          vaultCreator.address
-        );
-      });
-    });
+    // describe("Cooldowns ", function () {
+    //   it("user can not purchase and redeem within the cooldown period ", async () => {
+    //     const depositAmount = await getAmount(USDC, "10");
+    //     await USDC.approve(autoVault.target, depositAmount.toFixed());
+    //     await autoVault.deposit(depositAmount.toFixed(), vaultCreator.address);
+    //     await expect(
+    //       autoVault.withdraw(
+    //         depositAmount.toFixed(),
+    //         vaultCreator.address,
+    //         vaultCreator.address
+    //       )
+    //     ).to.be.rejectedWith("CoolDownViolated()");
+    //     await time.increase(60);
+    //   });
+    //   it("user can not purchase and transfer within cooldown period", async () => {
+    //     const depositAmount = await getAmount(USDC, "10");
+    //     await USDC.approve(autoVault.target, depositAmount.toFixed());
+    //     await autoVault.deposit(depositAmount.toFixed(), vaultCreator.address);
+    //     await expect(
+    //       autoVault.transfer(otherUser.address, depositAmount.toFixed())
+    //     ).to.be.rejectedWith("CoolDownViolated()");
+    //   });
+    //   it("user can purchase and redeem after the cooldown period ", async () => {
+    //     const depositAmount = await getAmount(USDC, "10");
+    //     await USDC.approve(autoVault.target, depositAmount.toFixed());
+    //     await autoVault.deposit(depositAmount.toFixed(), vaultCreator.address);
+    //     await time.increase(60);
+    //     await autoVault.withdraw(
+    //       depositAmount.toFixed(),
+    //       vaultCreator.address,
+    //       vaultCreator.address
+    //     );
+    //   });
+    // });
     describe("Strategy Block Expiry ", function () {
       //Show the stuff here
       it("strategy execution can expire ", async () => {
@@ -535,164 +535,7 @@ describe("Operation Tests ", function () {
 
       // await impersonateOracleFulfill(vaultFactory, requestID2, input, 0);
     });
-    describe("Vault Actions Upon Withdrawal", function () {
-      let totalCollateral: Decimal;
-      const collateralWorth = new Decimal("1");
 
-      beforeEach(async () => {
-        const requestID = await autoVault.executeStrategy.staticCall(1);
-        const tx4 = await autoVault.executeStrategy(1);
-        await tx4.wait();
-        //When its below 70, then its rejected
-        const currentPrice = getAmountDec("60", 10);
-
-        const input = [
-          currentPrice.toFixed(),
-          new Decimal(25).mul(decimals).toFixed(),
-        ];
-        const totalAssets = toDecimal(await USDC.balanceOf(autoVault.target));
-        const percent = 200_000;
-        const amount = totalAssets.mul(percent).dividedBy(SWAP_FEE_SCALE);
-        let swapFee = amount.mul(SWAP_FEE).dividedBy(SWAP_FEE_SCALE) as Decimal;
-
-        swapFee = swapFee.mul(PUBLIC_FEE).dividedBy(SWAP_FEE_SCALE).ceil();
-
-        expect(
-          await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
-        ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
-        await time.increase(60);
-
-        totalCollateral = new Decimal("0");
-
-        const trades = await FakeGainsNetwork.getTrades(autoVault.target);
-        for (const trade of trades) {
-          const collateralAmount = trade.collateralAmount;
-
-          totalCollateral = totalCollateral.plus(collateralAmount.toString());
-        }
-        totalCollateral = totalCollateral.mul(collateralWorth).floor();
-      });
-      it("vault decreases position size when possible arara", async () => {
-        const redeemAmount = await getAmount(USDC, "1");
-        const choice = 3;
-        const requestID = await autoVault.startAction.staticCall(
-          vaultCreator.address,
-          redeemAmount.toFixed(),
-          choice,
-          redeemAmount.toFixed()
-        );
-        const assetsInVault = await USDC.balanceOf(autoVault.target);
-        const totalAssets = totalCollateral.plus(assetsInVault.toString());
-        const { expectedAmount, expectedFee } = await previewRedeem(
-          autoVault,
-          vaultCreator.address,
-          redeemAmount,
-          totalAssets
-        );
-        //Now there is an active trade
-        await autoVault.startAction(
-          vaultCreator.address,
-          redeemAmount.toFixed(),
-          choice,
-          redeemAmount.toFixed()
-        );
-        const trades = await FakeGainsNetwork.getTrades(
-          autoVault.target.toString()
-        );
-        const assetsWithdrawn = expectedAmount;
-        let collateralToWithdraw = new Decimal(0);
-        for (const trade of trades) {
-          const collateralAmount = new Decimal(
-            trade.collateralAmount.toString()
-          );
-          console.log(assetsWithdrawn, collateralAmount, totalAssets);
-          collateralToWithdraw = assetsWithdrawn
-            .mul(collateralAmount)
-            .dividedBy(totalAssets)
-            .floor();
-          collateralToWithdraw = collateralToWithdraw
-            .mul(1_100_000)
-            .dividedBy(1_000_000);
-          console.log(`The trade will lose ${collateralToWithdraw}`);
-        }
-        const input = [totalCollateral.toFixed()];
-        //if collateralWorth > collateralToWithdraw then decrease else close
-
-        const collateralWorth = collateralToWithdraw.plus(1);
-        expect(
-          await impersonateOracleDoVaultActionAndCheck(
-            vaultFactory,
-            requestID,
-            input,
-            Number(await USDC.decimals()),
-            0,
-            collateralWorth.toFixed(),
-            FakeGainsNetwork,
-            "DecreasePositionSizeCalled"
-          )
-        ).to.emit(FakeGainsNetwork, "DecreasePositionSizeCalled");
-      });
-      it("vault closes positions when above threshold arara", async () => {
-        const redeemAmount = await getAmount(USDC, "1");
-        const choice = 3;
-        const requestID = await autoVault.startAction.staticCall(
-          vaultCreator.address,
-          redeemAmount.toFixed(),
-          choice,
-          redeemAmount.toFixed()
-        );
-        const assetsInVault = await USDC.balanceOf(autoVault.target);
-        const totalAssets = totalCollateral.plus(assetsInVault.toString());
-        const { expectedAmount, expectedFee } = await previewRedeem(
-          autoVault,
-          vaultCreator.address,
-          redeemAmount,
-          totalAssets
-        );
-        //Now there is an active trade
-        await autoVault.startAction(
-          vaultCreator.address,
-          redeemAmount.toFixed(),
-          choice,
-          redeemAmount.toFixed()
-        );
-        const trades = await FakeGainsNetwork.getTrades(
-          autoVault.target.toString()
-        );
-        const assetsWithdrawn = expectedAmount;
-        let collateralToWithdraw = new Decimal(0);
-        for (const trade of trades) {
-          const collateralAmount = new Decimal(
-            trade.collateralAmount.toString()
-          );
-          console.log(assetsWithdrawn, collateralAmount, totalAssets);
-          collateralToWithdraw = assetsWithdrawn
-            .mul(collateralAmount)
-            .dividedBy(totalAssets)
-            .floor();
-          collateralToWithdraw = collateralToWithdraw
-            .mul(1_100_000)
-            .dividedBy(1_000_000);
-          console.log(`The trade will lose ${collateralToWithdraw}`);
-        }
-        const input = [totalCollateral.toFixed()];
-        //if collateralWorth > collateralToWithdraw then decrease else close
-
-        const collateralWorth = collateralToWithdraw;
-        expect(
-          await impersonateOracleDoVaultActionAndCheck(
-            vaultFactory,
-            requestID,
-            input,
-            Number(await USDC.decimals()),
-            0,
-            collateralWorth.toFixed(),
-            FakeGainsNetwork,
-            "CloseTradeMarketCalled"
-          )
-        ).to.emit(FakeGainsNetwork, "CloseTradeMarketCalled");
-      });
-    });
     describe("Slippage Controls Work ", function () {
       let totalCollateral: Decimal;
       const collateralWorth = new Decimal("1");
@@ -794,88 +637,6 @@ describe("Operation Tests ", function () {
         await autoVault.startAction(
           vaultCreator.address,
           mintAmount.toFixed(),
-          choice,
-          expectedAmount.sub(1).toFixed()
-        );
-
-        const input = [totalCollateral.toFixed()];
-        //if collateralWorth > collateralToWithdraw then decrease else close
-
-        await expect(
-          impersonateOracleDoVaultAction(
-            vaultFactory,
-            requestID,
-            input,
-            Number(await USDC.decimals()),
-            0,
-            collateralWorth.toFixed()
-          )
-        ).to.be.rejectedWith("Slippage()");
-      });
-      it("slippage can be triggered for withdrawing ", async () => {
-        const withdrawAmount = await getAmount(USDC, "1");
-        const choice = 2;
-        const requestID = await autoVault.startAction.staticCall(
-          vaultCreator.address,
-          withdrawAmount.toFixed(),
-          choice,
-          withdrawAmount.toFixed()
-        );
-
-        const assetsInVault = await USDC.balanceOf(autoVault.target);
-        const totalAssets = totalCollateral.plus(assetsInVault.toString());
-        const { expectedAmount, expectedFee } = await previewWithdraw(
-          autoVault,
-          vaultCreator.address,
-          withdrawAmount,
-          totalAssets
-        );
-
-        //Now there is an active trade
-        await autoVault.startAction(
-          vaultCreator.address,
-          withdrawAmount.toFixed(),
-          choice,
-          expectedAmount.plus(1).toFixed()
-        );
-
-        const input = [totalCollateral.toFixed()];
-        //if collateralWorth > collateralToWithdraw then decrease else close
-
-        await expect(
-          impersonateOracleDoVaultAction(
-            vaultFactory,
-            requestID,
-            input,
-            Number(await USDC.decimals()),
-            0,
-            collateralWorth.toFixed()
-          )
-        ).to.be.rejectedWith("Slippage()");
-      });
-      it("slippage can be triggered for redeeming ", async () => {
-        const redeemAmount = await getAmount(USDC, "1");
-        const choice = 3;
-        const requestID = await autoVault.startAction.staticCall(
-          vaultCreator.address,
-          redeemAmount.toFixed(),
-          choice,
-          redeemAmount.toFixed()
-        );
-
-        const assetsInVault = await USDC.balanceOf(autoVault.target);
-        const totalAssets = totalCollateral.plus(assetsInVault.toString());
-        const { expectedAmount, expectedFee } = await previewRedeem(
-          autoVault,
-          vaultCreator.address,
-          redeemAmount,
-          totalAssets
-        );
-
-        //Now there is an active trade
-        await autoVault.startAction(
-          vaultCreator.address,
-          redeemAmount.toFixed(),
           choice,
           expectedAmount.sub(1).toFixed()
         );

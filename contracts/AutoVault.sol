@@ -206,7 +206,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         VaultAction memory vaultAction = requestToAction[requestId];
         currentUser.set(vaultAction.msgSender);
         data[0] = _adjustForDecimals(data[0], 18, _asset.decimals());
-        data[0] = data[0].mulDiv(900_000, 1_000_000);
 
         totalValueCollateral.set(data[0] > 0 ? data[0] + 1 : 1);
 
@@ -247,10 +246,26 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         uint256 feeMultiplier;
         address caller;
     }
+    error NoTradesDuringWithdrawPeriod();
+
+    modifier revertDuringWithdrawPeriod() {
+        if (
+            block.timestamp >= nextWithdrawPeriod &&
+            block.timestamp <= nextWithdrawPeriod + withdrawPeriodLength
+        ) {
+            revert NoTradesDuringWithdrawPeriod();
+        }
+        _;
+    }
 
     function executeStrategy(
         uint256 strategy
-    ) external whenNotPaused returns (bytes32 requestId) {
+    )
+        external
+        whenNotPaused
+        revertDuringWithdrawPeriod
+        returns (bytes32 requestId)
+    {
         (uint256 feeMultiplier, Chainlink.Request memory req, ) = abi.decode(
             SSTORE2.read(strategies[strategy]),
             (uint256, Chainlink.Request, bytes)
@@ -292,7 +307,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     function fulfill(
         bytes32 requestId,
         uint256[] calldata data
-    ) public whenNotPaused onlyFactory {
+    ) public whenNotPaused onlyFactory revertDuringWithdrawPeriod {
         // console.log(data.leWngth);
         if ((data[1] / (10 ** 18)) + MAX_TIME_DIFFERENCE < block.timestamp) {
             revert TimeStampDifferenceTooLarge(
@@ -540,12 +555,13 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         );
     }
 
-    function totalAssets() public override returns (uint256) {
+    function totalAssets() public view override returns (uint256) {
         uint256 collateralAmount = 0;
         if (GainsNetwork.getTrades(address(this)).length != 0) {
             if (totalValueCollateral.get() == 0) revert NeedCallback();
             collateralAmount = totalValueCollateral.get() - 1;
         }
+        console.log("total assets sol", super.totalAssets(), collateralAmount);
         return super.totalAssets() + collateralAmount;
     }
 
@@ -678,16 +694,19 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     //Next one is 100
     //Period is 10
     // 111 - 100 = 1
+    error WithdrawPeriodNotEnabled();
+
     function _checkIfWithdrawPeriod() internal view {
+        if (isWithdrawPeriod) return;
         if (nextWithdrawPeriod == 0) {
             revert NoWithdrawPeriodSet();
         }
         if (block.timestamp < nextWithdrawPeriod) {
             revert NotYetWithdrawPeriod(nextWithdrawPeriod - block.timestamp);
         }
-        if (block.timestamp - nextWithdrawPeriod > withdrawPeriodLength) {
+        if (block.timestamp > withdrawPeriodLength + nextWithdrawPeriod) {
             revert PastWithdrawPeriod(
-                nextWithdrawPeriod - block.timestamp - withdrawPeriodLength
+                block.timestamp - nextWithdrawPeriod - withdrawPeriodLength
             );
         }
     }
@@ -728,5 +747,26 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             indexToStrategy[trades[i - 2].index] = 0;
         }
         _asset.safeTransfer(vaultFactory, oracleFee);
+    }
+
+    bool public isWithdrawPeriod;
+
+    event WithdrawPeriodTriggered();
+    event WithdrawPeriodEnded();
+
+    error WithdrawPeriodAlreadyActive();
+    error WithdrawPeriodAlreadyEnded();
+
+    function forceWithdrawPeriod() external onlyOwner {
+        if (isWithdrawPeriod) revert WithdrawPeriodAlreadyActive();
+        isWithdrawPeriod = true;
+        emit WithdrawPeriodTriggered();
+    }
+
+    // Function to end the current withdraw period
+    function endWithdrawPeriod() external onlyOwner {
+        if (!isWithdrawPeriod) revert WithdrawPeriodAlreadyEnded();
+        isWithdrawPeriod = false;
+        emit WithdrawPeriodEnded();
     }
 }
