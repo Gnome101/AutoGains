@@ -1,6 +1,6 @@
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 import { AutoVault } from "../typechain-types";
-import { Context } from "./common-test";
+import { closeDummyTrade, Context } from "./common-test";
 
 import { expect } from "chai";
 import { ethers } from "hardhat";
@@ -10,6 +10,9 @@ import {
   getAmount,
   openDummyTrade,
 } from "./common-test";
+import Decimal from "decimal.js";
+import { getStrategies } from "./getStrategies";
+import { getSigner, impersonateOracleFulfill } from "../utils/AutoGains";
 
 describe("AutoVault Edge Cases and Security ", function () {
   let c: Context,
@@ -21,7 +24,7 @@ describe("AutoVault Edge Cases and Security ", function () {
     c = await deployContractsFixture();
     vaultCreator = c.vaultCreator;
     otherUser = c.otherUser;
-    autoVault = await createAutoVault(c, "100", "0");
+    autoVault = await createAutoVault(c, "100", "0", 6);
   });
 
   describe("Edge Cases and Security", function () {
@@ -96,6 +99,62 @@ describe("AutoVault Edge Cases and Security ", function () {
         autoVault,
         "WithdrawPeriodSet"
       );
+    });
+  });
+  describe("AutoVault Max Trades Limit goopy", function () {
+    let MAX_NUMBER_TRADES: number;
+    this.beforeEach(async () => {
+      MAX_NUMBER_TRADES = Number(await autoVault.MAX_NUMBER_TRADES());
+    });
+    it("should enforce MAX_NUMBER_TRADES limit of 5 ", async function () {
+      // Open 5 trades
+      for (let i = 0; i < MAX_NUMBER_TRADES; i++) {
+        await openDummyTrade(autoVault, c, i.toString());
+      }
+
+      // Verify that 5 trades are open
+      const trades = await c.FakeGainsNetwork.getTrades(autoVault.target);
+      expect(trades.length).to.equal(MAX_NUMBER_TRADES);
+
+      // Attempt to open 6th trade
+      const strategy = MAX_NUMBER_TRADES;
+      const requestID = await autoVault.executeStrategy.staticCall(strategy);
+      await autoVault.executeStrategy(strategy);
+
+      const currentPrice = ethers.parseUnits("60000", 18);
+      const input = [currentPrice, ethers.parseUnits("80", 18)];
+
+      // Expect the 6th trade to be reverted with ExceedMaxTradeCount error
+      await expect(
+        impersonateOracleFulfill(c.vaultFactory, requestID, input, 0)
+      )
+        .to.be.revertedWithCustomError(autoVault, "ExceedMaxTradeCount")
+        .withArgs(MAX_NUMBER_TRADES + 1, MAX_NUMBER_TRADES);
+
+      // Verify that still only 5 trades are open
+      const tradesAfterAttempt = await c.FakeGainsNetwork.getTrades(
+        autoVault.target
+      );
+      expect(tradesAfterAttempt.length).to.equal(MAX_NUMBER_TRADES);
+    });
+    it("should allow opening a trade after closing one ", async function () {
+      // Open 5 trades
+      for (let i = 0; i < MAX_NUMBER_TRADES; i++) {
+        await openDummyTrade(autoVault, c, i.toString());
+      }
+
+      // Verify that 5 trades are open
+      const tradesBefore = await c.FakeGainsNetwork.getTrades(autoVault.target);
+      expect(tradesBefore.length).to.equal(MAX_NUMBER_TRADES);
+
+      // Close one trade
+      await closeDummyTrade(autoVault, c, "1");
+      // Open another trade
+      await openDummyTrade(autoVault, c, "1");
+
+      // Verify that still only 5 trades are open
+      const finalTrades = await c.FakeGainsNetwork.getTrades(autoVault.target);
+      expect(finalTrades.length).to.equal(MAX_NUMBER_TRADES);
     });
   });
 });

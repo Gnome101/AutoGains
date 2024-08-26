@@ -1,12 +1,14 @@
 import { ethers, deployments, network } from "hardhat";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
+
+import { ERC20 } from "../typechain-types/@openzeppelin/contracts/token/ERC20/ERC20";
 import {
   AutoVault,
   Helper,
   IGainsNetwork,
   VaultFactory,
 } from "../typechain-types";
-import { ERC20 } from "../typechain-types/@openzeppelin/contracts/token/ERC20/ERC20";
+
 import { Deployment } from "hardhat-deploy/dist/types";
 import { contracts } from "../Addresses";
 import { Decimal } from "decimal.js";
@@ -139,16 +141,25 @@ describe("Live Testnet Vault Tests", function () {
 
       await executeStrategyWithPrice(0, 25);
       await waitForTradeUpdate(initialTrade);
-      await new Promise((f) => setTimeout(f, 60000));
+      // await new Promise((f) => setTimeout(f, 60000));
 
       profiler.end("Executing Trade");
+      const depositAmount = await getAmount(USDC, "4");
+
+      profiler.start("Approving USDC");
+      const tx = await USDC.approve(
+        autoVault.target,
+        depositAmount.mul(2).toFixed()
+      );
+      await tx.wait();
+      profiler.end("Approving USDC");
       profiler.start("Preparing Deposit");
 
       const totalAssets = await getVaultTotalAssets(
         autoVault.target.toString()
       );
-      const depositAmount = await getAmount(USDC, "2");
       const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
+      console.log("estimate", totalAssets);
       const DepositPreview = await previewDeposit(
         autoVault,
         user.address,
@@ -157,11 +168,7 @@ describe("Live Testnet Vault Tests", function () {
       );
       const expectedShares = DepositPreview.expectedAmount;
       console.log(DepositPreview);
-      const tx = await USDC.approve(
-        autoVault.target,
-        depositAmount.mul(2).toFixed()
-      );
-      await tx.wait();
+
       profiler.end("Preparing Deposit");
       profiler.start("Start Action");
 
@@ -169,7 +176,7 @@ describe("Live Testnet Vault Tests", function () {
         user.address,
         depositAmount.toFixed(),
         0,
-        expectedShares.mul("0.96").floor().toFixed()
+        expectedShares.mul("0.95").floor().toFixed()
       );
       profiler.end("Start Action");
       profiler.start("Waiting for Balance Update");
@@ -191,37 +198,41 @@ describe("Live Testnet Vault Tests", function () {
 
       await executeStrategyWithPrice(0, 25);
       await waitForTradeUpdate(initialTrade);
-      await new Promise((f) => setTimeout(f, 60000));
+
       profiler.end("Executing Trade");
-      profiler.start("Preparing Deposit");
+      profiler.start("Approving USDC");
 
-      const totalAssets = await getVaultTotalAssets(
-        autoVault.target.toString()
-      );
-      const mintAmount = await getAmount(USDC, "2");
-      const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
-
-      const DepositPreview = await previewDeposit(
-        autoVault,
-        user.address,
-        mintAmount,
-        totalAssets
-      );
-      const expectedShares = DepositPreview.expectedAmount;
-      console.log(DepositPreview);
+      const mintAmount = await getAmount(USDC, "4");
       const tx = await USDC.approve(
         autoVault.target,
         mintAmount.mul(2).toFixed()
       );
       await tx.wait();
-      profiler.end("Preparing Deposit");
+
+      profiler.end("Approving USDC");
+      profiler.start("Preparing Mint");
+      const totalAssets = await getVaultTotalAssets(
+        autoVault.target.toString()
+      );
+      const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
+
+      const PreivewMint = await previewMint(
+        autoVault,
+        user.address,
+        mintAmount,
+        totalAssets
+      );
+      const expectedShares = PreivewMint.expectedAmount;
+      console.log(PreivewMint);
+
+      profiler.end("Preparing Mint");
       profiler.start("Start Action");
 
       await autoVault.startAction(
         user.address,
         mintAmount.toFixed(),
-        0,
-        expectedShares.mul("1.05").floor().toFixed()
+        1,
+        expectedShares.mul("1.2").floor().toFixed()
       );
       profiler.end("Start Action");
       profiler.start("Waiting for Balance Update");
@@ -236,452 +247,46 @@ describe("Live Testnet Vault Tests", function () {
       );
       //   await testAction("Deposit");
     });
-    it("User can withdraw ", async function () {
-      const add = await autoVault.asset();
-      console.log("Asset", add);
-      profiler.start("Get Most Recent Data");
+    it("user can start withdraw period and withdraw ", async () => {
       const initialTrade = await getLastTrade();
       profiler.end("Get Most Recent Data");
 
       profiler.start("Executing Trade");
 
       await executeStrategyWithPrice(0, 25);
-      await waitForTradeUpdate(initialTrade);
-      await new Promise((f) => setTimeout(f, 60000));
+      const tradeFormed = await waitForTradeUpdate(initialTrade);
 
       profiler.end("Executing Trade");
-      profiler.start("Preparing Withdraw");
+      const tx1 = await autoVault.forceWithdrawPeriod();
+      await tx1.wait();
 
-      const totalAssets = await getVaultTotalAssets(
-        autoVault.target.toString()
-      );
-      const withdrawAmount = await getAmount(USDC, "1");
-      const balanceBefore = toDecimal(await USDC.balanceOf(user.address));
-      const WithdrawPreview = await previewWithdraw(
-        autoVault,
-        user.address,
-        withdrawAmount,
-        totalAssets
-      );
-      const expectedShares = WithdrawPreview.expectedAmount;
-      console.log(WithdrawPreview);
+      const tx2 = await autoVault.startAction(user.address, "0", 2, "0");
+      await tx2.wait();
+      const tradeAfter = await waitForTradeUpdate(tradeFormed);
+      verifyClose(tradeFormed, tradeAfter);
 
-      profiler.end("Preparing Withdraw");
-      profiler.start("Start Action");
+      const redeemAmount = await getAmount(USDC, "4");
 
-      await autoVault.startAction(
-        user.address,
-        withdrawAmount.toFixed(),
-        2,
-        expectedShares.mul("0.96").floor().toFixed()
-      );
-      profiler.end("Start Action");
-      profiler.start("Waiting for Balance Update");
-
-      await waitForBalanceUpdate(balanceBefore);
-      await waitForTradeUpdate(initialTrade);
-      const finalTrade = await getLastTrade();
-      profiler.end("Waiting for Balance Update");
-      const balanceAfter = toDecimal(await USDC.balanceOf(user.address));
-
-      assert.equal(
-        balanceAfter.sub(balanceBefore).toFixed(),
-        withdrawAmount.toFixed()
-      );
-      verifyDecreasedPosition(initialTrade, finalTrade);
-
-      //   await testAction("Deposit");
-    });
-    it("User can redeem ", async function () {
-      const add = await autoVault.asset();
-      console.log("Asset", add);
-      profiler.start("Get Most Recent Data");
-      const initialTrade = await getLastTrade();
-      profiler.end("Get Most Recent Data");
-
-      profiler.start("Executing Trade");
-
-      await executeStrategyWithPrice(0, 25);
-      await waitForTradeUpdate(initialTrade);
-      const tradeNext = await getLastTrade();
-
-      await new Promise((f) => setTimeout(f, 60000));
-
-      profiler.end("Executing Trade");
-      profiler.start("Preparing Redeem");
-
-      const totalAssets = await getVaultTotalAssets(
-        autoVault.target.toString()
-      );
-      const redeemAmount = await getAmount(USDC, "3");
-      const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
-
-      const redeemPreview = await previewRedeem(
-        autoVault,
-        user.address,
-        redeemAmount,
-        totalAssets
-      );
-      const expectedShares = redeemPreview.expectedAmount;
-      console.log(redeemPreview);
-
-      profiler.end("Preparing Redeem");
-      profiler.start("Start Action");
-
-      await autoVault.startAction(
-        user.address,
-        redeemAmount.toFixed(),
-        3,
-        expectedShares.mul("1.5").floor().toFixed()
-      );
-
-      profiler.end("Start Action");
-      profiler.start("Waiting for Balance Update");
-
-      await waitForBalanceUpdate(balanceBefore);
-      await waitForTradeUpdate(tradeNext);
-
-      profiler.end("Waiting for Balance Update");
-      const finalTrade = await getLastTrade();
-      expect(JSON.stringify(finalTrade)).to.not.equal("{}");
-
-      const balanceAfter = toDecimal(await autoVault.balanceOf(user.address));
-
-      assert.equal(
-        balanceBefore.sub(balanceAfter).toFixed(),
+      const expectedAssets = await autoVault.previewRedeem(
         redeemAmount.toFixed()
       );
-      console.log(tradeNext, finalTrade);
-      verifyDecreasedPosition(tradeNext, finalTrade);
-
-      //   await testAction("Deposit");
-    });
-    it("User can redeem everything and the position closes egore", async function () {
-      const add = await autoVault.asset();
-      console.log("Asset", add);
-      profiler.start("Get Most Recent Data");
-      const initialTrade = await getLastTrade();
-      profiler.end("Get Most Recent Data");
-
-      profiler.start("Executing Trade");
-
-      await executeStrategyWithPrice(0, 25);
-      await waitForTradeUpdate(initialTrade);
-      await new Promise((f) => setTimeout(f, 60000));
-
-      profiler.end("Executing Trade");
-      profiler.start("Preparing Redeem");
-
-      const totalAssets = await getVaultTotalAssets(
-        autoVault.target.toString()
-      );
-      const redeemAmount = await getAmount(USDC, "1");
-      const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
-
-      const redeemPreview = await previewRedeem(
-        autoVault,
+      const balanceBefore = toDecimal(await USDC.balanceOf(user.address));
+      const tx3 = await autoVault.redeem(
+        redeemAmount.toFixed(),
         user.address,
-        balanceBefore,
-        totalAssets
+        user.address
       );
-      const expectedShares = redeemPreview.expectedAmount;
-      console.log(redeemPreview);
-
-      profiler.end("Preparing Redeem");
-      profiler.start("Start Action");
-
-      await autoVault.startAction(
-        user.address,
-        balanceBefore.toFixed(),
-        3,
-        expectedShares.mul("1.15").floor().toFixed()
-      );
-
-      profiler.end("Start Action");
-      profiler.start("Waiting for Balance Update");
-
-      await waitForBalanceUpdate(balanceBefore);
-      await waitForTradeUpdate(initialTrade);
-      profiler.end("Waiting for Balance Update");
-      const finalTrade = await getLastTrade();
-      expect(JSON.stringify(finalTrade)).to.equal("{}");
-
-      const balanceAfter = toDecimal(await autoVault.balanceOf(user.address));
-
+      await tx3.wait();
+      const balanceAfter = toDecimal(await USDC.balanceOf(user.address));
       assert.equal(
-        balanceBefore.sub(balanceAfter).toFixed(),
-        balanceBefore.toFixed()
+        balanceAfter.sub(balanceBefore).toFixed(),
+        expectedAssets.toString()
       );
-
-      //   await testAction("Deposit");
     });
     // it("Strategy 4: Open and Cancel Order", async function () {
     //   await testStrategy(3, verifyOpenOrder, verifyCancelOrder);
     // });
   });
-  // describe("Live Vault Tests egore", function () {
-  //   let tradeAfter: Trade;
-  //   before(async () => {
-  //     const add = await autoVault.asset();
-  //     console.log("Asset", add);
-  //     profiler.start("Get Most Recent Data");
-
-  //     const initialTrade = await getLastTrade();
-  //     profiler.end("Get Most Recent Data");
-
-  //     profiler.start("Executing Trade");
-
-  //     await executeStrategyWithPrice(0, 25);
-  //     await waitForTradeUpdate(initialTrade);
-  //     await new Promise((f) => setTimeout(f, 60000));
-  //     tradeAfter = await getLastTrade();
-
-  //     profiler.end("Executing Trade");
-  //   });
-  //   afterEach(async () => {
-  //     await new Promise((f) => setTimeout(f, 60000));
-  //   });
-  //   it("User can deposit ", async function () {
-  //     profiler.start("Preparing Deposit");
-
-  //     const totalAssets = await getVaultTotalAssets(
-  //       autoVault.target.toString()
-  //     );
-  //     const depositAmount = await getAmount(USDC, "2");
-  //     const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
-  //     const DepositPreview = await previewDeposit(
-  //       autoVault,
-  //       user.address,
-  //       depositAmount,
-  //       totalAssets
-  //     );
-
-  //     const expectedShares = DepositPreview.expectedAmount;
-  //     console.log(DepositPreview);
-  //     const tx = await USDC.approve(
-  //       autoVault.target,
-  //       depositAmount.mul(2).toFixed()
-  //     );
-
-  //     await tx.wait();
-  //     profiler.end("Preparing Deposit");
-  //     profiler.start("Start Action");
-
-  //     await autoVault.startAction(
-  //       user.address,
-  //       depositAmount.toFixed(),
-  //       0,
-  //       expectedShares.mul("0.96").floor().toFixed()
-  //     );
-  //     profiler.end("Start Action");
-  //     profiler.start("Waiting for Balance Update");
-
-  //     await waitForBalanceUpdate(balanceBefore);
-  //     profiler.end("Waiting for Balance Update");
-
-  //     //   await testAction("Deposit");
-  //   });
-  //   it("User can mint ", async function () {
-  //     const add = await autoVault.asset();
-  //     console.log("Asset", add);
-  //     profiler.start("Get Most Recent Data");
-
-  //     const initialTrade = await getLastTrade();
-  //     profiler.end("Get Most Recent Data");
-
-  //     profiler.start("Executing Trade");
-
-  //     await executeStrategyWithPrice(0, 25);
-  //     await waitForTradeUpdate(initialTrade);
-  //     await new Promise((f) => setTimeout(f, 60000));
-  //     profiler.end("Executing Trade");
-  //     profiler.start("Preparing Deposit");
-
-  //     const totalAssets = await getVaultTotalAssets(
-  //       autoVault.target.toString()
-  //     );
-  //     const mintAmount = await getAmount(USDC, "2");
-  //     const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
-
-  //     const MintPreview = await previewMint(
-  //       autoVault,
-  //       user.address,
-  //       mintAmount,
-  //       totalAssets
-  //     );
-  //     const expectedAssetsUsed = MintPreview.expectedAmount;
-  //     console.log(MintPreview);
-  //     const tx = await USDC.approve(
-  //       autoVault.target,
-  //       mintAmount.mul(2).toFixed()
-  //     );
-  //     await tx.wait();
-  //     profiler.end("Preparing Deposit");
-  //     profiler.start("Start Action");
-
-  //     await autoVault.startAction(
-  //       user.address,
-  //       mintAmount.toFixed(),
-  //       0,
-  //       expectedAssetsUsed.mul("0.96").floor().toFixed()
-  //     );
-  //     profiler.end("Start Action");
-  //     profiler.start("Waiting for Balance Update");
-
-  //     await waitForBalanceUpdate(balanceBefore);
-  //     profiler.end("Waiting for Balance Update");
-  //     const balanceAfter = toDecimal(await autoVault.balanceOf(user.address));
-
-  //     assert.equal(
-  //       balanceAfter.sub(balanceBefore).toFixed(),
-  //       mintAmount.toFixed()
-  //     );
-  //     //   await testAction("Deposit");
-  //   });
-  //   it("User can withdraw ", async function () {
-  //     profiler.start("Preparing Withdraw");
-
-  //     const totalAssets = await getVaultTotalAssets(
-  //       autoVault.target.toString()
-  //     );
-  //     const withdrawAmount = await getAmount(USDC, "1");
-  //     const balanceBefore = toDecimal(await USDC.balanceOf(user.address));
-  //     const WithdrawPreview = await previewWithdraw(
-  //       autoVault,
-  //       user.address,
-  //       withdrawAmount,
-  //       totalAssets
-  //     );
-  //     const expectedShares = WithdrawPreview.expectedAmount;
-  //     console.log(WithdrawPreview);
-
-  //     profiler.end("Preparing Withdraw");
-  //     profiler.start("Start Action");
-
-  //     await autoVault.startAction(
-  //       user.address,
-  //       withdrawAmount.toFixed(),
-  //       2,
-  //       expectedShares.mul("0.96").floor().toFixed()
-  //     );
-
-  //     profiler.end("Start Action");
-  //     profiler.start("Waiting for Balance Update");
-
-  //     await waitForBalanceUpdate(balanceBefore);
-  //     await waitForTradeUpdate(tradeAfter);
-  //     const finalTrade = await getLastTrade();
-  //     profiler.end("Waiting for Balance Update");
-  //     const balanceAfter = toDecimal(await USDC.balanceOf(user.address));
-
-  //     assert.equal(
-  //       balanceAfter.sub(balanceBefore).toFixed(),
-  //       withdrawAmount.toFixed()
-  //     );
-
-  //     verifyDecreasedPosition(tradeAfter, finalTrade);
-  //     tradeAfter = finalTrade;
-  //     //   await testAction("Deposit");
-  //   });
-  //   it("User can redeem ", async function () {
-  //     profiler.start("Preparing Redeem");
-
-  //     const totalAssets = await getVaultTotalAssets(
-  //       autoVault.target.toString()
-  //     );
-  //     const redeemAmount = await getAmount(USDC, "1.5");
-  //     const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
-
-  //     const redeemPreview = await previewRedeem(
-  //       autoVault,
-  //       user.address,
-  //       redeemAmount,
-  //       totalAssets
-  //     );
-  //     const expectedShares = redeemPreview.expectedAmount;
-  //     console.log(redeemPreview);
-
-  //     profiler.end("Preparing Redeem");
-  //     profiler.start("Start Action");
-
-  //     await autoVault.startAction(
-  //       user.address,
-  //       redeemAmount.toFixed(),
-  //       3,
-  //       expectedShares.mul("0.96").floor().toFixed()
-  //     );
-
-  //     profiler.end("Start Action");
-  //     profiler.start("Waiting for Balance Update");
-
-  //     await waitForBalanceUpdate(balanceBefore);
-  //     await waitForTradeUpdate(tradeAfter);
-
-  //     profiler.end("Waiting for Balance Update");
-  //     const finalTrade = await getLastTrade();
-  //     expect(JSON.stringify(finalTrade)).to.not.equal("{}");
-
-  //     const balanceAfter = toDecimal(await autoVault.balanceOf(user.address));
-
-  //     assert.equal(
-  //       balanceBefore.sub(balanceAfter).toFixed(),
-  //       redeemAmount.toFixed()
-  //     );
-  //     verifyDecreasedPosition(tradeAfter, finalTrade);
-  //     tradeAfter = finalTrade;
-  //     //   await testAction("Deposit");
-  //   });
-  //   it("User can redeem everything and the position closes", async function () {
-  //     profiler.start("Preparing Redeem");
-
-  //     const totalAssets = await getVaultTotalAssets(
-  //       autoVault.target.toString()
-  //     );
-  //     const redeemAmount = await getAmount(USDC, "1");
-  //     const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
-
-  //     const redeemPreview = await previewRedeem(
-  //       autoVault,
-  //       user.address,
-  //       balanceBefore,
-  //       totalAssets
-  //     );
-  //     const expectedShares = redeemPreview.expectedAmount;
-  //     console.log(redeemPreview);
-
-  //     profiler.end("Preparing Redeem");
-  //     profiler.start("Start Action");
-
-  //     await autoVault.startAction(
-  //       user.address,
-  //       balanceBefore.toFixed(),
-  //       3,
-  //       expectedShares.mul("0.96").floor().toFixed()
-  //     );
-
-  //     profiler.end("Start Action");
-  //     profiler.start("Waiting for Balance Update");
-
-  //     await waitForBalanceUpdate(balanceBefore);
-  //     await waitForTradeUpdate(tradeAfter);
-  //     profiler.end("Waiting for Balance Update");
-  //     const finalTrade = await getLastTrade();
-  //     expect(JSON.stringify(finalTrade)).to.equal("{}");
-
-  //     const balanceAfter = toDecimal(await autoVault.balanceOf(user.address));
-
-  //     assert.equal(
-  //       balanceBefore.sub(balanceAfter).toFixed(),
-  //       balanceBefore.toFixed()
-  //     );
-  //     tradeAfter = finalTrade;
-
-  //     //   await testAction("Deposit");
-  //   });
-  //   // it("Strategy 4: Open and Cancel Order", async function () {
-  //   //   await testStrategy(3, verifyOpenOrder, verifyCancelOrder);
-  //   // });
-  // });
 
   async function executeStrategyWithPrice(strategyIndex: number, rsi: number) {
     const price = await getPriceFromUpdater();
@@ -857,10 +462,6 @@ describe("Live Testnet Vault Tests", function () {
           const latestBalance = await getBalance();
 
           console.log(previousBalance.toFixed(), "|", latestBalance.toFixed());
-          // console.log(await autoVault.getC());
-          // console.log(await autoVault.getPublicDataBef());
-          console.log(await autoVault.getPublicData());
-          console.log(await vaultFactory.bodyA());
 
           if (previousBalance.toFixed() != latestBalance.toFixed()) {
             clearInterval(intervalId);

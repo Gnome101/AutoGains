@@ -44,16 +44,15 @@ This section lists files that are in scope for the metrics report.
 
 ### <span id=t-source-Units-in-Scope>Source Units in Scope</span>
 
-Source Units Analyzed: **`4`**<br>
-Source Units in Scope: **`4`** (**100%**)
+Source Units Analyzed: **`3`**<br>
+Source Units in Scope: **`3`** (**100%**)
 
 | Type | File   | Logic Contracts | Interfaces | Lines | nLines | nSLOC | Comment Lines | Complex. Score | Capabilities |
 | ---- | ------ | --------------- | ---------- | ----- | ------ | ----- | ------------- | -------------- | ------------ | 
-| 📝 | contracts/AutoVault.sol | 1 | **** | 630 | 576 | 442 | 75 | 283 | **<abbr title='Initiates ETH Value Transfer'>📤</abbr>** |
-| 📝 | contracts/VaultFactory.sol | 1 | **** | 270 | 246 | 202 | 12 | 140 | **** |
-| 🎨 | contracts/Interfaces/ERC4626Fees.sol | 1 | **** | 202 | 159 | 108 | 23 | 90 | **** |
-| 🎨 | contracts/Interfaces/ERC4626.sol | 1 | **** | 351 | 312 | 151 | 115 | 112 | **** |
-| 📝🎨 | **Totals** | **4** | **** | **1453**  | **1293** | **903** | **225** | **625** | **<abbr title='Initiates ETH Value Transfer'>📤</abbr>** |
+| 📝 | contracts/AutoVault.sol | 1 | **** | 790 | 717 | 512 | 116 | 327 | **** |
+| 🎨 | contracts/Interfaces/ERC4626Fees.sol | 1 | **** | 226 | 183 | 131 | 24 | 88 | **** |
+| 📝 | contracts/VaultFactory.sol | 1 | **** | 295 | 268 | 220 | 13 | 147 | **** |
+| 📝🎨 | **Totals** | **3** | **** | **1311**  | **1168** | **863** | **153** | **562** | **** |
 
 <sub>
 Legend: <a onclick="toggleVisibility('table-legend', this)">[➕]</a>
@@ -142,14 +141,14 @@ The analysis finished with **`0`** errors and **`0`** duplicate files.
 
 #### <span id=t-inline-documentation>Inline Documentation</span>
 
-- **Comment-to-Source Ratio:** On average there are`4.72` code lines per comment (lower=better).
+- **Comment-to-Source Ratio:** On average there are`6.58` code lines per comment (lower=better).
 - **ToDo's:** `0` 
 
 #### <span id=t-components>Components</span>
 
 | 📝Contracts   | 📚Libraries | 🔍Interfaces | 🎨Abstract |
 | ------------- | ----------- | ------------ | ---------- |
-| 2 | 0  | 0  | 2 |
+| 2 | 0  | 0  | 1 |
 
 #### <span id=t-exposed-functions>Exposed Functions</span>
 
@@ -157,27 +156,27 @@ This section lists functions that are explicitly declared public or payable. Ple
 
 | 🌐Public   | 💰Payable |
 | ---------- | --------- |
-| 46 | 0  | 
+| 32 | 0  | 
 
 | External   | Internal | Private | Pure | View |
 | ---------- | -------- | ------- | ---- | ---- |
-| 14 | 86  | 3 | 3 | 27 |
+| 15 | 67  | 2 | 4 | 26 |
 
 #### <span id=t-statevariables>StateVariables</span>
 
 | Total      | 🌐Public  |
 | ---------- | --------- |
-| 46  | 34 |
+| 48  | 41 |
 
 #### <span id=t-capabilities>Capabilities</span>
 
 | Solidity Versions observed | 🧪 Experimental Features | 💰 Can Receive Funds | 🖥 Uses Assembly | 💣 Has Destroyable Contracts | 
 | -------------------------- | ------------------------ | -------------------- | ---------------- | ---------------------------- |
-| `^0.8.24`<br/>`^0.8.0`<br/>`^0.8.20` |  | **** | **** | **** | 
+| `^0.8.24`<br/>`^0.8.0` |  | **** | **** | **** | 
 
 | 📤 Transfers ETH | ⚡ Low-Level Calls | 👥 DelegateCall | 🧮 Uses Hash Functions | 🔖 ECRecover | 🌀 New/Create/Create2 |
 | ---------------- | ----------------- | --------------- | ---------------------- | ------------ | --------------------- |
-| `yes` | **** | **** | **** | **** | **** | 
+| **** | **** | **** | **** | **** | **** | 
 
 | ♻️ TryCatch | Σ Unchecked |
 | ---------- | ----------- |
@@ -189,16 +188,17 @@ This section lists functions that are explicitly declared public or payable. Ple
 | ------------------------ | ------ |
 | @chainlink/contracts/src/v0.8/ChainlinkClient.sol | 2 |
 | @chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol | 1 |
+| @openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol | 1 |
+| @openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol | 1 |
+| @openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol | 1 |
 | @openzeppelin/contracts/access/Ownable.sol | 1 |
 | @openzeppelin/contracts/proxy/Clones.sol | 1 |
-| @openzeppelin/contracts/proxy/utils/Initializable.sol | 2 |
-| @openzeppelin/contracts/token/ERC20/ERC20.sol | 1 |
 | @openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol | 1 |
-| @openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol | 2 |
+| @openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol | 1 |
 | @openzeppelin/contracts/utils/Pausable.sol | 1 |
-| @openzeppelin/contracts/utils/Strings.sol | 1 |
-| @openzeppelin/contracts/utils/math/Math.sol | 3 |
-| hardhat/console.sol | 2 |
+| @openzeppelin/contracts/utils/Strings.sol | 2 |
+| @openzeppelin/contracts/utils/math/Math.sol | 2 |
+| hardhat/console.sol | 1 |
 | solmate/src/utils/SSTORE2.sol | 1 |
 
 #### <span id=t-totals>Totals</span>
@@ -259,9 +259,8 @@ This section lists functions that are explicitly declared public or payable. Ple
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
 | contracts/AutoVault.sol | [object Promise] |
-| contracts/VaultFactory.sol | [object Promise] |
 | contracts/Interfaces/ERC4626Fees.sol | [object Promise] |
-| contracts/Interfaces/ERC4626.sol | [object Promise] |
+| contracts/VaultFactory.sol | [object Promise] |
 
 
  Contracts Description Table
@@ -275,18 +274,19 @@ This section lists functions that are explicitly declared public or payable. Ple
 | └ | returnStrategies | Public ❗️ |   |NO❗️ |
 | └ | initialize | Public ❗️ | 🛑  | initializer |
 | └ | startAction | External ❗️ | 🛑  |NO❗️ |
+| └ | getAsset | Internal 🔒 |   | |
 | └ | extendApproval | Public ❗️ | 🛑  |NO❗️ |
-| └ | preformAction | External ❗️ | 🛑  | onlyFactory |
-| └ | executeStrategy | External ❗️ | 🛑  | whenNotPaused |
+| └ | getPublicData | Public ❗️ |   |NO❗️ |
+| └ | preformAction | Public ❗️ | 🛑  | onlyFactory |
+| └ | executeStrategy | External ❗️ | 🛑  | whenNotPaused revertDuringWithdrawPeriod |
 | └ | setOracleFee | Public ❗️ | 🛑  | onlyOwner |
-| └ | getC | Public ❗️ |   |NO❗️ |
-| └ | fulfill | Public ❗️ | 🛑  | whenNotPaused onlyFactory |
+| └ | fulfill | Public ❗️ | 🛑  | whenNotPaused onlyFactory revertDuringWithdrawPeriod |
 | └ | processStrategy | Public ❗️ |   |NO❗️ |
 | └ | applySwapFee | Internal 🔒 | 🛑  | |
 | └ | executeAction | Internal 🔒 | 🛑  | |
 | └ | extractTrade | Internal 🔒 |   | |
-| └ | totalAssets | Public ❗️ | 🛑  |NO❗️ |
-| └ | _beforeTransfer | Internal 🔒 |   | |
+| └ | totalAssets | Public ❗️ |   |NO❗️ |
+| └ | _adjustForDecimals | Internal 🔒 |   | |
 | └ | beforeWithdraw | Internal 🔒 | 🛑  | |
 | └ | afterDeposit | Internal 🔒 | 🛑  | |
 | └ | _entryFeeBasisPoints | Internal 🔒 |   | |
@@ -296,32 +296,22 @@ This section lists functions that are explicitly declared public or payable. Ple
 | └ | _entryFeeRecipient | Internal 🔒 |   | |
 | └ | _exitFeeRecipient | Internal 🔒 |   | |
 | └ | _msgSender | Internal 🔒 |   | |
+| └ | _msgData | Internal 🔒 |   | |
 | └ | internalDeposit | Internal 🔒 | 🛑  | |
 | └ | pause | External ❗️ | 🛑  | whenNotPaused onlyOwner |
 | └ | unpause | External ❗️ | 🛑  | whenPaused onlyOwner |
 | └ | owner | Public ❗️ |   |NO❗️ |
+| └ | _checkIfWithdrawPeriod | Internal 🔒 |   | |
+| └ | setWithdrawPeriod | External ❗️ | 🛑  |NO❗️ |
+| └ | closeAllPositions | Internal 🔒 | 🛑  | |
+| └ | forceWithdrawPeriod | External ❗️ | 🛑  | onlyOwner |
+| └ | endWithdrawPeriod | External ❗️ | 🛑  | onlyOwner |
 ||||||
-| **VaultFactory** | Implementation | ChainlinkClient, ConfirmedOwner |||
-| └ | <Constructor> | Public ❗️ | 🛑  | ConfirmedOwner |
-| └ | togglePublicAPI | External ❗️ | 🛑  | onlyOwner |
-| └ | createVault | External ❗️ | 🛑  |NO❗️ |
-| └ | buildChainlinkTradeRequest | Internal 🔒 |   | |
-| └ | getAddressKeys | Internal 🔒 | 🛑  | |
-| └ | setStartingFees | External ❗️ | 🛑  | onlyOwner |
-| └ | setOracleAddress | External ❗️ | 🛑  | onlyOwner |
-| └ | setChainLinkToken | External ❗️ | 🛑  | onlyOwner |
-| └ | setGainsAddress | External ❗️ | 🛑  | onlyOwner |
-| └ | claimFunds | External ❗️ | 🛑  | onlyOwner |
-| └ | toggleCaller | Public ❗️ | 🛑  | onlyOwner |
-| └ | sendInfoRequest | External ❗️ | 🛑  |NO❗️ |
-| └ | fulfill | Public ❗️ | 🛑  | recordChainlinkFulfillment |
-| └ | preformAction | External ❗️ | 🛑  |NO❗️ |
-||||||
-| **ERC4626Fees** | Implementation | ERC4626 |||
-| └ | previewDeposit | Public ❗️ | 🛑  |NO❗️ |
-| └ | previewMint | Public ❗️ | 🛑  |NO❗️ |
-| └ | previewWithdraw | Public ❗️ | 🛑  |NO❗️ |
-| └ | previewRedeem | Public ❗️ | 🛑  |NO❗️ |
+| **ERC4626Fees** | Implementation | ERC4626Upgradeable |||
+| └ | previewDeposit | Public ❗️ |   |NO❗️ |
+| └ | previewMint | Public ❗️ |   |NO❗️ |
+| └ | previewWithdraw | Public ❗️ |   |NO❗️ |
+| └ | previewRedeem | Public ❗️ |   |NO❗️ |
 | └ | splitFees | Internal 🔒 |   | |
 | └ | _deposit | Internal 🔒 | 🛑  | |
 | └ | _withdraw | Internal 🔒 | 🛑  | |
@@ -336,31 +326,21 @@ This section lists functions that are explicitly declared public or payable. Ple
 | └ | _doesRecipientPayFee | Internal 🔒 |   | |
 | └ | _getMinFee | Internal 🔒 |   | |
 ||||||
-| **ERC4626** | Implementation | ERC20, IERC4626 |||
-| └ | __ERC4626_init | Internal 🔒 | 🛑  | onlyInitializing |
-| └ | _tryGetAssetDecimals | Private 🔐 |   | |
-| └ | decimals | Public ❗️ |   |NO❗️ |
-| └ | asset | Public ❗️ |   |NO❗️ |
-| └ | totalAssets | Public ❗️ | 🛑  |NO❗️ |
-| └ | convertToShares | Public ❗️ | 🛑  |NO❗️ |
-| └ | convertToAssets | Public ❗️ | 🛑  |NO❗️ |
-| └ | maxDeposit | Public ❗️ |   |NO❗️ |
-| └ | maxMint | Public ❗️ |   |NO❗️ |
-| └ | maxWithdraw | Public ❗️ | 🛑  |NO❗️ |
-| └ | maxRedeem | Public ❗️ |   |NO❗️ |
-| └ | previewDeposit | Public ❗️ | 🛑  |NO❗️ |
-| └ | previewMint | Public ❗️ | 🛑  |NO❗️ |
-| └ | previewWithdraw | Public ❗️ | 🛑  |NO❗️ |
-| └ | previewRedeem | Public ❗️ | 🛑  |NO❗️ |
-| └ | deposit | Public ❗️ | 🛑  |NO❗️ |
-| └ | mint | Public ❗️ | 🛑  |NO❗️ |
-| └ | withdraw | Public ❗️ | 🛑  |NO❗️ |
-| └ | redeem | Public ❗️ | 🛑  |NO❗️ |
-| └ | _convertToShares | Internal 🔒 | 🛑  | |
-| └ | _convertToAssets | Internal 🔒 | 🛑  | |
-| └ | _deposit | Internal 🔒 | 🛑  | |
-| └ | _withdraw | Internal 🔒 | 🛑  | |
-| └ | _decimalsOffset | Internal 🔒 |   | |
+| **VaultFactory** | Implementation | ChainlinkClient, ConfirmedOwner |||
+| └ | <Constructor> | Public ❗️ | 🛑  | ConfirmedOwner |
+| └ | togglePublicAPI | External ❗️ | 🛑  | onlyOwner |
+| └ | createVault | External ❗️ | 🛑  |NO❗️ |
+| └ | buildChainlinkTradeRequest | Internal 🔒 | 🛑  | |
+| └ | getAddressKeys | Internal 🔒 | 🛑  | |
+| └ | setStartingFees | External ❗️ | 🛑  | onlyOwner |
+| └ | setOracleAddress | External ❗️ | 🛑  | onlyOwner |
+| └ | setChainLinkToken | External ❗️ | 🛑  | onlyOwner |
+| └ | setGainsAddress | External ❗️ | 🛑  | onlyOwner |
+| └ | claimFunds | External ❗️ | 🛑  | onlyOwner |
+| └ | toggleCaller | Public ❗️ | 🛑  | onlyOwner |
+| └ | sendInfoRequest | External ❗️ | 🛑  |NO❗️ |
+| └ | fulfill | Public ❗️ | 🛑  | recordChainlinkFulfillment |
+| └ | preformAction | Public ❗️ | 🛑  | recordChainlinkFulfillment |
 
 
  Legend

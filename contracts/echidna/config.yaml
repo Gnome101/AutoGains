@@ -1,0 +1,12 @@
+corpusDir: "corpus"
+testMode: property
+testLimit: 5000
+shrinkLimit: 500
+testMaxGas: 800003000
+timeout: 3600 # 1 hour
+codeSize: 0xfffffffffff # maximize code size
+allContracts: true
+deployContracts: [["0x1f", "Equation"]]
+deployContracts: [["0x1f", "Equation"]]
+
+cryticArgs: ["--compile-libraries=(Equation,0x1f)"]

@@ -33,6 +33,7 @@ import { AddressLike, assertArgument, BigNumberish } from "ethers";
 import { getAmountDec } from "./strategy-test";
 import { AutoVaultHarness__factory } from "../typechain-types/factories/contracts/Harness/AutoVaultHarness.sol";
 import { copyFileSync } from "fs";
+import { equal } from "assert";
 dotenv.config();
 
 describe("Operation Tests ", function () {
@@ -471,14 +472,14 @@ describe("Operation Tests ", function () {
     describe("Vault Maker Roles ", function () {
       it("only vault maker can pause the contract", async () => {
         await expect(autoVault.connect(otherUser).pause()).to.be.rejectedWith(
-          "vaultManagerOnly()"
+          "VaultManagerOnly()"
         );
         await expect(autoVault.pause()).to.emit(autoVault, "Paused");
       });
       it("only vault maker can unpause contract", async () => {
         await autoVault.pause();
         await expect(autoVault.connect(otherUser).unpause()).to.be.rejectedWith(
-          "vaultManagerOnly()"
+          "VaultManagerOnly()"
         );
         await expect(autoVault.unpause()).to.emit(autoVault, "Unpaused");
       });
@@ -486,7 +487,7 @@ describe("Operation Tests ", function () {
         const amount = "1";
         await expect(
           autoVault.connect(otherUser).setOracleFee(amount)
-        ).to.be.rejectedWith("vaultManagerOnly()");
+        ).to.be.rejectedWith("VaultManagerOnly()");
 
         await expect(autoVault.setOracleFee(amount)).to.emit(
           autoVault,
@@ -506,7 +507,7 @@ describe("Operation Tests ", function () {
         "ApprovalExtended"
       );
     });
-    it("can not have use the same strategy twice wass", async () => {
+    it("can not have use the same strategy twice ", async () => {
       const requestID = await autoVault.executeStrategy.staticCall(0);
       const tx1 = await autoVault.executeStrategy(0);
       await tx1.wait();
@@ -534,6 +535,14 @@ describe("Operation Tests ", function () {
       ).to.be.rejectedWith("StrategyAlreadyActive()");
 
       // await impersonateOracleFulfill(vaultFactory, requestID2, input, 0);
+    });
+    it("return strategies gives the accurate amount of strategies", async () => {
+      const strategies = await autoVault.returnStrategies();
+      assert.equal(
+        strategies.length,
+        2,
+        `There amount of strategies is incorrect`
+      );
     });
 
     describe("Slippage Controls Work ", function () {
@@ -898,6 +907,69 @@ describe("Operation Tests ", function () {
           [longStrategy] // There is only 1 API
         )
       ).to.rejectedWith("StrategiesAndAPIsSameLength(2, 1)");
+    });
+    it("can not make vault with too many strategies ", async () => {
+      const initalAmount = await getAmount(USDC, "10");
+
+      await USDC.approve(vaultFactory.target, initalAmount.toFixed());
+      const dummyAPI = {
+        method: "",
+        url: "",
+        headers: "",
+        body: "",
+        path: "",
+        jobIDs: "",
+      } as VaultFactory.APIInfoStruct;
+      let excessDumyAPIs = [] as VaultFactory.APIInfoStruct[];
+
+      //According to ChatGPT, if RSI is above 70 then its too high. If its below 30 then its too low
+      //So what I will do is have two strategies, if the RSI goes to 50 then it will close either position
+      //if 70 < x1 then longBTC else do nothing
+      const longAciton = await Helper.createOpenTradeAction(
+        1000,
+        0,
+        5000,
+        true,
+        true,
+        3,
+        0,
+        200000, // Should be 2%
+        10000000,
+        12000000,
+        8000000
+      );
+      const decimals = new Decimal(10).pow(18);
+
+      // if x1< 30 then longAction else nothing
+      const longStrategy = [
+        18,
+        14,
+        1,
+        2,
+        0,
+        new Decimal(30).mul(decimals).toFixed(),
+        0,
+        longAciton,
+        0,
+        0,
+      ];
+      //Two strategies are used, 0 has a custom api, 1 has a public one
+      const maxStrategyCount = await vaultFactory.maxStrategyCount();
+      const excessCount = Number(maxStrategyCount) + 1;
+
+      let excessArray = Array(excessCount).fill(longStrategy);
+      let excessDummyAPIs = Array(excessCount).fill(dummyAPI);
+
+      await expect(
+        vaultFactory.createVault(
+          USDC.target,
+          initalAmount.toFixed(),
+          excessDummyAPIs,
+          excessArray
+        )
+      )
+        .to.be.revertedWithCustomError(vaultFactory, "ExceedMaxStrategyCount")
+        .withArgs(excessCount, maxStrategyCount);
     });
   });
 });

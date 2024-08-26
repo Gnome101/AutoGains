@@ -2,14 +2,13 @@
 pragma solidity ^0.8.24;
 //Fees https://docs.openzeppelin.com/contracts/4.x/erc4626
 import "hardhat/console.sol";
-
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "../AutoVault.sol";
-import "../Interfaces/ERC20.sol";
 import "../Libraries/TransientPrimities.sol";
 
 contract AutoVaultHarness is AutoVault {
     constructor(
-        IERC20Metadata __asset,
+        IERC20Upgradeable __asset,
         uint256 startingBalance,
         address factoryOwner,
         address _vaultManager,
@@ -20,7 +19,7 @@ contract AutoVaultHarness is AutoVault {
         address _oracleAddress,
         address _gainsAddy
     ) {
-        AutoVault.StartInfo memory startInfo = AutoVault.StartInfo({
+        StartInfo memory startInfo = StartInfo({
             factoryOwner: owner(),
             vaultManager: msg.sender,
             chainLinkToken: _chainLinkToken,
@@ -95,5 +94,13 @@ contract AutoVaultHarness is AutoVault {
 
     function assetBalanceOfVault() public view returns (uint256) {
         return ERC20(asset()).balanceOf(address(this));
+    }
+
+    function call_adjustForDecimals(
+        uint256 x,
+        uint256 curD,
+        uint256 desiredD
+    ) public pure returns (uint256) {
+        return super._adjustForDecimals(x, curD, desiredD);
     }
 }

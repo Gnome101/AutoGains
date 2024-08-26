@@ -1,5 +1,12 @@
 import { ethers, network } from "hardhat";
-import { BigNumberish, BytesLike, Contract, FunctionFragment } from "ethers";
+import {
+  Addressable,
+  AddressLike,
+  BigNumberish,
+  BytesLike,
+  Contract,
+  FunctionFragment,
+} from "ethers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import {
@@ -16,6 +23,7 @@ import {
   calculateFeeOnTotal,
   calculateFeeOnRaw,
 } from "../test/vault-test";
+import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 Decimal.set({ precision: 40 });
 export async function impersonateOracleRequestAndFulfill(
   testContract: any,
@@ -447,4 +455,22 @@ export async function previewRedeem(
 export interface PreviewAmounts {
   expectedAmount: Decimal;
   expectedFee: Decimal;
+}
+
+export async function getSigner(
+  desiredAddress: AddressLike
+): Promise<HardhatEthersSigner> {
+  await network.provider.send("hardhat_setBalance", [
+    desiredAddress,
+    "0x56BC75E2D63100000", // 100 ETH
+  ]);
+
+  // Impersonate the oracle account
+  await network.provider.request({
+    method: "hardhat_impersonateAccount",
+    params: [desiredAddress],
+  });
+
+  const impersonatedSigner = await ethers.getSigner(desiredAddress.toString());
+  return impersonatedSigner;
 }

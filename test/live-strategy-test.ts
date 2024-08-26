@@ -121,12 +121,11 @@ describe("Live Testnet Strategy Tests", function () {
       await testStrategy(0, verifyOpenLong, verifyUpdateSL, verifyUpdateTP);
     });
 
-    it("Strategy 2: Open Long and Update Leverage ", async function () {
+    it("Strategy 2: Open Long and Update Leverage wooba", async function () {
       await testStrategy(1, verifyOpenLong, verifyUpdateLeverage, verifyClose);
     });
 
-    it("Strategy 3: Open Long and Decrease/Increase Position ytt", async function () {
-      //Currenntly the only one failing is verifyIncreasedPosition
+    it("Strategy 3: Open Long and Decrease/Increase Position ", async function () {
       await testStrategy(
         2,
         verifyOpenLong,
@@ -290,7 +289,7 @@ describe("Live Testnet Strategy Tests", function () {
       url: `https://xpzyihmcunwwykjpfdgy.supabase.co/rest/v1/rpc/process_indexed_json`,
       headers: `["accept", "application/json", "apikey","${process.env.API}"]`,
       body: '{"input_index": 1, "input_json": {}}',
-      path: "price;blockNumber;rsi",
+      path: "price;blockTimestamp;rsi",
       jobIDs: "168535c73f7b46cd8fd9a7f21bdbedc1",
     };
   }
@@ -324,7 +323,7 @@ describe("Live Testnet Strategy Tests", function () {
             "|",
             JSON.stringify(previousTrade)
           );
-          console.log(await autoVault.getC());
+
           if (JSON.stringify(lastTrade) != JSON.stringify(previousTrade)) {
             clearInterval(intervalId);
             resolve(lastTrade);
@@ -360,10 +359,10 @@ describe("Live Testnet Strategy Tests", function () {
   ) {
     const latestBlock = await provider.getBlock("latest");
     if (latestBlock == undefined) throw "undefined";
-    const blockNumber = new Decimal(latestBlock.number.toString());
+    const blockTimestamp = new Decimal(latestBlock.timestamp.toString());
     // const x = new Decimal(10).pow(18);
 
-    const body = `{"input_index": 1, "input_json": {"price": "${res.toFixed()}", "blockNumber":"${blockNumber.toFixed()}", "rsi": "${rsi.toFixed()}" }}`;
+    const body = `{"input_index": 1, "input_json": {"price": "${res.toFixed()}", "blockTimestamp":"${blockTimestamp.toFixed()}", "rsi": "${rsi.toFixed()}" }}`;
     console.log(body);
     const headers = `["Content-Type", "application/json", "apikey","${process.env.API}"]`;
     const parsedHeaders: Record<string, string> = {};

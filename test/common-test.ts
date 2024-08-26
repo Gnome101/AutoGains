@@ -141,23 +141,22 @@ export interface Context {
 export async function createAutoVault(
   c: Context,
   startingBalance: string,
-  collatIndex: string
+  collatIndex: string,
+  strategyCount: number = 1
 ): Promise<AutoVault> {
   const { USDC, vaultFactory, Helper, vaultCreator } = c;
   const initalAmount = await getAmount(USDC, "100");
 
   await USDC.approve(vaultFactory.target, initalAmount.toFixed());
+  const dummyAPI = {
+    method: "",
+    url: "",
+    headers: "",
+    body: "",
+    path: "",
+    jobIDs: "",
+  } as VaultFactory.APIInfoStruct;
 
-  const APIInfos = [
-    {
-      method: "",
-      url: "",
-      headers: "",
-      body: "",
-      path: "",
-      jobIDs: "",
-    },
-  ] as VaultFactory.APIInfoStruct[];
   //According to ChatGPT, if RSI is above 70 then its too high. If its below 30 then its too low
   //So what I will do is have two strategies, if the RSI goes to 50 then it will close either position
   //if 70 < x1 then longBTC else do nothing
@@ -175,8 +174,10 @@ export async function createAutoVault(
     8000000
   );
   const decimals = new Decimal(10).pow(18);
+  const closeAction = await Helper.createCloseTradeMarketAction();
 
   // if x1 >  70 then longAction else nothing
+  //if x1 == 50 then close
   const longStrategy = [
     18,
     15,
@@ -186,19 +187,35 @@ export async function createAutoVault(
     new Decimal(70).mul(decimals).toFixed(),
     0,
     longAciton,
+    18,
+    10,
+    1,
+    2,
+    0,
+    new Decimal(50).mul(decimals).toFixed(),
+    0,
+    closeAction,
     0,
     0,
   ];
+
+  let APIInfos = Array(strategyCount).fill(dummyAPI);
+  let strategies = Array(strategyCount).fill(longStrategy);
 
   const vaultAddress = await vaultFactory.createVault.staticCall(
     USDC,
     initalAmount.toFixed(),
     APIInfos,
-    [longStrategy] as number[][]
+    strategies
   );
-  await vaultFactory.createVault(USDC, initalAmount.toFixed(), APIInfos, [
-    longStrategy,
-  ]);
+
+  await vaultFactory.createVault(
+    USDC,
+    initalAmount.toFixed(),
+    APIInfos,
+    strategies
+  );
+
   await time.increase(61);
   const autoVault = (await ethers.getContractAt(
     "AutoVault",
@@ -237,11 +254,15 @@ export async function incrementTime(sec: number): Promise<number> {
   return nextTime;
 }
 
-export async function openDummyTrade(autoVault: AutoVault, Context: Context) {
+export async function openDummyTrade(
+  autoVault: AutoVault,
+  Context: Context,
+  strategy: string = "0"
+) {
   const { vaultFactory, FakeGainsNetwork } = Context;
   const decimals = new Decimal(10).pow(18);
-  let requestID = await autoVault.executeStrategy.staticCall(0);
-  const tx3 = await autoVault.executeStrategy(0);
+  let requestID = await autoVault.executeStrategy.staticCall(strategy);
+  const tx3 = await autoVault.executeStrategy(strategy);
   await tx3.wait();
   const x = new Decimal(10).pow(18);
   const currentPrice = new Decimal(60).mul(x);
@@ -250,4 +271,23 @@ export async function openDummyTrade(autoVault: AutoVault, Context: Context) {
   expect(
     await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
   ).to.emit(FakeGainsNetwork, "OpenTradeCalled");
+}
+
+export async function closeDummyTrade(
+  autoVault: AutoVault,
+  Context: Context,
+  strategy: string = "0"
+) {
+  const { vaultFactory, FakeGainsNetwork } = Context;
+  const decimals = new Decimal(10).pow(18);
+  let requestID = await autoVault.executeStrategy.staticCall(strategy);
+  const tx3 = await autoVault.executeStrategy(strategy);
+  await tx3.wait();
+  const x = new Decimal(10).pow(18);
+  const currentPrice = new Decimal(60).mul(x);
+  let input = [currentPrice.toFixed(), new Decimal(50).mul(decimals).toFixed()];
+
+  expect(
+    await impersonateOracleFulfill(vaultFactory, requestID, input, 0)
+  ).to.emit(FakeGainsNetwork, "CloseTradeMarketCalled");
 }

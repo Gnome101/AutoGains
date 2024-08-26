@@ -13,27 +13,112 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 
+import {StartInfo} from "./Structures.sol";
+
+/**
+ * @title VaultFactory
+ * @dev A factory contract for creating and managing AutoVault instances
+ */
 contract VaultFactory is ChainlinkClient, ConfirmedOwner {
-    using SafeERC20 for IERC20Metadata;
+    using SafeERC20Upgradeable for IERC20MetadataUpgradeable;
     using Chainlink for Chainlink.Request;
     using Math for uint256;
     using Clones for address;
     using Strings for address;
-    // mapping(address => address[]) userToVaults; read events
+
+    // Constants
+
+    /// @dev This constant is used to ensure a minimum initial deposit when creating a new vault
     uint256 private constant minimumDeposit = 100;
+
+    /// @dev This is the maximum amount of strategies that a position can have
+    uint256 public constant maxStrategyCount = 10;
+
+    // State variables
+    /// @dev This address is used to send Chainlink requests for external data
     address public oracleAddress;
+
+    /// @dev This token is used to pay for Chainlink oracle requests
     address public chainLinkToken;
+
+    /// @dev This contract is used for trading operations within the vaults
     address public gainsAddress;
+
+    /// @dev This immutable address is used as the base for creating new vault instances
     address public immutable autoVaultImplementation;
 
+    // Mappings
+
+    /// @notice Mapping to track public API endpoints
+    /// @dev Keys are API URLs, values indicate whether the API is public (true) or not (false)
     mapping(string => bool) public publicAPIEndPoints;
+
+    /// @notice Mapping to associate Chainlink request IDs with corresponding AutoVault instances
+    /// @dev Keys are Chainlink request IDs, values are the AutoVault contract addresses
     mapping(bytes32 => AutoVault) public requestToCaller;
+
+    /// @notice Mapping to track approved vault addresses
+    /// @dev Keys are vault addresses, values indicate whether the vault is approved (true) or not (false)
     mapping(address => bool) public approvedVaults;
 
-    error ArraysMustBeSameLength();
-    mapping(IERC20Metadata => uint256[2]) public tokenToOracleFee;
+    /// @notice Mapping to track approved caller addresses
+    /// @dev Keys are caller addresses, values indicate whether the caller is approved (true) or not (false)
+    mapping(address => bool) public approvedCaller;
 
+    /// @notice Mapping to store oracle fees for different tokens
+    /// @dev Keys are token addresses, values are arrays containing two fee values
+    /// @dev The first value is typically the oracle fee, and the second is the vault action fee
+    mapping(IERC20MetadataUpgradeable => uint256[2]) public tokenToOracleFee;
+
+    // Events
+    event PublicApiUpdate(string indexed url);
+
+    event OracleAddressSet(address indexed oracle);
+    event ChainLinkTokenSet(address indexed ChainLinkToken);
+    event GainsAddressSet(address indexed GainsAddress);
+    event FundsClaimed(
+        address indexed owner,
+        IERC20Metadata indexed asset,
+        uint256 amount
+    );
+    event SetStartingFee(
+        IERC20MetadataUpgradeable[] indexed collateral,
+        uint256[2][] amounts
+    );
+    event FundsClaimed(
+        address indexed owner,
+        IERC20MetadataUpgradeable indexed asset,
+        uint256 amount
+    );
+
+    event VaultCreated(
+        address indexed vaultCreator,
+        address indexed vaultAddress,
+        IERC20MetadataUpgradeable indexed collateral,
+        APIInfo[] apiinfo,
+        uint256[][] strategy
+    );
+    // Errors
+    error ArraysMustBeSameLength();
+    error CollateralNotAdded();
+    error NonApprovedVault(address vault);
+    error NonApprovedCaller(address sender);
+    error StrategiesAndAPIsSameLength(
+        uint256 apiLength,
+        uint256 strategyLength
+    );
+    error ExceedMaxStrategyCount(uint256 strategyAmount, uint256 maxAmount);
+
+    /**
+     * @dev Constructor for the VaultFactory contract
+     * @param oracleAddy Address of the Chainlink oracle
+     * @param _chainLinkToken Address of the LINK token
+     * @param _gainsAddress Address of the Gains Network contract
+     * @param _autoVaultImplementation Address of the AutoVault implementation contract
+     */
     constructor(
         address oracleAddy,
         address _chainLinkToken,
@@ -58,36 +143,42 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         string path;
         string jobIDs;
     }
-    event PublicApiUpdate(string indexed url);
 
+    /**
+     * @dev Toggles the public API status for a given URL
+     * @param url The URL to toggle
+     */
     function togglePublicAPI(string memory url) external onlyOwner {
         publicAPIEndPoints[url] = !publicAPIEndPoints[url];
         emit PublicApiUpdate(url);
     }
 
-    event VaultCreated(
-        address indexed vaultCreator,
-        address indexed vaultAddress,
-        IERC20Metadata indexed collateral,
-        APIInfo[] apiinfo,
-        uint256[][] strategy
-    );
-    error CollateralNotAdded();
-
+    /**
+     * @dev Creates a new AutoVault instance
+     * @param collateral The collateral token for the vault
+     * @param initialAmount The initial amount to deposit
+     * @param apiInfo Array of API information for strategies
+     * @param listOfStrategies Array of strategy parameters
+     * @return clonedVault The address of the newly created vault
+     */
     function createVault(
-        IERC20Metadata collateral,
+        IERC20MetadataUpgradeable collateral,
         uint256 initialAmount,
         APIInfo[] calldata apiInfo,
         uint256[][] calldata listOfStrategies
     ) external returns (address payable clonedVault) {
-        if (5 < listOfStrategies.length) revert();
+        if (maxStrategyCount < listOfStrategies.length)
+            revert ExceedMaxStrategyCount(
+                listOfStrategies.length,
+                maxStrategyCount
+            );
         require(initialAmount > minimumDeposit, "Deposit too low");
         if (tokenToOracleFee[collateral][0] == 0) revert CollateralNotAdded();
 
         collateral.safeTransferFrom(msg.sender, address(this), initialAmount);
         // Clone the AutoVault implementation
         clonedVault = payable(Clones.clone(autoVaultImplementation));
-        AutoVault.StartInfo memory startInfo = AutoVault.StartInfo({
+        StartInfo memory startInfo = StartInfo({
             factoryOwner: owner(),
             vaultManager: msg.sender,
             chainLinkToken: chainLinkToken,
@@ -125,12 +216,17 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         '["accept", "application/json", "Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwenlpaG1jdW53d3lranBmZGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0MjU3ODIsImV4cCI6MjAzODAwMTc4Mn0.mgu_pc2fGZgAQPSlMTY_FPLcsIvepIZb3geDXA7au-0"]';
 
     string public constant trade_job = "168535c73f7b46cd8fd9a7f21bdbedc1";
-    string public bodyA;
 
+    /**
+     * @dev Builds a Chainlink request for trade execution
+     * @param vaultAddress The address of the vault
+     * @param tokenDecimals The number of decimals for the token
+     * @return req The built Chainlink request
+     */
     function buildChainlinkTradeRequest(
         address vaultAddress,
         uint256 tokenDecimals
-    ) internal returns (Chainlink.Request memory req) {
+    ) internal view returns (Chainlink.Request memory req) {
         req = _buildOperatorRequest(
             bytes32(bytes(trade_job)),
             this.preformAction.selector
@@ -141,19 +237,19 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         string memory body = '{"userAddress": "';
         body = string.concat(body, vaultAddress.toHexString());
         body = string.concat(body, '"}');
-        bodyA = body;
         req._add("body", body);
         req._add("contact", "A"); // PLEASE ENTER YOUR CONTACT INFO. this allows us to notify you in the event of any emergencies related to your request (ie, bugs, downtime, etc.). example values: 'derek_linkwellnodes.io' (Discord handle) OR 'derek@linkwellnodes.io' OR '+1-617-545-4721'
-        // req._add("path", trade_path);
+        req._add("path", "totalnewCollateral;blockTimestamp");
         req._addInt("multiplier", int256(10 ** 18));
         return req;
     }
 
-    error StrategiesAndAPIsSameLength(
-        uint256 apiLength,
-        uint256 strategyLength
-    );
-
+    /**
+     * @dev Generates address keys for strategies
+     * @param apiInfo Array of API information
+     * @param listOfStrategies Array of strategy parameters
+     * @return finalArr Array of generated address keys
+     */
     function getAddressKeys(
         APIInfo[] calldata apiInfo,
         uint256[][] calldata listOfStrategies
@@ -202,13 +298,13 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         }
     }
 
-    event SetStartingFee(
-        IERC20Metadata[] indexed collateral,
-        uint256[2][] amounts
-    );
-
+    /**
+     * @dev Sets the starting fees for multiple tokens
+     * @param tokens Array of token addresses
+     * @param amounts Array of fee amounts
+     */
     function setStartingFees(
-        IERC20Metadata[] calldata tokens,
+        IERC20MetadataUpgradeable[] calldata tokens,
         uint256[2][] calldata amounts
     ) external onlyOwner {
         if (tokens.length != amounts.length) {
@@ -220,52 +316,61 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         emit SetStartingFee(tokens, amounts);
     }
 
-    event OracleAddressSet(address indexed oracle);
-
+    /**
+     * @dev Sets the oracle address
+     * @param _oracleAddress The new oracle address
+     */
     function setOracleAddress(address _oracleAddress) external onlyOwner {
         oracleAddress = _oracleAddress;
         emit OracleAddressSet(_oracleAddress);
     }
 
-    event ChainLinkTokenSet(address indexed ChainLinkToken);
-
+    /**
+     * @dev Sets the Chainlink token address
+     * @param _chainLinkToken The new Chainlink token address
+     */
     function setChainLinkToken(address _chainLinkToken) external onlyOwner {
         chainLinkToken = _chainLinkToken;
         emit ChainLinkTokenSet(_chainLinkToken);
     }
 
-    event GainsAddressSet(address indexed GainsAddress);
-
+    /**
+     * @dev Sets the Gains Network address
+     * @param _gainsAddress The new Gains Network address
+     */
     function setGainsAddress(address _gainsAddress) external onlyOwner {
         gainsAddress = _gainsAddress;
         emit GainsAddressSet(_gainsAddress);
     }
 
-    uint256 private ownerPercentShare = 7_000_000; //10e5 percision
-    uint256 private constant percentShareScaling = 10_000_000;
-
-    event FundsClaimed(
-        address indexed owner,
-        IERC20Metadata indexed asset,
-        uint256 amount
-    );
-
+    /**
+     * @dev Claims funds from the contract
+     * @param asset The token to claim
+     * @param funds The amount of funds to claim
+     */
     function claimFunds(
-        IERC20Metadata asset,
+        IERC20MetadataUpgradeable asset,
         uint256 funds
     ) external onlyOwner {
         asset.safeTransfer(msg.sender, funds);
         emit FundsClaimed(msg.sender, asset, funds);
     }
 
-    error NonApprovedVault(address vault);
-    error NonApprovedCaller(address sender);
-    mapping(address => bool) public approvedCaller;
-
+    /**
+     * @dev Toggles the approved caller status for a user
+     * @param user The address of the user
+     */
     function toggleCaller(address user) public onlyOwner {
         approvedCaller[user] = !approvedCaller[user];
     }
 
+    /**
+     * @dev Sends an info request to the Chainlink oracle
+     * @param caller The address of the caller
+     * @param req The Chainlink request
+     * @param fee The fee for the request
+     * @return requestId The ID of the Chainlink request
+     */
     function sendInfoRequest(
         address caller,
         Chainlink.Request memory req,
@@ -277,6 +382,11 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         requestToCaller[requestId] = AutoVault(msg.sender);
     }
 
+    /**
+     * @dev Fulfills a Chainlink request
+     * @param requestId The ID of the request
+     * @param data The data returned by the oracle
+     */
     function fulfill(
         bytes32 requestId,
         uint256[] calldata data
@@ -284,6 +394,11 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         requestToCaller[requestId].fulfill(requestId, data);
     }
 
+    /**
+     * @dev Performs an action based on the Chainlink response
+     * @param requestId The ID of the request
+     * @param data The data returned by the oracle
+     */
     function preformAction(
         bytes32 requestId,
         uint256[] memory data

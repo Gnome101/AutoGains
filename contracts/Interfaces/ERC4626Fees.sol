@@ -2,12 +2,13 @@
 
 pragma solidity ^0.8.0;
 
-import "./ERC4626.sol";
+//import "./ERC4626.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol";
 
 /// @dev ERC4626 vault with entry/exit fees expressed in https://en.wikipedia.org/wiki/Basis_point[basis point (bp)].
-abstract contract ERC4626Fees is ERC4626 {
-    using Math for uint256;
-
+abstract contract ERC4626Fees is ERC4626Upgradeable {
+    using MathUpgradeable for uint256;
+    using SafeERC20Upgradeable for IERC20MetadataUpgradeable;
     uint256 private constant _BASIS_POINT_SCALE = 1e4;
 
     // === Overrides ===
@@ -17,7 +18,6 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 assets
     ) public view virtual override returns (uint256) {
         uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints(), _msgSender());
-        console.log("glip", assets, fee, assets - fee);
         return super.previewDeposit(assets - fee);
     }
 
@@ -26,11 +26,6 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 shares
     ) public view virtual override returns (uint256) {
         uint256 assets = super.previewMint(shares);
-        console.log(
-            "mint",
-            assets,
-            _feeOnRaw(assets, _entryFeeBasisPoints(), _msgSender())
-        );
 
         return assets + _feeOnRaw(assets, _entryFeeBasisPoints(), _msgSender());
     }
@@ -49,11 +44,7 @@ abstract contract ERC4626Fees is ERC4626 {
         uint256 shares
     ) public view virtual override returns (uint256) {
         uint256 assets = super.previewRedeem(shares);
-        console.log(
-            "G",
-            assets,
-            _feeOnTotal(assets, _exitFeeBasisPoints(), _msgSender())
-        );
+
         return
             assets - _feeOnTotal(assets, _exitFeeBasisPoints(), _msgSender());
     }
@@ -74,11 +65,23 @@ abstract contract ERC4626Fees is ERC4626 {
         (address recipient1, address recipient2) = _entryFeeRecipient();
 
         if (fee > 0 && recipient2 == receiver) {
-            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee);
+            SafeERC20Upgradeable.safeTransfer(
+                IERC20Upgradeable(asset()),
+                recipient1,
+                fee
+            );
         } else if (fee > 0 && recipient2 != address(this)) {
             (uint256 fee1, uint256 fee2) = splitFees(fee);
-            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee1);
-            SafeERC20.safeTransfer(IERC20(asset()), recipient2, fee2);
+            SafeERC20Upgradeable.safeTransfer(
+                IERC20Upgradeable(asset()),
+                recipient1,
+                fee1
+            );
+            SafeERC20Upgradeable.safeTransfer(
+                IERC20Upgradeable(asset()),
+                recipient2,
+                fee2
+            );
         }
 
         super._deposit(caller, receiver, assets, shares);
@@ -103,11 +106,23 @@ abstract contract ERC4626Fees is ERC4626 {
         //     SafeERC20.safeTransfer(IERC20(asset()), recipient2, fee2);
         // }
         if (fee > 0 && recipient2 == receiver) {
-            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee);
+            SafeERC20Upgradeable.safeTransfer(
+                IERC20Upgradeable(asset()),
+                recipient1,
+                fee
+            );
         } else if (fee > 0 && recipient2 != address(this)) {
             (uint256 fee1, uint256 fee2) = splitFees(fee);
-            SafeERC20.safeTransfer(IERC20(asset()), recipient1, fee1);
-            SafeERC20.safeTransfer(IERC20(asset()), recipient2, fee2);
+            SafeERC20Upgradeable.safeTransfer(
+                IERC20Upgradeable(asset()),
+                recipient1,
+                fee1
+            );
+            SafeERC20Upgradeable.safeTransfer(
+                IERC20Upgradeable(asset()),
+                recipient2,
+                fee2
+            );
         }
         super._withdraw(caller, receiver, owner, assets, shares);
     }
@@ -169,12 +184,12 @@ abstract contract ERC4626Fees is ERC4626 {
             }
         }
         return
-            Math.max(
+            MathUpgradeable.max(
                 _getMinFee(),
                 assets.mulDiv(
                     feeBasisPoints,
                     _BASIS_POINT_SCALE,
-                    Math.Rounding.Ceil
+                    MathUpgradeable.Rounding.Up
                 )
             );
     }
@@ -195,12 +210,12 @@ abstract contract ERC4626Fees is ERC4626 {
             }
         }
         return
-            Math.max(
+            MathUpgradeable.max(
                 _getMinFee(),
                 assets.mulDiv(
                     feeBasisPoints,
                     feeBasisPoints + _BASIS_POINT_SCALE,
-                    Math.Rounding.Ceil
+                    MathUpgradeable.Rounding.Up
                 )
             );
     }

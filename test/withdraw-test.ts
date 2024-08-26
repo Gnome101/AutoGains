@@ -712,7 +712,7 @@ describe("AutoGains Withdraw Period Tests wuba", function () {
 
         await expect(
           otherAutoVault.forceWithdrawPeriod()
-        ).to.be.revertedWithCustomError(autoVault, "vaultManagerOnly");
+        ).to.be.revertedWithCustomError(autoVault, "VaultManagerOnly");
       });
 
       it("should revert if withdraw period is already active", async function () {
@@ -744,7 +744,7 @@ describe("AutoGains Withdraw Period Tests wuba", function () {
       it("should revert if called by non-owner", async function () {
         await expect(
           otherAutoVault.endWithdrawPeriod()
-        ).to.be.revertedWithCustomError(autoVault, "vaultManagerOnly");
+        ).to.be.revertedWithCustomError(autoVault, "VaultManagerOnly");
       });
 
       it("should revert if no active withdraw period", async function () {

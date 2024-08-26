@@ -22,6 +22,7 @@ import dotenv from "dotenv";
 import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 import { trace } from "console";
 import { toDecimal } from "./vault-test";
+import { getAmountDec } from "./strategy-test";
 dotenv.config();
 
 describe("Action Tests ", function () {
@@ -548,6 +549,32 @@ describe("Action Tests ", function () {
           expectedPrice,
           maxSlippage
         );
+    });
+  });
+  describe("Decimal Adjustment Works ", function () {
+    const previousDecimals = 10;
+    const number = "100";
+    const x = getAmountDec(number, previousDecimals);
+
+    it("can adjust decimals downwards ", async () => {
+      const newDecimals = 5;
+      const result = await autoVaultHarness.call_adjustForDecimals(
+        x.toFixed(),
+        previousDecimals,
+        newDecimals
+      );
+      const correctResult = getAmountDec(number, newDecimals);
+      assert.equal(result.toString(), correctResult.toFixed());
+    });
+    it("can adjust decimals upwards", async () => {
+      const newDecimals = 15;
+      const result = await autoVaultHarness.call_adjustForDecimals(
+        x.toFixed(),
+        previousDecimals,
+        newDecimals
+      );
+      const correctResult = getAmountDec(number, newDecimals);
+      assert.equal(result.toString(), correctResult.toFixed());
     });
   });
 });
