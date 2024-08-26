@@ -37,14 +37,15 @@ Out of scope:
 
 - The oracle address is trusted
 - The factory owner is trusted
+- The oracleFee and vaultActionFee will remain up to date at all times
 
 ## How It Works
-
 1. The VaultFactory contract deploys new AutoVault instances.
 2. Users can deposit funds into AutoVaults.
 3. AutoVaults execute trading strategies using Chainlink oracles for price data & indicator data.
 4. Trades are executed on the Gains Network platform.
-5. Users can withdraw funds during specified withdrawal periods.
+5. When there are active trades, user must use the startAction and preformAction methods.
+7. Users can withdraw funds during specified withdrawal periods.7. 
 
 ## Key Features
 
@@ -64,7 +65,8 @@ Out of scope:
 
 - If gas fees need to be increased, the vault maker must handle this adjustment.
 - The project uses assembly in some parts for gas optimization.
-- Withdraws 
+- Withdraws are only possible when the vault has no trades
+- A callback function is needed to value all trades because we cannot obtain their value on chain (we need the GNS median price)
 
 ## Security Considerations
 
