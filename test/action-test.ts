@@ -16,11 +16,11 @@ import {
 import { Deployment } from "hardhat-deploy/dist/types";
 import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import { impersonateOracleFulfill } from "../utils/AutoGains";
-import { erc20 } from "../typechain-types/@openzeppelin/contracts/token";
 import { Decimal } from "decimal.js";
 import dotenv from "dotenv";
-import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 import { trace } from "console";
+import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
+
 import { toDecimal } from "./vault-test";
 import { getAmountDec } from "./strategy-test";
 dotenv.config();

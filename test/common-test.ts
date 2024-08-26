@@ -4,15 +4,7 @@ import { expect, assert } from "chai";
 //@ts-ignore
 import { ethers, deployments, userConfig, network } from "hardhat";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
-import {
-  ERC20,
-  FakeGainsNetwork,
-  Helper,
-  IGainsNetwork,
-  VaultFactory,
-  AutoVault,
-  VaultFactory__factory,
-} from "../typechain-types";
+
 import { Deployment } from "hardhat-deploy/dist/types";
 import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import {
@@ -23,10 +15,17 @@ import {
   previewWithdraw,
   previewRedeem,
 } from "../utils/AutoGains";
-import { erc20 } from "../typechain-types/@openzeppelin/contracts/token";
+import {
+  ERC20,
+  FakeGainsNetwork,
+  Helper,
+  IGainsNetwork,
+  VaultFactory,
+  AutoVault,
+  VaultFactory__factory,
+} from "../typechain-types";
 import { Decimal } from "decimal.js";
 import dotenv from "dotenv";
-import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 import { trace } from "console";
 import { FEE_MULTIPLIER_SCALE } from "@gainsnetwork/sdk";
 import { AddressLike, FallbackFragment, MinInt256, Signer } from "ethers";

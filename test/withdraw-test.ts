@@ -1,14 +1,7 @@
 import { expect, assert } from "chai";
 import { ethers } from "hardhat";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
-import {
-  AutoVault,
-  VaultFactory,
-  ERC20,
-  FakeGainsNetwork,
-  Helper,
-  VaultFactory__factory,
-} from "../typechain-types";
+
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { Decimal } from "decimal.js";
 import {
@@ -28,6 +21,14 @@ import {
   previewRedeem,
   previewWithdraw,
 } from "../utils/AutoGains";
+import {
+  AutoVault,
+  VaultFactory,
+  ERC20,
+  FakeGainsNetwork,
+  Helper,
+  VaultFactory__factory,
+} from "../typechain-types";
 import { UnmanagedSubscriber } from "ethers";
 import { getImportantInfo } from "./vault-test";
 let accounts: SignerWithAddress[];
@@ -201,6 +202,7 @@ describe("AutoGains Withdraw Period Tests wuba", function () {
           const totalAssets = await USDC.balanceOf(autoVault.target);
 
           const { expectedAmount, expectedFee } = await previewRedeem(
+            vaultFactory,
             autoVault,
             vaultCreator.address,
             redeemAmount,
@@ -451,6 +453,7 @@ describe("AutoGains Withdraw Period Tests wuba", function () {
           );
 
           const { expectedAmount, expectedFee } = await previewWithdraw(
+            vaultFactory,
             otherAutoVault,
             otherUser.address,
             withdrawAmount2,

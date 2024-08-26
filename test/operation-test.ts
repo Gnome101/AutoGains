@@ -4,14 +4,7 @@ import { expect, assert } from "chai";
 //@ts-ignore
 import { ethers, deployments, userConfig, network } from "hardhat";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
-import {
-  AutoVault,
-  ERC20,
-  FakeGainsNetwork,
-  Helper,
-  IGainsNetwork,
-  VaultFactory,
-} from "../typechain-types";
+
 import { Deployment } from "hardhat-deploy/dist/types";
 import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import {
@@ -23,17 +16,23 @@ import {
   previewMint,
   previewWithdraw,
 } from "../utils/AutoGains";
-import { erc20 } from "../typechain-types/@openzeppelin/contracts/token";
+import {
+  AutoVault,
+  ERC20,
+  FakeGainsNetwork,
+  Helper,
+  IGainsNetwork,
+  VaultFactory,
+} from "../typechain-types";
 import { Decimal } from "decimal.js";
 import dotenv from "dotenv";
 import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
+
 import { trace } from "console";
 import { FEE_MULTIPLIER_SCALE } from "@gainsnetwork/sdk";
 import { AddressLike, assertArgument, BigNumberish } from "ethers";
 import { getAmountDec } from "./strategy-test";
-import { AutoVaultHarness__factory } from "../typechain-types/factories/contracts/Harness/AutoVaultHarness.sol";
-import { copyFileSync } from "fs";
-import { equal } from "assert";
+
 dotenv.config();
 
 describe("Operation Tests ", function () {
@@ -483,23 +482,6 @@ describe("Operation Tests ", function () {
         );
         await expect(autoVault.unpause()).to.emit(autoVault, "Unpaused");
       });
-      it("only vault maker can change oracle fee", async () => {
-        const amount = "1";
-        await expect(
-          autoVault.connect(otherUser).setOracleFee(amount)
-        ).to.be.rejectedWith("VaultManagerOnly()");
-
-        await expect(autoVault.setOracleFee(amount)).to.emit(
-          autoVault,
-          "OracleFeeSet"
-        );
-        const oracleFeeAfter = await autoVault.oracleFee();
-        assert.equal(
-          oracleFeeAfter.toString(),
-          amount,
-          "Oracle fee did not update like it should"
-        );
-      });
     });
     it("anyone can extend approval ", async () => {
       await expect(autoVault.extendApproval()).to.emit(
@@ -594,6 +576,7 @@ describe("Operation Tests ", function () {
         const assetsInVault = await USDC.balanceOf(autoVault.target);
         const totalAssets = totalCollateral.plus(assetsInVault.toString());
         const { expectedAmount, expectedFee } = await previewDeposit(
+          vaultFactory,
           autoVault,
           vaultCreator.address,
           depositAmount,
@@ -635,6 +618,7 @@ describe("Operation Tests ", function () {
         const assetsInVault = await USDC.balanceOf(autoVault.target);
         const totalAssets = totalCollateral.plus(assetsInVault.toString());
         const { expectedAmount, expectedFee } = await previewMint(
+          vaultFactory,
           autoVault,
           vaultCreator.address,
           mintAmount,

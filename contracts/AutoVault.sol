@@ -44,11 +44,11 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     /// @dev Mapping to store the last mint timestamp for each user
     mapping(address => uint256) private _lastMintTimestamp;
 
-    /// @dev Oracle fee for Chainlink requests
-    uint256 public oracleFee;
+    // /// @dev Oracle fee for Chainlink requests
+    // uint256 public oracleFee;
 
-    /// @dev Fee for vault actions (e.g., deposits, withdrawals)
-    uint256 public vaultActionFee;
+    // /// @dev Fee for vault actions (e.g., deposits, withdrawals)
+    // uint256 public vaultActionFee;
 
     /// @dev Timestamp for the next available withdraw period
     uint256 public nextWithdrawPeriod;
@@ -207,8 +207,8 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         vaultFactory = msg.sender;
         specialRefer = startingInfo.factoryOwner;
         internalDeposit(startingBalance, startingInfo.vaultManager);
-        oracleFee = startingFee[0];
-        vaultActionFee = startingFee[1];
+        // oracleFee = startingFee[0];
+        // vaultActionFee = startingFee[1];
         // tradeFee = startingFee[2];
         balanceRequest = _req;
         __asset.approve(startingInfo.gainsAddress, type(uint256).max);
@@ -329,7 +329,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         requestToStrategy[requestId] = strategy;
         rewardBot[requestId] = RewardInfo({
             masterFee: Math.mulDiv(
-                oracleFee * 2,
+                VaultFactory(vaultFactory).getOracleFee(asset()) * 2,
                 feeMultiplier,
                 1_000_000,
                 Math.Rounding.Ceil
@@ -337,15 +337,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             feeMultiplier: feeMultiplier,
             caller: msg.sender
         });
-    }
-
-    /**
-     * @dev Sets the oracle fee.
-     * @param amount The new oracle fee amount.
-     */
-    function setOracleFee(uint256 amount) public onlyOwner {
-        oracleFee = amount;
-        emit OracleFeeSet(msg.sender, amount);
     }
 
     /**
@@ -388,12 +379,17 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         );
 
         //Send half of the oracle fee to the rewardBot
-        getAsset().safeTransfer(rewardInfo.caller, oracleFee / 3);
+        getAsset().safeTransfer(
+            rewardInfo.caller,
+            VaultFactory(vaultFactory).getOracleFee(asset()) / 3
+        );
 
         //Send the remaining balance to the vaultFactory
         getAsset().safeTransfer(
             vaultFactory,
-            rewardInfo.masterFee - oracleFee / 3
+            rewardInfo.masterFee -
+                VaultFactory(vaultFactory).getOracleFee(asset()) /
+                3
         );
     }
 
@@ -655,8 +651,9 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
      */
     function _getMinFee() internal view override returns (uint256) {
         Trade[] memory trades = GainsNetwork.getTrades(address(this));
-        if (trades.length == 0) return vaultActionFee; // If there are no trades, make it not a max fee
-        return oracleFee; //If there are trades, make it the max fee
+        if (trades.length == 0)
+            return VaultFactory(vaultFactory).getVaultActionFee(asset()); // If there are no trades, make it not a max fee
+        return VaultFactory(vaultFactory).getOracleFee(asset()); //If there are trades, make it the max fee
     }
 
     /**
@@ -824,7 +821,10 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
 
             indexToStrategy[trades[i - 2].index] = 0;
         }
-        getAsset().safeTransfer(vaultFactory, oracleFee);
+        getAsset().safeTransfer(
+            vaultFactory,
+            VaultFactory(vaultFactory).getVaultActionFee(asset())
+        );
     }
 
     /**

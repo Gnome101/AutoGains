@@ -4,6 +4,14 @@ import { expect, assert } from "chai";
 //@ts-ignore
 import { ethers, deployments, userConfig, network } from "hardhat";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
+
+import { Deployment } from "hardhat-deploy/dist/types";
+import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
+import {
+  impersonateOracleFulfill,
+  impersonateOracleFulfillAndCheck,
+} from "../utils/AutoGains";
+import { Decimal } from "decimal.js";
 import {
   AutoVault,
   ERC20,
@@ -12,18 +20,10 @@ import {
   IGainsNetwork,
   VaultFactory,
 } from "../typechain-types";
-import { Deployment } from "hardhat-deploy/dist/types";
-import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
-import {
-  impersonateOracleFulfill,
-  impersonateOracleFulfillAndCheck,
-} from "../utils/AutoGains";
-import { erc20 } from "../typechain-types/@openzeppelin/contracts/token";
-import { Decimal } from "decimal.js";
 import dotenv from "dotenv";
-import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 import { trace } from "console";
 import { getStrategies } from "./getStrategies";
+import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 
 dotenv.config();
 const ENABLE_PROFILER = true;

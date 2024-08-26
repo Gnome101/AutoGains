@@ -405,4 +405,24 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
     ) public recordChainlinkFulfillment(requestId) {
         requestToCaller[requestId].preformAction(requestId, data);
     }
+
+    /**
+     * @dev Returns the oracle fee for a given asset
+     * @param asset The address of the asset
+     * @notice This is the min fee for actions when there is a trade
+     * @return The oracle fee for that given asset
+     */
+    function getOracleFee(address asset) public view returns (uint256) {
+        return tokenToOracleFee[IERC20MetadataUpgradeable(asset)][0];
+    }
+
+    /**
+     * @dev Returns the vault fee for a given asset
+     * @notice This is generally the min fee for all actions when there are no trades
+     * @param asset The address of the asset
+     * @return The vault action fee for that given asset
+     */
+    function getVaultActionFee(address asset) public view returns (uint256) {
+        return tokenToOracleFee[IERC20MetadataUpgradeable(asset)][1];
+    }
 }

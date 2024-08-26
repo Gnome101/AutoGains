@@ -15,7 +15,6 @@ import {
   mineUpTo,
 } from "@nomicfoundation/hardhat-network-helpers";
 import Decimal from "decimal.js";
-import { AutoVault, AutoVaultHarness__factory } from "../typechain-types";
 import { expect } from "chai";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import {
@@ -23,6 +22,12 @@ import {
   calculateFeeOnTotal,
   calculateFeeOnRaw,
 } from "../test/vault-test";
+import {
+  AutoVault,
+  AutoVaultHarness__factory,
+  VaultFactory,
+} from "../typechain-types";
+
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 Decimal.set({ precision: 40 });
 export async function impersonateOracleRequestAndFulfill(
@@ -301,6 +306,7 @@ export async function impersonateOracleDoVaultActionAndCheck(
 }
 
 export async function previewDeposit(
+  vaultFactory: VaultFactory,
   autoVault: AutoVault,
   runner: string,
   depositAmount: Decimal,
@@ -310,7 +316,7 @@ export async function previewDeposit(
   let entryFee = await autoVault.ENTRY_FEE();
   console.log(entryFee);
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
-  const minFee = await autoVault.vaultActionFee();
+  const minFee = await vaultFactory.getVaultActionFee(await autoVault.asset());
 
   let expectedFee = calculateFeeOnTotal(
     depositAmount,
@@ -338,6 +344,7 @@ export async function previewDeposit(
   return { expectedAmount: expectedShares, expectedFee: expectedFee };
 }
 export async function previewMint(
+  vaultFactory: VaultFactory,
   autoVault: AutoVault,
   runner: string,
   mintAmount: Decimal,
@@ -347,7 +354,9 @@ export async function previewMint(
 
   const entryFee = toDecimal(await autoVault.ENTRY_FEE());
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
-  const minFee = toDecimal(await autoVault.vaultActionFee());
+  const minFee = toDecimal(
+    await vaultFactory.getVaultActionFee(await autoVault.asset())
+  );
   console.log("info js", totalAssets, totalSupply);
   const expectedAssetsPaid = mintAmount
     .mul(totalAssets.plus(1))
@@ -372,6 +381,7 @@ export async function previewMint(
   };
 }
 export async function previewWithdraw(
+  vaultFactory: VaultFactory,
   autoVault: AutoVault,
   runner: string,
   withdrawAmount: Decimal,
@@ -381,7 +391,9 @@ export async function previewWithdraw(
 
   const exitFee = toDecimal(await autoVault.EXIT_FEE());
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
-  const minFee = toDecimal(await autoVault.vaultActionFee());
+  const minFee = toDecimal(
+    await vaultFactory.getVaultActionFee(await autoVault.asset())
+  );
   console.log(`min Fee:${minFee}`);
   let expectedFee = calculateFeeOnRaw(
     withdrawAmount,
@@ -409,6 +421,7 @@ export async function previewWithdraw(
   };
 }
 export async function previewRedeem(
+  vaultFactory: VaultFactory,
   autoVault: AutoVault,
   runner: string,
   redeemAmount: Decimal,
@@ -418,7 +431,9 @@ export async function previewRedeem(
 
   const exitFee = toDecimal(await autoVault.EXIT_FEE());
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
-  const minFee = toDecimal(await autoVault.vaultActionFee());
+  const minFee = toDecimal(
+    await vaultFactory.getVaultActionFee(await autoVault.asset())
+  );
   console.log(
     "More TS",
     redeemAmount,

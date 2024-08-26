@@ -4,6 +4,9 @@ import { expect, assert } from "chai";
 //@ts-ignore
 import { ethers, deployments, userConfig, network } from "hardhat";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
+
+import { Deployment } from "hardhat-deploy/dist/types";
+import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import {
   AutoVault,
   ERC20,
@@ -12,8 +15,6 @@ import {
   IGainsNetwork,
   VaultFactory,
 } from "../typechain-types";
-import { Deployment } from "hardhat-deploy/dist/types";
-import { contracts } from "../Addresses"; // assuming Addresses.ts exports an object
 import {
   impersonateOracleFulfill,
   impersonateOracleDoVaultAction,
@@ -22,15 +23,13 @@ import {
   previewWithdraw,
   previewRedeem,
 } from "../utils/AutoGains";
-import { erc20 } from "../typechain-types/@openzeppelin/contracts/token";
 import { Decimal } from "decimal.js";
 import dotenv from "dotenv";
-import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 import { trace } from "console";
 import { FEE_MULTIPLIER_SCALE } from "@gainsnetwork/sdk";
 import { AddressLike, FallbackFragment, MinInt256 } from "ethers";
-import { getAmountDec } from "./strategy-test";
-import { Sign } from "crypto";
+
+import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
 
 dotenv.config();
 
@@ -1153,7 +1152,7 @@ async function test_deposit(
   console.log(
     `Total Assets: ${totalCollateral.toFixed()} and vault: ${assetsInVault}`
   );
-  const { expectedAmount, expectedFee } = await previewDeposit(
+  const { expectedAmount, expectedFee } = await previewDeposit(vaultFactory,
     autoVault,
     userDepositing.address,
     depositAmount,
@@ -1243,7 +1242,7 @@ async function test_mint(
   console.log("total assets:", totalCollateral, totalAssetsExisting);
   const vaultCreatorAddress = await autoVault.vaultManager();
 
-  const { expectedAmount, expectedFee } = await previewMint(
+  const { expectedAmount, expectedFee } = await previewMint(vaultFactory,
     autoVault,
     userDepositing.address,
     mintAmount,

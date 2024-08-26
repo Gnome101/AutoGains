@@ -1,6 +1,5 @@
 import { ethers, deployments, network } from "hardhat";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
-
 import { ERC20 } from "../typechain-types/@openzeppelin/contracts/token/ERC20/ERC20";
 import {
   AutoVault,
@@ -16,8 +15,9 @@ import dotenv from "dotenv";
 import { PriceUpdater } from "../scripts/readTrades";
 import { getStrategies } from "./getStrategies";
 import { expect, assert } from "chai";
-import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/FakeGainsNetwork";
 import { BigNumberish, Provider } from "ethers";
+import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/FakeGainsNetwork";
+
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
 import { execArgv } from "process";
 import { chownSync } from "fs";
@@ -160,7 +160,7 @@ describe("Live Testnet Vault Tests", function () {
       );
       const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
       console.log("estimate", totalAssets);
-      const DepositPreview = await previewDeposit(
+      const DepositPreview = await previewDeposit(vaultFactory,
         autoVault,
         user.address,
         depositAmount,
@@ -216,7 +216,7 @@ describe("Live Testnet Vault Tests", function () {
       );
       const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
 
-      const PreivewMint = await previewMint(
+      const PreivewMint = await previewMint(vaultFactory,
         autoVault,
         user.address,
         mintAmount,
