@@ -31,6 +31,9 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
 
     // Constants
 
+    /// @dev This constant is used to denote the decimals needed for the chainlink reqest
+    int256 private constant requestDecimals = 10 ** 18;
+
     /// @dev This constant is used to ensure a minimum initial deposit when creating a new vault
     uint256 private constant minimumDeposit = 100;
 
@@ -49,6 +52,21 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
 
     /// @dev This immutable address is used as the base for creating new vault instances
     address public immutable autoVaultImplementation;
+
+    ///@notice the state vars below are for getting the balance of the vault
+    /// @dev This string is used for denoting the method of the api request
+    string public trade_method = "POST";
+
+    /// @dev This string is used for denoting the method of the api request
+    string public trade_url =
+        "https://xpzyihmcunwwykjpfdgy.supabase.co/functions/v1/get-trading-variables";
+
+    /// @dev This string is used for denoting the method of the api request
+    string public trade_headers =
+        '["accept", "application/json", "Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwenlpaG1jdW53d3lranBmZGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0MjU3ODIsImV4cCI6MjAzODAwMTc4Mn0.mgu_pc2fGZgAQPSlMTY_FPLcsIvepIZb3geDXA7au-0"]';
+
+    /// @dev This string is used for denoting the method of the api request
+    string public trade_job = "168535c73f7b46cd8fd9a7f21bdbedc1";
 
     // Mappings
 
@@ -111,6 +129,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         uint256 strategyLength
     );
     error ExceedMaxStrategyCount(uint256 strategyAmount, uint256 maxAmount);
+    error DepositTooLow();
 
     /**
      * @dev Constructor for the VaultFactory contract
@@ -172,7 +191,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
                 listOfStrategies.length,
                 maxStrategyCount
             );
-        require(initialAmount > minimumDeposit, "Deposit too low");
+        if (initialAmount < minimumDeposit) revert DepositTooLow();
         if (tokenToOracleFee[collateral][0] == 0) revert CollateralNotAdded();
 
         collateral.safeTransferFrom(msg.sender, address(this), initialAmount);
@@ -188,10 +207,8 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         // Initialize the cloned vault
         AutoVault(clonedVault).initialize(
             collateral,
-            buildChainlinkTradeRequest(clonedVault, collateral.decimals()),
             initialAmount,
             startInfo,
-            tokenToOracleFee[collateral],
             string.concat("Auto", collateral.name()),
             string.concat("a", collateral.symbol()),
             getAddressKeys(apiInfo, listOfStrategies)
@@ -209,24 +226,14 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         );
     }
 
-    string public constant trade_method = "POST";
-    string public constant trade_url =
-        "https://xpzyihmcunwwykjpfdgy.supabase.co/functions/v1/get-trading-variables";
-    string public constant trade_headers =
-        '["accept", "application/json", "Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwenlpaG1jdW53d3lranBmZGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0MjU3ODIsImV4cCI6MjAzODAwMTc4Mn0.mgu_pc2fGZgAQPSlMTY_FPLcsIvepIZb3geDXA7au-0"]';
-
-    string public constant trade_job = "168535c73f7b46cd8fd9a7f21bdbedc1";
-
     /**
      * @dev Builds a Chainlink request for trade execution
      * @param vaultAddress The address of the vault
-     * @param tokenDecimals The number of decimals for the token
      * @return req The built Chainlink request
      */
     function buildChainlinkTradeRequest(
-        address vaultAddress,
-        uint256 tokenDecimals
-    ) internal view returns (Chainlink.Request memory req) {
+        address vaultAddress
+    ) public view returns (Chainlink.Request memory req) {
         req = _buildOperatorRequest(
             bytes32(bytes(trade_job)),
             this.preformAction.selector
@@ -283,7 +290,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
 
             req._add("contact", "A"); // PLEASE ENTER YOUR CONTACT INFO. this allows us to notify you in the event of any emergencies related to your request (ie, bugs, downtime, etc.). example values: 'derek_linkwellnodes.io' (Discord handle) OR 'derek@linkwellnodes.io' OR '+1-617-545-4721'
             req._add("path", apiInfo[i].path);
-            req._addInt("multiplier", 10 ** 18);
+            req._addInt("multiplier", requestDecimals);
 
             bytes memory encodedTree = Equation.init(listOfStrategies[i]);
 
@@ -375,11 +382,25 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         address caller,
         Chainlink.Request memory req,
         uint256 fee
-    ) external returns (bytes32 requestId) {
+    ) public returns (bytes32 requestId) {
         if (!approvedCaller[caller]) revert NonApprovedCaller(caller);
         if (!approvedVaults[msg.sender]) revert NonApprovedVault(msg.sender);
         requestId = _sendChainlinkRequest(req, fee);
         requestToCaller[requestId] = AutoVault(msg.sender);
+    }
+
+    /**
+     * @dev Sends an info request to the Chainlink oracle
+     * @param caller The address of the caller
+     * @param fee The fee for the request
+     * @return requestId The ID of the Chainlink request
+     */
+    function sendVaultBalanceReq(
+        address caller,
+        uint256 fee
+    ) external returns (bytes32 requestId) {
+        Chainlink.Request memory req = buildChainlinkTradeRequest(msg.sender);
+        return sendInfoRequest(caller, req, fee);
     }
 
     /**
@@ -424,5 +445,41 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
      */
     function getVaultActionFee(address asset) public view returns (uint256) {
         return tokenToOracleFee[IERC20MetadataUpgradeable(asset)][1];
+    }
+
+    /**
+     * @dev Changes the method used to call for the balance API
+     * @notice This is used in case the API for user positions changes
+     * @param method The new string method for requests
+     */
+    function changeMethod(string memory method) external onlyOwner {
+        trade_method = method;
+    }
+
+    /**
+     * @dev Changes the url used to call for the balance API
+     * @notice This is used in case the API for user positions changes
+     * @param url The new string url for requests
+     */
+    function changeURl(string memory url) external onlyOwner {
+        trade_url = url;
+    }
+
+    /**
+     * @dev Changes the headers used to call for the balance API
+     * @notice This is used in case the API for user positions changes
+     * @param headers The new string headers for requests
+     */
+    function changeHeaders(string memory headers) external onlyOwner {
+        trade_headers = headers;
+    }
+
+    /**
+     * @dev Changes the jobID used to call for the balance API
+     * @notice This is used in case the API for user positions changes
+     * @param jobID The new string jobID for requests
+     */
+    function changeJob(string memory jobID) external onlyOwner {
+        trade_job = jobID;
     }
 }

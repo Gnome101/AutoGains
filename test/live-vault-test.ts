@@ -129,7 +129,7 @@ describe("Live Testnet Vault Tests", function () {
   });
 
   describe("Live Vault Tests", function () {
-    it("User can deposit ", async function () {
+    it("User can deposit wooba", async function () {
       const add = await autoVault.asset();
       console.log("Asset", add);
       profiler.start("Get Most Recent Data");
@@ -160,7 +160,8 @@ describe("Live Testnet Vault Tests", function () {
       );
       const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
       console.log("estimate", totalAssets);
-      const DepositPreview = await previewDeposit(vaultFactory,
+      const DepositPreview = await previewDeposit(
+        vaultFactory,
         autoVault,
         user.address,
         depositAmount,
@@ -216,7 +217,8 @@ describe("Live Testnet Vault Tests", function () {
       );
       const balanceBefore = toDecimal(await autoVault.balanceOf(user.address));
 
-      const PreivewMint = await previewMint(vaultFactory,
+      const PreivewMint = await previewMint(
+        vaultFactory,
         autoVault,
         user.address,
         mintAmount,

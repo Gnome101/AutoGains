@@ -10,8 +10,8 @@ contract AutoVaultHarness is AutoVault {
     constructor(
         IERC20Upgradeable __asset,
         uint256 startingBalance,
-        address factoryOwner,
-        address _vaultManager,
+        address,
+        address,
         string memory _name,
         string memory _symbol,
         address[] memory _equations,
@@ -29,13 +29,8 @@ contract AutoVaultHarness is AutoVault {
 
         initialize(
             __asset,
-            _buildOperatorRequest(
-                bytes32(bytes("")),
-                AutoVault.preformAction.selector
-            ),
             startingBalance,
             startInfo,
-            [uint256(10), 20],
             _name,
             _symbol,
             _equations
@@ -64,11 +59,11 @@ contract AutoVaultHarness is AutoVault {
         return super.extractTrade(action, index, currentOpen);
     }
 
-    function call_entryFeeBasisPoints() external view returns (uint256) {
+    function call_entryFeeBasisPoints() external pure returns (uint256) {
         return super._entryFeeBasisPoints(); // replace with e.g. 100 for 1%
     }
 
-    function call_exitFeeBasisPoints() external view returns (uint256) {
+    function call_exitFeeBasisPoints() external pure returns (uint256) {
         return super._exitFeeBasisPoints(); // replace with e.g. 100 for 1%
     }
 

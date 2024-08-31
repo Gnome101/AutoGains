@@ -123,7 +123,7 @@ describe("Live Testnet Strategy Tests", function () {
       await testStrategy(0, verifyOpenLong, verifyUpdateSL, verifyUpdateTP);
     });
 
-    it("Strategy 2: Open Long and Update Leverage wooba", async function () {
+    it("Strategy 2: Open Long and Update Leverage ", async function () {
       await testStrategy(1, verifyOpenLong, verifyUpdateLeverage, verifyClose);
     });
 

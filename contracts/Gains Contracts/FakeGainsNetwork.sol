@@ -56,9 +56,9 @@ contract FakeGainsNetwork is IGainsNetwork {
     }
 
     function getCounters(
-        address _trader,
-        CounterType _type
-    ) external view override returns (Counter memory) {
+        address,
+        CounterType
+    ) external pure override returns (Counter memory) {
         return Counter(0, 0, 0);
     }
 
@@ -140,10 +140,7 @@ contract FakeGainsNetwork is IGainsNetwork {
         emit CancelOpenOrderCalled(_index);
     }
 
-    function closeTradeMarket(
-        uint32 _index,
-        uint64 expectedPrice
-    ) external override {
+    function closeTradeMarket(uint32 _index, uint64) external override {
         Trade[] storage trades = userToTrades[msg.sender];
         for (uint i = 0; i < trades.length; i++) {
             uint32 tradeIndex = trades[i].index;
@@ -167,7 +164,7 @@ contract FakeGainsNetwork is IGainsNetwork {
         uint32 _index,
         uint120 _collateralDelta,
         uint24 _leverageDelta,
-        uint64 _expectedPrice
+        uint64
     ) external override {
         Trade[] storage trades = userToTrades[msg.sender];
 
@@ -212,8 +209,8 @@ contract FakeGainsNetwork is IGainsNetwork {
     }
 
     function getTradeInfos(
-        address _trader
-    ) external view override returns (TradeInfo[] memory) {
+        address
+    ) external pure override returns (TradeInfo[] memory) {
         return new TradeInfo[](0);
     }
 
@@ -231,6 +228,7 @@ contract FakeGainsNetwork is IGainsNetwork {
         for (uint i = 0; i < trades.length; i++) {
             if (trades[i].index == _index) return trades[i];
         }
+        revert();
     }
 
     function getTradeBorrowingFee(

@@ -316,7 +316,9 @@ export async function previewDeposit(
   let entryFee = await autoVault.ENTRY_FEE();
   console.log(entryFee);
   const MOVEMENT_FEE_SCALE = new Decimal(10 ** 4);
-  const minFee = await vaultFactory.getVaultActionFee(await autoVault.asset());
+  const asset = await autoVault.asset();
+  console.log(asset);
+  const minFee = await vaultFactory.getVaultActionFee(asset);
 
   let expectedFee = calculateFeeOnTotal(
     depositAmount,

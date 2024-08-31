@@ -758,6 +758,59 @@ describe("Operation Tests ", function () {
         "Owner funds increased incorrectly"
       );
     });
+    describe("API Info Changes hoohy", function () {
+      it("only the factory owner can change the method", async () => {
+        const initialMethod = await vaultFactory.trade_method();
+        const newMethod = "GET";
+
+        await expect(vaultFactory.changeMethod(newMethod)).to.be.revertedWith(
+          "Only callable by owner"
+        );
+
+        await vaultFactory.connect(otherUser).changeMethod(newMethod);
+        expect(await vaultFactory.trade_method()).to.equal(newMethod);
+        expect(await vaultFactory.trade_method()).to.not.equal(initialMethod);
+      });
+
+      it("only the factory owner can change the URL", async () => {
+        const initialURL = await vaultFactory.trade_url();
+        const newURL = "https://new-api-endpoint.com";
+
+        await expect(vaultFactory.changeURl(newURL)).to.be.revertedWith(
+          "Only callable by owner"
+        );
+
+        await vaultFactory.connect(otherUser).changeURl(newURL);
+        expect(await vaultFactory.trade_url()).to.equal(newURL);
+        expect(await vaultFactory.trade_url()).to.not.equal(initialURL);
+      });
+
+      it("only the factory owner can change the headers", async () => {
+        const initialHeaders = await vaultFactory.trade_headers();
+        const newHeaders = '["Content-Type", "application/json"]';
+
+        await expect(vaultFactory.changeHeaders(newHeaders)).to.be.revertedWith(
+          "Only callable by owner"
+        );
+
+        await vaultFactory.connect(otherUser).changeHeaders(newHeaders);
+        expect(await vaultFactory.trade_headers()).to.equal(newHeaders);
+        expect(await vaultFactory.trade_headers()).to.not.equal(initialHeaders);
+      });
+
+      it("only the factory owner can change the job ID", async () => {
+        const initialJobID = await vaultFactory.trade_job();
+        const newJobID = "new-job-id-123";
+
+        await expect(vaultFactory.changeJob(newJobID)).to.be.revertedWith(
+          "Only callable by owner"
+        );
+
+        await vaultFactory.connect(otherUser).changeJob(newJobID);
+        expect(await vaultFactory.trade_job()).to.equal(newJobID);
+        expect(await vaultFactory.trade_job()).to.not.equal(initialJobID);
+      });
+    });
   });
   describe("Other", function () {
     it("can not make vault with unknown token ", async () => {

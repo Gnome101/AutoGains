@@ -23,7 +23,7 @@ const MAINNET_RPC_URL =
 const REPORT_GAS = process.env.REPORT_GAS || false;
 
 module.exports = {
-  defaultNetwork: "hardhat",
+  defaultNetwork: "arbSep",
   networks: {
     hardhat: {
       forking: {

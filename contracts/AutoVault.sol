@@ -38,9 +38,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     /// @dev Referral address for all trades executed by this vault
     address public specialRefer = 0xB46838207D4CDc3b0F6d8862b8F0d29fee938051;
 
-    /// @dev Reusable Chainlink request for fetching the total balance of the vault's trades
-    Chainlink.Request public balanceRequest;
-
     /// @dev Mapping to store the last mint timestamp for each user
     mapping(address => uint256) private _lastMintTimestamp;
 
@@ -116,6 +113,13 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     /// @dev This limit is in place so that the gas to preform the fufillment doesn't go too high
     uint256 public constant MAX_NUMBER_TRADES = 5;
 
+    /// @notice This is the amount of zeroes that each request has associated with it
+    /// @dev The `requestDecimals` variable in vaultFactory is related to this one
+    uint256 private constant DECIMAL_COUNT = 18;
+
+    /// @notice This is the actual amount of decimals attached to requests
+    uint256 private constant REQ_DECIMAL = 10 ** DECIMAL_COUNT;
+
     // Events ----------------------------------------------------------------------
     event WithdrawPeriodSet(uint256 date);
     event WithdrawPeriodStarted();
@@ -178,25 +182,20 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     /**
      * @dev Initializes the AutoVault. This function is used instead of a constructor for upgradeable contracts.
      * @param __asset The underlying asset token that the vault will use for trading
-     * @param _req The Chainlink request for fetching balance information
      * @param startingBalance The initial balance of the vault
      * @param startingInfo Struct containing addresses for various components (factory, manager, tokens, etc.)
-     * @param startingFee Array containing initial fee values for oracle and vault actions
      * @param _name The name of the vault token
      * @param _symbol The symbol of the vault token
      * @param _equations Array of addresses containing encoded strategy information
      */
     function initialize(
         IERC20Upgradeable __asset,
-        Chainlink.Request memory _req,
         uint256 startingBalance,
         StartInfo memory startingInfo,
-        uint256[2] memory startingFee,
         string memory _name,
         string memory _symbol,
         address[] memory _equations
     ) public initializer {
-        // _asset = __asset;
         __ERC4626_init(__asset);
         __ERC20_init(_name, _symbol);
 
@@ -210,7 +209,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         // oracleFee = startingFee[0];
         // vaultActionFee = startingFee[1];
         // tradeFee = startingFee[2];
-        balanceRequest = _req;
         __asset.approve(startingInfo.gainsAddress, type(uint256).max);
     }
 
@@ -230,10 +228,8 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     ) external returns (bytes32 requestId) {
         if (choice == Choice.WITHDRAW_PERIOD) _checkIfWithdrawPeriod();
 
-        Chainlink.Request memory req = balanceRequest;
-        requestId = VaultFactory(vaultFactory).sendInfoRequest(
+        requestId = VaultFactory(vaultFactory).sendVaultBalanceReq(
             msg.sender,
-            req,
             fee
         );
         requestToAction[requestId] = VaultAction(
@@ -273,13 +269,13 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     ) public onlyFactory {
         VaultAction memory vaultAction = requestToAction[requestId];
         currentUser.set(vaultAction.msgSender);
-        data[0] = _adjustForDecimals(data[0], 18, decimals());
+        data[0] = _adjustForDecimals(data[0], DECIMAL_COUNT, decimals());
 
         totalValueCollateral.set(data[0] > 0 ? data[0] + 1 : 1);
 
-        if ((data[1] / (10 ** 18)) + MAX_TIME_DIFFERENCE < block.timestamp) {
+        if ((data[1] / (REQ_DECIMAL)) + MAX_TIME_DIFFERENCE < block.timestamp) {
             revert TimeStampDifferenceTooLarge(
-                block.timestamp - data[1] / (10 ** 18)
+                block.timestamp - data[1] / (REQ_DECIMAL)
             );
         }
 
@@ -349,9 +345,9 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         uint256[] calldata data
     ) public whenNotPaused onlyFactory revertDuringWithdrawPeriod {
         // console.log(data.leWngth);
-        if ((data[1] / (10 ** 18)) + MAX_TIME_DIFFERENCE < block.timestamp) {
+        if ((data[1] / (REQ_DECIMAL)) + MAX_TIME_DIFFERENCE < block.timestamp) {
             revert TimeStampDifferenceTooLarge(
-                block.timestamp - data[1] / (10 ** 18)
+                block.timestamp - data[1] / (REQ_DECIMAL)
             );
         }
 
@@ -816,7 +812,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         for (uint i = 2; i < latestPrices.length; i++) {
             GainsNetwork.closeTradeMarket(
                 trades[i - 2].index,
-                uint64(_adjustForDecimals(latestPrices[i], 18, 10))
+                uint64(_adjustForDecimals(latestPrices[i], DECIMAL_COUNT, 10))
             );
 
             indexToStrategy[trades[i - 2].index] = 0;
