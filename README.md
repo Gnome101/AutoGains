@@ -38,7 +38,7 @@ Out of scope:
 - The oracle address is trusted
 - The factory owner is trusted
 - The oracleFee and vaultActionFee will remain up to date at all times
-- The protocol will use known ERC20 implementations that are known and work with the protocol.
+- The protocol will use known ERC20 implementations that are known and work with the protocol.These will be WETH, USDC, and DAI.
 
 ## How It Works
 1. The VaultFactory contract deploys new AutoVault instances.
