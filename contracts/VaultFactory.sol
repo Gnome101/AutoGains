@@ -391,16 +391,16 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
 
     /**
      * @dev Sends an info request to the Chainlink oracle
-     * @param caller The address of the caller
      * @param fee The fee for the request
      * @return requestId The ID of the Chainlink request
      */
     function sendVaultBalanceReq(
-        address caller,
         uint256 fee
     ) external returns (bytes32 requestId) {
         Chainlink.Request memory req = buildChainlinkTradeRequest(msg.sender);
-        return sendInfoRequest(caller, req, fee);
+        if (!approvedVaults[msg.sender]) revert NonApprovedVault(msg.sender);
+        requestId = _sendChainlinkRequest(req, fee);
+        requestToCaller[requestId] = AutoVault(msg.sender);
     }
 
     /**

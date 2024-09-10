@@ -228,10 +228,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     ) external returns (bytes32 requestId) {
         if (choice == Choice.WITHDRAW_PERIOD) _checkIfWithdrawPeriod();
 
-        requestId = VaultFactory(vaultFactory).sendVaultBalanceReq(
-            msg.sender,
-            fee
-        );
+        requestId = VaultFactory(vaultFactory).sendVaultBalanceReq(fee);
         requestToAction[requestId] = VaultAction(
             msg.sender,
             receiver,
