@@ -64,6 +64,8 @@ abstract contract ERC4626Fees is ERC4626Upgradeable {
 
         (address recipient1, address recipient2) = _entryFeeRecipient();
 
+        super._deposit(caller, receiver, assets, shares);
+
         if (fee > 0 && recipient2 == receiver) {
             SafeERC20Upgradeable.safeTransfer(
                 IERC20Upgradeable(asset()),
@@ -83,8 +85,6 @@ abstract contract ERC4626Fees is ERC4626Upgradeable {
                 fee2
             );
         }
-
-        super._deposit(caller, receiver, assets, shares);
 
         afterDeposit(receiver, assets);
     }
