@@ -249,7 +249,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
      * @dev Extends the approval for the GainsNetwork contract.
      */
     function extendApproval() public {
-        getAsset().approve(address(GainsNetwork), type(uint256).max);
+        getAsset().forceApprove(address(GainsNetwork), type(uint256).max);
         emit ApprovalExtended(msg.sender);
     }
 
