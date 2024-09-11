@@ -38,9 +38,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     /// @dev Referral address for all trades executed by this vault
     address public specialRefer = 0xB46838207D4CDc3b0F6d8862b8F0d29fee938051;
 
-    /// @dev Mapping to store the last mint timestamp for each user
-    mapping(address => uint256) private _lastMintTimestamp;
-
     // /// @dev Oracle fee for Chainlink requests
     // uint256 public oracleFee;
 
@@ -61,9 +58,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
 
     /// @dev Mapping of index to strategy IDs
     mapping(uint32 => uint256) public indexToStrategy;
-
-    /// @dev Mapping of index to percent of position
-    mapping(uint256 => uint256) public indexToPercentPosition;
 
     /// @dev Mapping of request IDs to VaultActions
     mapping(bytes32 => VaultAction) public requestToAction;
@@ -472,7 +466,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
                 index,
                 openPrice
             );
-            // indexToPercentPosition[index] = posPercent;
             trade.collateralAmount -= applySwapFee(
                 trade.collateralAmount,
                 feeMultiplier
@@ -712,7 +705,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     function internalDeposit(uint256 assets, address receiver) internal {
         uint256 shares = previewDeposit(assets);
         _mint(receiver, shares);
-        _lastMintTimestamp[receiver] = block.timestamp;
         emit Deposit(receiver, receiver, assets, shares);
     }
 

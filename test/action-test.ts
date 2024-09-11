@@ -539,12 +539,21 @@ describe("Action Tests ", function () {
         .mul(currentPrice.toString())
         .dividedBy("1000000")
         .toFixed();
+      const swapFee = collateralDelta
+        .mul(collateralAmount)
+        .dividedBy(1000000)
+        .mul(SWAP_FEE)
+        .dividedBy(SWAP_FEE_SCALE) as Decimal;
 
       await expect(call)
         .to.emit(FakeGainsNetwork, "IncreasePositionSizeCalled")
         .withArgs(
           0,
-          collateralDelta.mul(collateralAmount).dividedBy(1000000).toFixed(),
+          collateralDelta
+            .mul(collateralAmount)
+            .dividedBy(1000000)
+            .sub(swapFee)
+            .toFixed(),
           leverageDelta,
           expectedPrice,
           maxSlippage
