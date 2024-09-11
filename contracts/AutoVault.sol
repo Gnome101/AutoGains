@@ -569,7 +569,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             )
         );
 
-        if (collateralAmount >= IERC20(asset()).balanceOf(address(this)))
+        if (collateralAmount > IERC20(asset()).balanceOf(address(this)))
             revert InsufficientBalance();
 
         return (
