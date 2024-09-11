@@ -349,8 +349,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         }
 
         uint256 strategy = requestToStrategy[requestId];
-        uint256 action = processStrategy(strategy, data);
-
+        uint256 action = processStrategy(strategy, data[2:]);
         if (action == 0) revert NoAction();
 
         uint32 index = strategyToIndex[strategy];
@@ -785,6 +784,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             revert NotTokenHolder(msg.sender);
         }
         //If there is already a set withdraw period in the future, then revert
+
         if (block.timestamp <= nextWithdrawPeriod + withdrawPeriodLength) {
             revert WithdrawPeriodAlreadySet();
         }

@@ -179,7 +179,7 @@ describe("Vault Tests eeep", function () {
       18,
       15,
       1,
-      1,
+      0,
       0,
       new Decimal(70).mul(decimals).toFixed(),
       0,
@@ -281,7 +281,7 @@ describe("Vault Tests eeep", function () {
         18,
         15,
         1,
-        2,
+        0,
         0,
         new Decimal(70).mul(decimals).toFixed(),
         0,
@@ -1152,7 +1152,8 @@ async function test_deposit(
   console.log(
     `Total Assets: ${totalCollateral.toFixed()} and vault: ${assetsInVault}`
   );
-  const { expectedAmount, expectedFee } = await previewDeposit(vaultFactory,
+  const { expectedAmount, expectedFee } = await previewDeposit(
+    vaultFactory,
     autoVault,
     userDepositing.address,
     depositAmount,
@@ -1242,7 +1243,8 @@ async function test_mint(
   console.log("total assets:", totalCollateral, totalAssetsExisting);
   const vaultCreatorAddress = await autoVault.vaultManager();
 
-  const { expectedAmount, expectedFee } = await previewMint(vaultFactory,
+  const { expectedAmount, expectedFee } = await previewMint(
+    vaultFactory,
     autoVault,
     userDepositing.address,
     mintAmount,

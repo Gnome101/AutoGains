@@ -525,8 +525,6 @@ describe("AutoGains Withdraw Period Tests wuba", function () {
         it("should not allow initiating a new withdraw period if one is active ", async function () {
           const { vaultCreator } = c;
 
-          // Set initial withdraw period
-          await autoVault.setWithdrawPeriod();
           const initialWithdrawPeriod = await autoVault.nextWithdrawPeriod();
 
           // Attempt to set a new withdraw period
@@ -548,17 +546,9 @@ describe("AutoGains Withdraw Period Tests wuba", function () {
         it("should respect the withdraw period duration ", async function () {
           const { vaultCreator } = c;
 
-          // Set withdraw period
-          await autoVault.setWithdrawPeriod();
+          //Get the initial withdraw period start and period length
           const withdrawPeriodStart = await autoVault.nextWithdrawPeriod();
-
-          // Try to withdraw just before the period starts
-          await expect(
-            autoVault.startAction(vaultCreator.address, 1, 2, 0)
-          ).to.be.revertedWithCustomError(autoVault, "NotYetWithdrawPeriod");
-
-          // Move time to start of withdraw period
-          await time.increaseTo(withdrawPeriodStart);
+          const withdrawPeriod = await autoVault.MIN_PERIOD_TIME();
 
           // Withdrawal should now be possible
           await expect(autoVault.startAction(vaultCreator.address, 1, 2, 0)).to

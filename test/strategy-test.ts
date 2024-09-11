@@ -164,7 +164,7 @@ describe("Strategy Tests ", function () {
       18,
       15,
       1,
-      2,
+      0,
       0,
       new Decimal(70).mul(decimals).toFixed(),
       0,
@@ -278,7 +278,7 @@ describe("Strategy Tests ", function () {
       18, //if
       14, // less
       1, //rsi
-      2,
+      0,
       0, //30
       new Decimal(30).mul(decimals).toFixed(),
       0,
@@ -286,7 +286,7 @@ describe("Strategy Tests ", function () {
       18,
       15,
       1,
-      2,
+      0,
       0,
       new Decimal(70).mul(decimals).toFixed(),
       0,
@@ -295,12 +295,12 @@ describe("Strategy Tests ", function () {
       16,
       15,
       1,
-      2,
+      0,
       0,
       new Decimal(40).mul(decimals).toFixed(),
       14,
       1,
-      2,
+      0,
       0,
       new Decimal(60).mul(decimals).toFixed(),
       0,

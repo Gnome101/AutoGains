@@ -87,7 +87,7 @@ function getStrategy(
     18, //if
     14, // less
     1, //rsi
-    2,
+    0,
     0, //30
     new Decimal(35).mul(decimals).toFixed(),
     0,
@@ -95,7 +95,7 @@ function getStrategy(
     18,
     15,
     1,
-    2,
+    0,
     0,
     new Decimal(75).mul(decimals).toFixed(),
     0,
@@ -103,7 +103,7 @@ function getStrategy(
     18,
     10,
     1,
-    2,
+    0,
     0,
     new Decimal(50).mul(decimals).toFixed(),
     0,
