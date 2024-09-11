@@ -168,6 +168,9 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         ) {
             revert NoTradesDuringWithdrawPeriod();
         }
+        if (isWithdrawPeriod) {
+            revert NoTradesDuringWithdrawPeriod();
+        }
         _;
     }
 
