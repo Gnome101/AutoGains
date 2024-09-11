@@ -35,7 +35,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
     int256 private constant requestDecimals = 10 ** 18;
 
     /// @dev This constant is used to ensure a minimum initial deposit when creating a new vault
-    uint256 private constant minimumDeposit = 100;
+    uint256 private constant minimumDeposit = 10 ** 6;
 
     /// @dev This is the maximum amount of strategies that a position can have
     uint256 public constant maxStrategyCount = 10;
@@ -193,7 +193,6 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
                 listOfStrategies.length,
                 maxStrategyCount
             );
-        if (initialAmount < minimumDeposit) revert DepositTooLow();
         if (tokenToOracleFee[collateral][0] == 0) revert CollateralNotAdded();
 
         collateral.safeTransferFrom(msg.sender, address(this), initialAmount);
@@ -226,6 +225,9 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             apiInfo,
             listOfStrategies
         );
+        if (AutoVault(clonedVault).balanceOf(msg.sender) < minimumDeposit) {
+            revert DepositTooLow();
+        }
     }
 
     /**
