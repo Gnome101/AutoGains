@@ -40,6 +40,9 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
     /// @dev This is the maximum amount of strategies that a position can have
     uint256 public constant maxStrategyCount = 10;
 
+    //@dev This is the amount of decimals that the fees use
+    uint256 public constant BIP = 1_000_000;
+
     // State variables
     /// @dev This address is used to send Chainlink requests for external data
     address public oracleAddress;
@@ -254,7 +257,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         req._add("body", body);
         req._add("contact", "A"); // PLEASE ENTER YOUR CONTACT INFO. this allows us to notify you in the event of any emergencies related to your request (ie, bugs, downtime, etc.). example values: 'derek_linkwellnodes.io' (Discord handle) OR 'derek@linkwellnodes.io' OR '+1-617-545-4721'
         req._add("path", "totalnewCollateral;blockTimestamp");
-        req._addInt("multiplier", int256(10 ** 18));
+        req._addInt("multiplier", int256(requestDecimals));
         return req;
     }
 
@@ -286,8 +289,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             );
             req._add("method", apiInfo[i].method);
             req._add("url", apiInfo[i].url);
-            uint256 feeMultiplier = 1_000_000 +
-                publicAPIEndPoints[apiInfo[i].url];
+            uint256 feeMultiplier = BIP + publicAPIEndPoints[apiInfo[i].url];
 
             req._add("headers", apiInfo[i].headers);
             if (bytes(apiInfo[i].body).length > 0) {

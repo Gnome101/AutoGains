@@ -120,6 +120,9 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     /// @notice This is the actual amount of decimals attached to requests
     uint256 private constant REQ_DECIMAL = 10 ** DECIMAL_COUNT;
 
+    //@dev This is the amount of decimals that the fees use
+    uint256 private constant BIP = 1_000_000;
+
     // Events ----------------------------------------------------------------------
     event WithdrawPeriodSet(uint256 date);
     event WithdrawPeriodStarted();
@@ -326,7 +329,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             masterFee: Math.mulDiv(
                 VaultFactory(vaultFactory).getOracleFee(asset()) * 2,
                 feeMultiplier,
-                1_000_000,
+                BIP,
                 Math.Rounding.Ceil
             ), // Public API Fee comes out to same as oracleFee
             feeMultiplier: feeMultiplier,
@@ -418,12 +421,12 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             Math.mulDiv(
                 totalCollateralAmount,
                 SWAP_FEE,
-                1_000_000,
+                BIP,
                 Math.Rounding.Ceil
             )
         );
         swapFee = uint120(
-            Math.mulDiv(swapFee, feeMultiplier, 1_000_000, Math.Rounding.Ceil)
+            Math.mulDiv(swapFee, feeMultiplier, BIP, Math.Rounding.Ceil)
         );
 
         getAsset().safeTransfer(vaultFactory, swapFee);
@@ -481,25 +484,19 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         } else if (actionType == 1) {
             GainsNetwork.updateSl(
                 index,
-                uint64(Math.mulDiv(openPrice, uint32(action >> 220), 1_000_000))
+                uint64(Math.mulDiv(openPrice, uint32(action >> 220), BIP))
             );
         } else if (actionType == 2) {
             GainsNetwork.updateTp(
                 index,
-                uint64(Math.mulDiv(openPrice, uint32(action >> 220), 1_000_000))
+                uint64(Math.mulDiv(openPrice, uint32(action >> 220), BIP))
             );
         } else if (actionType == 3) {
             GainsNetwork.updateOpenOrder(
                 index,
-                uint64(
-                    Math.mulDiv(openPrice, uint32(action >> 204), 1_000_000)
-                ),
-                uint64(
-                    Math.mulDiv(openPrice, uint32(action >> 172), 1_000_000)
-                ),
-                uint64(
-                    Math.mulDiv(openPrice, uint32(action >> 140), 1_000_000)
-                ),
+                uint64(Math.mulDiv(openPrice, uint32(action >> 204), BIP)),
+                uint64(Math.mulDiv(openPrice, uint32(action >> 172), BIP)),
+                uint64(Math.mulDiv(openPrice, uint32(action >> 140), BIP)),
                 uint16(action >> 236)
             );
         } else if (actionType == 4) {
@@ -519,21 +516,17 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
                     Math.mulDiv(
                         trade.collateralAmount,
                         uint32(action >> 220),
-                        1_000_000
+                        BIP
                     )
                 ),
                 uint24(action >> 196),
-                uint64(Math.mulDiv(openPrice, uint32(action >> 164), 1_000_000))
+                uint64(Math.mulDiv(openPrice, uint32(action >> 164), BIP))
             );
         } else if (actionType == 8) {
             Trade memory trade = GainsNetwork.getTrade(address(this), index);
 
             uint120 collateralDelta = uint120(
-                Math.mulDiv(
-                    trade.collateralAmount,
-                    uint32(action >> 204),
-                    1_000_000
-                )
+                Math.mulDiv(trade.collateralAmount, uint32(action >> 204), BIP)
             );
             collateralDelta -= applySwapFee(collateralDelta, feeMultiplier);
 
@@ -541,9 +534,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
                 index,
                 collateralDelta,
                 uint24(action >> 180),
-                uint64(
-                    Math.mulDiv(openPrice, uint32(action >> 148), 1_000_000)
-                ),
+                uint64(Math.mulDiv(openPrice, uint32(action >> 148), BIP)),
                 uint16(action >> 236)
             );
         }
@@ -568,7 +559,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             Math.mulDiv(
                 IERC20(asset()).balanceOf(address(this)),
                 collateralPercentage,
-                1_000_000
+                BIP
             )
         );
 
@@ -587,14 +578,10 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
                 tradeType: TradeType(uint8((action >> 184) & 0x3)),
                 collateralAmount: collateralAmount,
                 openPrice: uint64(
-                    Math.mulDiv(currentOpen, uint32(action >> 120), 1_000_000)
+                    Math.mulDiv(currentOpen, uint32(action >> 120), BIP)
                 ),
-                tp: uint64(
-                    Math.mulDiv(currentOpen, uint32(action >> 88), 1_000_000)
-                ),
-                sl: uint64(
-                    Math.mulDiv(currentOpen, uint32(action >> 56), 1_000_000)
-                ),
+                tp: uint64(Math.mulDiv(currentOpen, uint32(action >> 88), BIP)),
+                sl: uint64(Math.mulDiv(currentOpen, uint32(action >> 56), BIP)),
                 __placeholder: 0
             }),
             collateralPercentage
