@@ -136,7 +136,7 @@ describe("Operation Tests ", function () {
     await vaultFactory
       .connect(otherUser)
       .setGainsAddress(FakeGainsNetwork.target);
-    await vaultFactory.connect(otherUser).togglePublicAPI(publicAPI);
+    await vaultFactory.connect(otherUser).changePublicAPI(publicAPI, 500_000);
   });
 
   describe("Vault Created ", function () {

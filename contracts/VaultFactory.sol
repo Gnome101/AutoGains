@@ -72,7 +72,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
 
     /// @notice Mapping to track public API endpoints
     /// @dev Keys are API URLs, values indicate whether the API is public (true) or not (false)
-    mapping(string => bool) public publicAPIEndPoints;
+    mapping(string => uint256) public publicAPIEndPoints;
 
     /// @notice Mapping to associate Chainlink request IDs with corresponding AutoVault instances
     /// @dev Keys are Chainlink request IDs, values are the AutoVault contract addresses
@@ -167,8 +167,11 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
      * @dev Toggles the public API status for a given URL
      * @param url The URL to toggle
      */
-    function togglePublicAPI(string memory url) external onlyOwner {
-        publicAPIEndPoints[url] = !publicAPIEndPoints[url];
+    function changePublicAPI(
+        string memory url,
+        uint256 feeMultiplier
+    ) external onlyOwner {
+        publicAPIEndPoints[url] = feeMultiplier;
         emit PublicApiUpdate(url);
     }
 
@@ -283,10 +286,9 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             );
             req._add("method", apiInfo[i].method);
             req._add("url", apiInfo[i].url);
-            uint256 feeMultiplier = 1_000_000;
-            if (publicAPIEndPoints[apiInfo[i].url]) {
-                feeMultiplier = 1_500_000;
-            }
+            uint256 feeMultiplier = 1_000_000 +
+                publicAPIEndPoints[apiInfo[i].url];
+
             req._add("headers", apiInfo[i].headers);
             if (bytes(apiInfo[i].body).length > 0) {
                 req._add("body", apiInfo[i].body);
