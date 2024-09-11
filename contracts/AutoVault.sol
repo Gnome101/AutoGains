@@ -525,15 +525,18 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         } else if (actionType == 8) {
             Trade memory trade = GainsNetwork.getTrade(address(this), index);
 
+            uint120 collateralDelta = uint120(
+                Math.mulDiv(
+                    trade.collateralAmount,
+                    uint32(action >> 204),
+                    1_000_000
+                )
+            );
+            collateralDelta -= applySwapFee(collateralDelta, feeMultiplier);
+
             GainsNetwork.increasePositionSize(
                 index,
-                uint120(
-                    Math.mulDiv(
-                        trade.collateralAmount,
-                        uint32(action >> 204),
-                        1_000_000
-                    )
-                ),
+                collateralDelta,
                 uint24(action >> 180),
                 uint64(
                     Math.mulDiv(openPrice, uint32(action >> 148), 1_000_000)
