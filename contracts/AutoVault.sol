@@ -369,7 +369,7 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
             strategy
         );
 
-        //Send half of the oracle fee to the rewardBot
+        //Send 2/3 of the oracle fee to the rewardBot
         getAsset().safeTransfer(
             rewardInfo.caller,
             VaultFactory(vaultFactory).getOracleFee(asset()) / 3
