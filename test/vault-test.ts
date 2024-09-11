@@ -192,15 +192,22 @@ describe("Vault Tests eeep", function () {
       USDC,
       initalAmount.toFixed(),
       APIInfos,
-      [longStrategy] as number[][]
+      [longStrategy] as number[][],
+      "AutoGainsUSDC",
+      "aUSDC"
     );
     const vaultFactoryBalanceBefore = toDecimal(
       await USDC.balanceOf(vaultFactory.target)
     );
 
-    await vaultFactory.createVault(USDC, initalAmount.toFixed(), APIInfos, [
-      longStrategy,
-    ]);
+    await vaultFactory.createVault(
+      USDC,
+      initalAmount.toFixed(),
+      APIInfos,
+      [longStrategy],
+      "AutoGainsUSDC",
+      "aUSDC"
+    );
     let autoVault = (await ethers.getContractAt(
       "AutoVault",
       vaultAddress,
@@ -294,11 +301,18 @@ describe("Vault Tests eeep", function () {
         USDC,
         initalAmount.toFixed(),
         APIInfos,
-        [longStrategy] as number[][]
+        [longStrategy] as number[][],
+        "AutoGainsUSDC",
+        "aUSDC"
       );
-      await vaultFactory.createVault(USDC, initalAmount.toFixed(), APIInfos, [
-        longStrategy,
-      ]);
+      await vaultFactory.createVault(
+        USDC,
+        initalAmount.toFixed(),
+        APIInfos,
+        [longStrategy],
+        "AutoGainsUSDC",
+        "aUSDC"
+      );
       await time.increase(61);
       autoVault = (await ethers.getContractAt(
         "AutoVault",

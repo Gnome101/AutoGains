@@ -205,14 +205,18 @@ export async function createAutoVault(
     USDC,
     initalAmount.toFixed(),
     APIInfos,
-    strategies
+    strategies,
+    "AutoGainsUSDC",
+    "aUSDC"
   );
 
   await vaultFactory.createVault(
     USDC,
     initalAmount.toFixed(),
     APIInfos,
-    strategies
+    strategies,
+    "AutoGainsUSDC",
+    "aUSDC"
   );
 
   await time.increase(61);

@@ -203,13 +203,19 @@ describe("Operation Tests ", function () {
         USDC,
         initalAmount.toFixed(),
         APIInfos,
-        [longStrategy, longStrategy] as number[][]
+        [longStrategy, longStrategy] as number[][],
+        "AutoGainsUSDC",
+        "aUSDC"
       );
 
-      await vaultFactory.createVault(USDC, initalAmount.toFixed(), APIInfos, [
-        longStrategy,
-        longStrategy,
-      ]);
+      await vaultFactory.createVault(
+        USDC,
+        initalAmount.toFixed(),
+        APIInfos,
+        [longStrategy, longStrategy],
+        "AutoGainsUSDC",
+        "aUSDC"
+      );
       autoVault = (await ethers.getContractAt(
         "AutoVault",
         vaultAddress,
@@ -875,7 +881,9 @@ describe("Operation Tests ", function () {
           otherUser.address,
           initalAmount.toFixed(),
           APIInfos,
-          [longStrategy, longStrategy]
+          [longStrategy, longStrategy],
+          "AutoGainsUSDC",
+          "aUSDC"
         )
       ).to.rejectedWith("CollateralNotAdded()");
     });
@@ -941,7 +949,9 @@ describe("Operation Tests ", function () {
           USDC.target,
           initalAmount.toFixed(),
           APIInfos, // There are two apis
-          [longStrategy] // There is only 1 API
+          [longStrategy], // There is only 1 API,
+          "AutoGainsUSDC",
+          "aUSDC"
         )
       ).to.rejectedWith("StrategiesAndAPIsSameLength(2, 1)");
     });
@@ -1002,7 +1012,9 @@ describe("Operation Tests ", function () {
           USDC.target,
           initalAmount.toFixed(),
           excessDummyAPIs,
-          excessArray
+          excessArray,
+          "AutoGainsUSDC",
+          "aUSDC"
         )
       )
         .to.be.revertedWithCustomError(vaultFactory, "ExceedMaxStrategyCount")

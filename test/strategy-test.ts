@@ -177,11 +177,18 @@ describe("Strategy Tests ", function () {
       USDC,
       initalAmount.toFixed(),
       APIInfos,
-      [longStrategy] as number[][]
+      [longStrategy] as number[][],
+      "AutoGainsUSDC",
+      "aUSDC"
     );
-    await vaultFactory.createVault(USDC, initalAmount.toFixed(), APIInfos, [
-      longStrategy,
-    ]);
+    await vaultFactory.createVault(
+      USDC,
+      initalAmount.toFixed(),
+      APIInfos,
+      [longStrategy],
+      "AutoGainsUSDC",
+      "aUSDC"
+    );
     let autoVault = (await ethers.getContractAt(
       "AutoVault",
       vaultAddress,
@@ -313,11 +320,18 @@ describe("Strategy Tests ", function () {
       USDC,
       initialAmount.toFixed(),
       APIInfos,
-      [strategy] as number[][]
+      [strategy] as number[][],
+      "AutoGainsUSDC",
+      "aUSDC"
     );
-    await vaultFactory.createVault(USDC, initialAmount.toFixed(), APIInfos, [
-      strategy,
-    ]);
+    await vaultFactory.createVault(
+      USDC,
+      initialAmount.toFixed(),
+      APIInfos,
+      [strategy],
+      "AutoGainsUSDC",
+      "aUSDC"
+    );
 
     let autoVault = (await ethers.getContractAt(
       "AutoVault",
@@ -395,13 +409,17 @@ describe("Strategy Tests ", function () {
         USDC,
         initialAmount.toFixed(),
         APIInfos,
-        strategies as number[][]
+        strategies as number[][],
+        "AutoGainsUSDC",
+        "aUSDC"
       );
       await vaultFactory.createVault(
         USDC,
         initialAmount.toFixed(),
         APIInfos,
-        strategies
+        strategies,
+        "AutoGainsUSDC",
+        "aUSDC"
       );
 
       autoVault = (await ethers.getContractAt(

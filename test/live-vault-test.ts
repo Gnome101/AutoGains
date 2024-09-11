@@ -111,14 +111,18 @@ describe("Live Testnet Vault Tests", function () {
       USDC,
       initialAmount.toFixed(),
       APIInfos,
-      strategies
+      strategies,
+      "AutoGainsUSDC",
+      "aUSDC"
     );
 
     const tx2 = await vaultFactory.createVault(
       USDC,
       initialAmount.toFixed(),
       APIInfos,
-      strategies
+      strategies,
+      "AutoGainsUSDC",
+      "aUSDC"
     );
 
     await tx2.wait();

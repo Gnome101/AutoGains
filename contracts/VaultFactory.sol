@@ -184,7 +184,9 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         IERC20MetadataUpgradeable collateral,
         uint256 initialAmount,
         APIInfo[] calldata apiInfo,
-        uint256[][] calldata listOfStrategies
+        uint256[][] calldata listOfStrategies,
+        string memory collName,
+        string memory collSymbol
     ) external returns (address payable clonedVault) {
         if (maxStrategyCount < listOfStrategies.length)
             revert ExceedMaxStrategyCount(
@@ -209,8 +211,8 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             collateral,
             initialAmount,
             startInfo,
-            string.concat("Auto", collateral.name()),
-            string.concat("a", collateral.symbol()),
+            collName,
+            collSymbol,
             getAddressKeys(apiInfo, listOfStrategies)
         );
         approvedVaults[clonedVault] = true;

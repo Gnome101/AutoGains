@@ -103,13 +103,17 @@ describe("Live Testnet Strategy Tests", function () {
       USDC,
       initialAmount.toFixed(),
       APIInfos,
-      strategies
+      strategies,
+      "AutoGainsUSDC",
+      "aUSDC"
     );
     await vaultFactory.createVault(
       USDC,
       initialAmount.toFixed(),
       APIInfos,
-      strategies
+      strategies,
+      "AutoGainsUSDC",
+      "aUSDC"
     );
 
     autoVault = await ethers.getContractAt("AutoVault", vaultAddress, user);
