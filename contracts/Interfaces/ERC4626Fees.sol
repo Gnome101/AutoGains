@@ -72,7 +72,13 @@ abstract contract ERC4626Fees is ERC4626Upgradeable {
                 recipient1,
                 fee
             );
-        } else if (fee > 0 && recipient2 != address(this)) {
+        } else if (fee > 0 && recipient1 == receiver) {
+            SafeERC20Upgradeable.safeTransfer(
+                IERC20Upgradeable(asset()),
+                recipient2,
+                fee
+            );
+        } else if (fee > 0) {
             (uint256 fee1, uint256 fee2) = splitFees(fee);
             SafeERC20Upgradeable.safeTransfer(
                 IERC20Upgradeable(asset()),
