@@ -30,6 +30,7 @@ import { FEE_MULTIPLIER_SCALE } from "@gainsnetwork/sdk";
 import { AddressLike, FallbackFragment, MinInt256 } from "ethers";
 
 import { TradeStruct } from "../typechain-types/contracts/Gains Contracts/IGainsNetwork";
+import { equal } from "assert";
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ describe("Vault Tests eeep", function () {
   const SWAP_FEE_SCALE = 10 ** 6;
   let MIN_FEE: Decimal;
   const collateralIndex = 1;
+  const MIN_DEPOSIT = new Decimal("10000");
 
   beforeEach(async () => {
     const chainID = network.config.chainId;
@@ -305,6 +307,7 @@ describe("Vault Tests eeep", function () {
         "AutoGainsUSDC",
         "aUSDC"
       );
+      console.log("\nForming the vault ");
       await vaultFactory.createVault(
         USDC,
         initalAmount.toFixed(),
@@ -347,10 +350,12 @@ describe("Vault Tests eeep", function () {
         const userBalanceBefore = new Decimal(
           (await autoVault.balanceOf(vaultCreator.address)).toString()
         );
+
         const expectedShares = await autoVault.deposit.staticCall(
           depositAmount.toFixed(),
           vaultCreator.address
         );
+
         await autoVault.deposit(depositAmount.toFixed(), vaultCreator.address);
 
         assert.equal(
@@ -358,14 +363,23 @@ describe("Vault Tests eeep", function () {
           userBalanceBefore.add(expectedShares.toString()).toFixed()
         );
       });
-      it("other user can deposit for a fee gyat", async () => {
+      it("other user can deposit for a fee ", async () => {
+        console.log("\n Stragint test");
         const depositAmount = await getAmount(USDC, "2");
-        console.log("Amount", depositAmount);
         await otherUSDC.approve(autoVault.target, depositAmount.toFixed());
 
         const expectedFee = calculateFeeOnTotal(depositAmount, ENTRY_FEE);
-        console.log("Expected fee", expectedFee);
-        const expectedShares = depositAmount.sub(expectedFee);
+        const totalAssets = new Decimal(
+          (await autoVault.totalAssets()).toString()
+        );
+        const totalSupply = new Decimal(
+          (await autoVault.totalSupply()).toString()
+        );
+        const expectedShares = depositAmount
+          .sub(expectedFee)
+          .mul(totalSupply.plus(1))
+          .dividedBy(totalAssets.plus(1))
+          .floor();
 
         const Before = await getImportantInfo(
           otherAutoVault,
@@ -383,6 +397,7 @@ describe("Vault Tests eeep", function () {
           USDC,
           otherUser.address
         );
+
         assert.equal(
           After.userBalance.sub(Before.userBalance).toFixed(),
           expectedShares.toString(),
@@ -417,10 +432,23 @@ describe("Vault Tests eeep", function () {
       it("other user can mint for a fee ", async () => {
         const mintAmount = await getAmount(otherAutoVault, "2");
 
-        const expectedFee = calculateFeeOnRaw(mintAmount, ENTRY_FEE);
+        const totalAssets = new Decimal(
+          (await autoVault.totalAssets()).toString()
+        );
+
+        const totalSupply = new Decimal(
+          (await autoVault.totalSupply()).toString()
+        );
+
+        let expectedAssetsPaid = mintAmount
+          .mul(totalAssets.plus(1))
+          .dividedBy(totalSupply.plus(1))
+          .ceil();
+
+        const expectedFee = calculateFeeOnRaw(expectedAssetsPaid, ENTRY_FEE);
+        expectedAssetsPaid = expectedAssetsPaid.plus(expectedFee);
         console.log(mintAmount, "expected", expectedFee);
 
-        const expectedAssetsPaid = mintAmount.plus(expectedFee);
         const Before = await getImportantInfo(
           otherAutoVault,
           USDC,
@@ -492,6 +520,19 @@ describe("Vault Tests eeep", function () {
           const withdrawAmount = await getAmount(USDC, ".5");
 
           const expectedFee = calculateFeeOnRaw(withdrawAmount, EXIT_FEE);
+
+          const totalAssets = new Decimal(
+            (await autoVault.totalAssets()).toString()
+          );
+          const totalSupply = new Decimal(
+            (await autoVault.totalSupply()).toString()
+          );
+          const expectedShares = withdrawAmount
+            .plus(expectedFee)
+            .mul(totalSupply.plus(1))
+            .dividedBy(totalAssets.plus(1))
+            .ceil();
+
           console.log(withdrawAmount, "expected", expectedFee);
 
           const Before = await getImportantInfo(
@@ -514,7 +555,7 @@ describe("Vault Tests eeep", function () {
 
           assert.equal(
             Before.userBalance.sub(After.userBalance).toFixed(),
-            withdrawAmount.plus(expectedFee).toString(),
+            expectedShares.toFixed(),
             "User Shares decreased by wrong amount"
           );
           assert.equal(
@@ -534,30 +575,46 @@ describe("Vault Tests eeep", function () {
           );
         });
         it("vaultCreator can redeem ", async () => {
-          const depositAmount = await getAmount(USDC, "2");
+          const redeemAmount = await getAmount(USDC, "2");
           const userBalanceBefore = new Decimal(
             (await autoVault.balanceOf(vaultCreator.address)).toString()
           );
-          const expectedSharesTaken = await autoVault.withdraw.staticCall(
-            depositAmount.toFixed(),
+          const expectedSharesTaken = await autoVault.redeem.staticCall(
+            redeemAmount.toFixed(),
             vaultCreator.address,
             vaultCreator.address
           );
+
           await autoVault.redeem(
-            depositAmount.toFixed(),
+            redeemAmount.toFixed(),
             vaultCreator.address,
             vaultCreator.address
+          );
+          const userBalanceAfter = new Decimal(
+            (await autoVault.balanceOf(vaultCreator.address)).toString()
           );
           assert.equal(
-            (await autoVault.balanceOf(vaultCreator.address)).toString(),
-            userBalanceBefore.sub(expectedSharesTaken.toString()).toFixed()
+            redeemAmount.toString(),
+            userBalanceBefore.sub(userBalanceAfter).toFixed()
           );
         });
-        it("other user can redeem for a fee ", async () => {
+        it("other user can redeem for a fee gyattt", async () => {
           const redeemAmount = await getAmount(otherAutoVault, "1");
+          const totalAssets = new Decimal(
+            (await autoVault.totalAssets()).toString()
+          );
 
-          const expectedFee = calculateFeeOnTotal(redeemAmount, EXIT_FEE);
+          const totalSupply = new Decimal(
+            (await autoVault.totalSupply()).toString()
+          );
 
+          let expectedAssets = redeemAmount
+            .mul(totalAssets.plus(1))
+            .dividedBy(totalSupply.plus(1))
+            .floor();
+
+          const expectedFee = calculateFeeOnTotal(expectedAssets, EXIT_FEE);
+          expectedAssets = expectedAssets.sub(expectedFee);
           const Before = await getImportantInfo(
             otherAutoVault,
             USDC,
@@ -580,7 +637,7 @@ describe("Vault Tests eeep", function () {
           );
           assert.equal(
             After.assetBalance.sub(Before.assetBalance).toFixed(),
-            redeemAmount.sub(expectedFee).toFixed(),
+            expectedAssets.toFixed(),
             "User paid an incorrect amount"
           );
           assert.equal(
@@ -1072,6 +1129,7 @@ describe("Vault Tests eeep", function () {
     const vaultCreatorBalance = toDecimal(
       await collateral.balanceOf(vaultCreator.address)
     );
+    console.log(`User Balance: ${userBalance}`);
     return {
       userBalance,
       assetBalance,
@@ -1347,233 +1405,3 @@ async function test_mint(
     );
   }
 }
-// async function test_withdraw(
-//   USDC: ERC20,
-//   autoVault: AutoVault,
-//   totalCollateral: Decimal,
-//   collateralAmounts: Decimal[],
-//   userDepositing: SignerWithAddress,
-//   vaultFactory: VaultFactory,
-//   FACTORY_SHARE: Decimal,
-//   FakeGainsNetwork: FakeGainsNetwork
-// ) {
-//   const withdrawAmount = await getAmount(USDC, ".1");
-//   const choice = 2;
-
-//   const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
-//   const totalAssets = totalCollateral.plus(totalAssetsExisting.toString());
-//   const vaultCreatorAddress = await autoVault.vaultManager();
-//   const { expectedAmount, expectedFee } = await previewWithdraw(
-//     autoVault,
-//     userDepositing.address,
-//     withdrawAmount,
-//     totalAssets
-//   );
-//   const expectedSoldShares = expectedAmount;
-//   const requestID = await autoVault.startAction.staticCall(
-//     userDepositing.address,
-//     withdrawAmount.toFixed(),
-//     choice,
-//     expectedSoldShares.toFixed()
-//   );
-
-//   const Before = await getImportantInfo(
-//     autoVault,
-//     USDC,
-//     userDepositing.address,
-//     vaultFactory.target,
-//     vaultCreatorAddress
-//   );
-
-//   await autoVault.startAction(
-//     userDepositing.address,
-//     withdrawAmount.toFixed(),
-//     choice,
-//     expectedSoldShares.toFixed()
-//   );
-
-//   // console.log(`Total collateral before:`, totalCollateral);
-//   const input = [totalCollateral.toFixed()];
-
-//   await impersonateOracleDoVaultAction(
-//     vaultFactory,
-//     requestID,
-//     input,
-//     Number(await USDC.decimals()),
-//     0
-//   );
-
-//   collateralAmounts = collateralAmounts.map((x) =>
-//     x.sub(x.mul(withdrawAmount).dividedBy(totalAssets).floor())
-//   );
-//   //Since collateral is equal to how much put in, shares should be 1 to 1
-//   const After = await getImportantInfo(
-//     autoVault,
-//     USDC,
-//     userDepositing.address,
-//     vaultFactory.target,
-//     vaultCreatorAddress
-//   );
-
-//   let trades = await FakeGainsNetwork.getTrades(autoVault.target);
-//   totalCollateral = new Decimal("0");
-//   let i = 0;
-//   for (const trade of trades) {
-//     const collateralAmount = trade.collateralAmount;
-//     assert.equal(
-//       collateralAmounts[i].toFixed(),
-//       collateralAmount.toString(),
-//       "Trades should decrease by desired amount"
-//     );
-//     totalCollateral = totalCollateral.plus(collateralAmount.toString());
-//     i++;
-//   }
-//   // console.log(`Total collateral after:`, totalCollateral);
-//   assert.equal(
-//     Before.userBalance.sub(After.userBalance).toFixed(),
-//     expectedSoldShares.toFixed(),
-//     "vaultCreator balance should decrease by correct amount"
-//   );
-//   if (vaultCreatorAddress == userDepositing.address) {
-//     assert.equal(
-//       After.assetBalance.sub(Before.assetBalance).toFixed(),
-//       withdrawAmount.toFixed()
-//     );
-//     assert.equal(
-//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-//       expectedFee.toFixed(),
-//       "Vault Factory recieved wrong fee"
-//     );
-//     assert.equal(
-//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-//       withdrawAmount.toFixed(),
-//       "Vault Creator recieved wrong amount for withdrawal"
-//     );
-//   } else {
-//     assert.equal(
-//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-//       expectedFee.dividedBy(FACTORY_SHARE).toFixed(),
-//       "Vault Factory recieved wrong fee"
-//     );
-//     assert.equal(
-//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-//       expectedFee.sub(expectedFee.dividedBy(FACTORY_SHARE)).toFixed(),
-//       "Vault Creator recieved wrong fee"
-//     );
-//   }
-// }
-// async function test_redeem(
-//   USDC: ERC20,
-//   autoVault: AutoVault,
-//   totalCollateral: Decimal,
-//   collateralAmounts: Decimal[],
-//   userDepositing: SignerWithAddress,
-//   vaultFactory: VaultFactory,
-//   FACTORY_SHARE: Decimal,
-//   FakeGainsNetwork: FakeGainsNetwork
-// ) {
-//   const redeemAmount = await getAmount(autoVault, "2");
-//   const choice = 3;
-//   const vaultCreatorAddress = await autoVault.vaultManager();
-
-//   const requestID = await autoVault.startAction.staticCall(
-//     userDepositing.address,
-//     redeemAmount.toFixed(),
-//     choice,
-//     redeemAmount.toFixed()
-//   );
-//   const Before = await getImportantInfo(
-//     autoVault,
-//     USDC,
-//     userDepositing.address,
-//     vaultFactory.target,
-//     vaultCreatorAddress
-//   );
-//   const input = [totalCollateral.toFixed()];
-//   const totalAssetsExisting = await USDC.balanceOf(autoVault.target);
-//   const totalAssets = totalCollateral.plus(totalAssetsExisting.toString());
-//   const { expectedAmount, expectedFee } = await previewRedeem(
-//     autoVault,
-//     userDepositing.address,
-//     redeemAmount,
-//     totalAssets
-//   );
-//   const expectedAssetsEarned = expectedAmount;
-//   console.log(`Bruh`, expectedAssetsEarned);
-//   await autoVault.startAction(
-//     userDepositing.address,
-//     redeemAmount.toFixed(),
-//     choice,
-//     expectedAssetsEarned.toFixed()
-//   );
-
-//   // console.log(`Total collateral before:`, totalCollateral);
-
-//   await impersonateOracleDoVaultAction(
-//     vaultFactory,
-//     requestID,
-//     input,
-//     Number(await USDC.decimals()),
-//     0
-//   );
-//   collateralAmounts = collateralAmounts.map((x) =>
-//     x.mul(totalAssets.sub(expectedAssetsEarned)).dividedBy(totalAssets).ceil()
-//   );
-//   //Since collateral is equal to how much put in, shares should be 1 to 1
-
-//   const After = await getImportantInfo(
-//     autoVault,
-//     USDC,
-//     userDepositing.address,
-//     vaultFactory.target,
-//     vaultCreatorAddress
-//   );
-
-//   let trades = await FakeGainsNetwork.getTrades(autoVault.target);
-//   totalCollateral = new Decimal("0");
-//   let i = 0;
-//   for (const trade of trades) {
-//     const collateralAmount = trade.collateralAmount;
-//     assert.equal(
-//       collateralAmounts[i].toFixed(),
-//       collateralAmount.toString(),
-//       "Trades should decrease by desired amount"
-//     );
-//     totalCollateral = totalCollateral.plus(collateralAmount.toString());
-//     i++;
-//   }
-//   // console.log(`Total collateral after:`, totalCollateral);
-//   assert.equal(
-//     Before.userBalance.sub(After.userBalance).toFixed(),
-//     redeemAmount.toFixed(),
-//     "vaultCreator balance should decrease by correct amount"
-//   );
-
-//   assert.equal(
-//     After.assetBalance.sub(Before.assetBalance).toFixed(),
-//     expectedAssetsEarned.toFixed()
-//   );
-//   if (vaultCreatorAddress == userDepositing.address) {
-//     assert.equal(
-//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-//       expectedFee.toFixed(),
-//       "Vault Factory received wrong fee"
-//     );
-//     assert.equal(
-//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-//       expectedAssetsEarned.toFixed(),
-//       "Vault Creator received wrong fee"
-//     );
-//   } else {
-//     assert.equal(
-//       After.factoryBalance.sub(Before.factoryBalance).toFixed(),
-//       expectedFee.dividedBy(FACTORY_SHARE).toFixed(),
-//       "Vault Factory received wrong fee"
-//     );
-//     assert.equal(
-//       After.vaultCreatorBalance.sub(Before.vaultCreatorBalance).toFixed(),
-//       expectedFee.sub(expectedFee.dividedBy(FACTORY_SHARE)).toFixed(),
-//       "Vault Creator received wrong fee"
-//     );
-//   }
-// }

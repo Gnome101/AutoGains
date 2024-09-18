@@ -35,7 +35,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
     int256 private constant requestDecimals = 10 ** 18;
 
     /// @dev This constant is used to ensure a minimum initial deposit when creating a new vault
-    uint256 private constant minimumDeposit = 10 ** 6;
+    uint256 private constant minimumDeposit = 10 ** 4;
 
     /// @dev This is the maximum amount of strategies that a position can have
     uint256 public constant maxStrategyCount = 10;
@@ -65,8 +65,8 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         "https://xpzyihmcunwwykjpfdgy.supabase.co/functions/v1/get-trading-variables";
 
     /// @dev This string is used for denoting the method of the api request
-    string public trade_headers =
-        '["accept", "application/json", "Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwenlpaG1jdW53d3lranBmZGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0MjU3ODIsImV4cCI6MjAzODAwMTc4Mn0.mgu_pc2fGZgAQPSlMTY_FPLcsIvepIZb3geDXA7au-0"]';
+    string public trade_headers = "";
+    // '["accept", "application/json", "Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwenlpaG1jdW53d3lranBmZGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0MjU3ODIsImV4cCI6MjAzODAwMTc4Mn0.mgu_pc2fGZgAQPSlMTY_FPLcsIvepIZb3geDXA7au-0"]';
 
     /// @dev This string is used for denoting the method of the api request
     string public trade_job = "168535c73f7b46cd8fd9a7f21bdbedc1";
@@ -220,6 +220,7 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             collSymbol,
             getAddressKeys(apiInfo, listOfStrategies)
         );
+
         approvedVaults[clonedVault] = true;
         collateral.safeTransfer(clonedVault, initialAmount);
 
@@ -231,7 +232,10 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             apiInfo,
             listOfStrategies
         );
-        if (AutoVault(clonedVault).balanceOf(msg.sender) < minimumDeposit) {
+        if (
+            AutoVault(clonedVault).balanceOf(address(clonedVault)) <
+            minimumDeposit
+        ) {
             revert DepositTooLow();
         }
     }
@@ -290,8 +294,9 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             req._add("method", apiInfo[i].method);
             req._add("url", apiInfo[i].url);
             uint256 feeMultiplier = BIP + publicAPIEndPoints[apiInfo[i].url];
-
-            req._add("headers", apiInfo[i].headers);
+            if (bytes(apiInfo[i].headers).length > 0) {
+                req._add("headers", apiInfo[i].headers);
+            }
             if (bytes(apiInfo[i].body).length > 0) {
                 req._add("body", apiInfo[i].body);
             }

@@ -120,7 +120,7 @@ describe("Strategy Tests ", function () {
     profiler.end("Setup");
   });
 
-  it("strategy works as expected ", async () => {
+  it("strategy works as expected woop", async () => {
     const initalAmount = await getAmount(USDC, "10");
     const apiKey = process.env.LUKE_API;
     const method = "method";

@@ -117,6 +117,9 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
     //@dev This is the amount of decimals that the fees use
     uint256 private constant BIP = 1_000_000;
 
+    /// @dev This constant is used to ensure a minimum initial deposit when creating a new vault
+    uint256 private constant minimumDeposit = 10 ** 4;
+
     // Events ----------------------------------------------------------------------
     event WithdrawPeriodSet(uint256 date);
     event WithdrawPeriodStarted();
@@ -205,6 +208,9 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
 
         vaultFactory = msg.sender;
         internalDeposit(startingBalance, startingInfo.vaultManager);
+        internalDeposit(minimumDeposit, address(this));
+        console.log(startingBalance + minimumDeposit, "START");
+
         // oracleFee = startingFee[0];
         // vaultActionFee = startingFee[1];
         // tradeFee = startingFee[2];
@@ -703,9 +709,8 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
      * @param receiver The address that will receive the minted shares
      **/
     function internalDeposit(uint256 assets, address receiver) internal {
-        uint256 shares = previewDeposit(assets);
-        _mint(receiver, shares);
-        emit Deposit(receiver, receiver, assets, shares);
+        _mint(receiver, assets);
+        emit Deposit(receiver, receiver, assets, assets);
     }
 
     /**

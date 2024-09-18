@@ -6,6 +6,8 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol";
 
 /// @dev ERC4626 vault with entry/exit fees expressed in https://en.wikipedia.org/wiki/Basis_point[basis point (bp)].
+import "hardhat/console.sol";
+
 abstract contract ERC4626Fees is ERC4626Upgradeable {
     using MathUpgradeable for uint256;
     using SafeERC20Upgradeable for IERC20MetadataUpgradeable;
@@ -18,6 +20,12 @@ abstract contract ERC4626Fees is ERC4626Upgradeable {
         uint256 assets
     ) public view virtual override returns (uint256) {
         uint256 fee = _feeOnTotal(assets, _entryFeeBasisPoints(), _msgSender());
+        console.log(
+            "preview deposit",
+            assets,
+            fee,
+            super.previewDeposit(assets - fee)
+        );
         return super.previewDeposit(assets - fee);
     }
 

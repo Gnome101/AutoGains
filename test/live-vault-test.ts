@@ -133,7 +133,7 @@ describe("Live Testnet Vault Tests", function () {
   });
 
   describe("Live Vault Tests", function () {
-    it("User can deposit wooba", async function () {
+    it("User can deposit ", async function () {
       const add = await autoVault.asset();
       console.log("Asset", add);
       profiler.start("Get Most Recent Data");
@@ -191,7 +191,7 @@ describe("Live Testnet Vault Tests", function () {
 
       //   await testAction("Deposit");
     });
-    it("User can mint ", async function () {
+    it("User can mint gwop", async function () {
       const add = await autoVault.asset();
       console.log("Asset", add);
       profiler.start("Get Most Recent Data");
