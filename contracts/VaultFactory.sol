@@ -132,7 +132,6 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
         uint256 strategyLength
     );
     error ExceedMaxStrategyCount(uint256 strategyAmount, uint256 maxAmount);
-    error DepositTooLow();
 
     /**
      * @dev Constructor for the VaultFactory contract

@@ -123,7 +123,7 @@ describe("Live Testnet Strategy Tests", function () {
   });
 
   describe("Strategy Tests", function () {
-    it("Strategy 1: Open Long and Update SL/TP ", async function () {
+    it("Strategy 1: Open Long and Update SL/TP gwap", async function () {
       await testStrategy(0, verifyOpenLong, verifyUpdateSL, verifyUpdateTP);
     });
 
