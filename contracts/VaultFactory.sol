@@ -1,7 +1,7 @@
 // SPDX-License-Identifier:  BSL-1.1
 pragma solidity ^0.8.24;
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 import "./AutoVault.sol";
 import "./Libraries/Equation.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -232,12 +232,6 @@ contract VaultFactory is ChainlinkClient, ConfirmedOwner {
             apiInfo,
             listOfStrategies
         );
-        if (
-            AutoVault(clonedVault).balanceOf(address(clonedVault)) <
-            minimumDeposit
-        ) {
-            revert DepositTooLow();
-        }
     }
 
     /**

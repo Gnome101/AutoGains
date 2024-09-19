@@ -209,7 +209,6 @@ contract AutoVault is ERC4626Fees, ChainlinkClient, Pausable {
         vaultFactory = msg.sender;
         internalDeposit(startingBalance, startingInfo.vaultManager);
         internalDeposit(minimumDeposit, address(this));
-        console.log(startingBalance + minimumDeposit, "START");
 
         // oracleFee = startingFee[0];
         // vaultActionFee = startingFee[1];
